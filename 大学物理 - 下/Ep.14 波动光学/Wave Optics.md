@@ -354,7 +354,7 @@ $$⭐\qquad\Delta\varphi=2\pi\frac{\Delta}{\lambda}$$
 
 1. 在真空中放入厚度为$d$折射率为$n$的介质，  
    附加（多出来的）光程差：$nd-d=(n-1)d$
-2. 光从**光疏**介质射**到光密**介质并**反射**时，发生半波损失，  
+2. 光从**光疏**介质射**到光密**介质并**反射**时，发生**半波损失**，  
    附加光程差：$\frac{\lambda}{2}$**（不做证明，但要牢记）**
 3. 薄透镜物点与像点间等光程，即经过透镜每一条光线$s_i$是等光程的，  
    不引起附加光程差。  
@@ -428,7 +428,7 @@ $S$的作用是提供点光源，发出柱面波。
 推导过程见下：  
 > 推导过程 - 光程差$\Delta$：  
 > $\Delta=r_2-r_1\approx d\sin\theta\approx d\frac{x}{D}(\because d \ll D, r_1 \parallel r_2)$  
-> 带入光程差公示：  
+> 带入光程差公式：  
 > $\Delta=d\frac{x}{D}=\left\{\begin{array}{l}\pm k\lambda & \textsf{（明）}\\\pm \frac{2k+1}{2}\lambda &\textsf{（暗）}\end{array}\qquad(k=0,1,2,\cdots)\right.$
 >
 > 转换后即为上式。
@@ -441,6 +441,7 @@ $S$的作用是提供点光源，发出柱面波。
   * 暗处：$I_{min}=0$
 * 条纹宽度：
   $$⭐ \Delta x = \frac{D}{d}\lambda$$
+  *注意这里有近似，所以实际上是不等宽度的。*
   * $\lambda$一定：$\Delta x \propto D$，$\Delta x \propto \frac{1}{d}$，  
     观察屏$D$越远、双缝间隙$d$越小 → 条纹$\Delta x$越宽。
   * $d, D$一定：$\Delta x \propto \lambda$，  
@@ -455,6 +456,10 @@ $S$的作用是提供点光源，发出柱面波。
 >
 > ![白光照射双缝示意图 1](images/Wave%20Optics--11-07_15-15-34.png)  
 > 白光照射双缝示意图
+>
+> 重叠，即$k\lambda_\textrm{红}=(k+1)\lambda_\textrm{紫}$，  
+> 解得$k=1.33$。  
+> 故**只有第一级**未重叠，清晰可见。
 
 #### 2. 其他分波阵面干涉
 
@@ -755,6 +760,9 @@ $\Delta=2ne+\frac{\lambda}{2}=\left\{\begin{array}{l}k\lambda & \textsf{（明�
 
 #### 3. 薄膜等倾干涉
 
+![装置 1](images/Wave%20Optics--11-13_15-11-13.png)  
+装置
+
 厚度统一、均匀。
 
 影响光程差的关键因素只有**入射角**。
@@ -808,7 +816,7 @@ $\lambda=\frac{(r_m^2-r_k^2)n}{(m-k)R}$
 
 产生等倾干涉。
 
-##### 1. 装置
+##### 1. 迈克尔逊干涉仪装置
 
 ![迈克尔逊干涉仪装置 1](images/Wave%20Optics--11-07_21-07-48.png)  
 迈克尔逊干涉仪装置
@@ -1010,18 +1018,25 @@ $\Psi=C\int_S \frac{\rm dS}{2r}(1+\cos\theta)\cos(\omega t +\phi_0-2\pi\frac{r}{
 
 * 条纹角位置：  
   *（明暗纹条件$a$除过去）*  
-  $\sin\varphi\approx\varphi=\left\{\begin{array}{l}0 & （\textrm{中央明纹中心）}\\\pm (2k+1)\frac{\lambda}{2a} &\textsf{（各级明纹中心）} \\\pm k\frac{\lambda}{a} & \textsf{（暗纹中心）} \end{array}(k=1,2,\cdots)\right.$
-  * 中央明纹：$0$
-  * 其他明纹：$\pm (2k+1)\frac{\lambda}{2a} (k=1,2,\cdots)$
-  * 其他暗纹：$\pm k\frac{\lambda}{a} (k=1,2,\cdots)$
+  $\sin\varphi\approx\varphi=\left\{\begin{array}{l}0 & （\textrm{中央明纹中心）}\\\pm \frac{(2k+1)}{2}\frac{\lambda}{a} &\textsf{（各级明纹中心）} \\\pm k\frac{\lambda}{a} & \textsf{（暗纹中心）} \end{array}(k=1,2,\cdots)\right.$
+
+  ⚠注意：这里**只适用$\varphi$很小的情况**，如果角度$\varphi$很大，请用$a\sin\varphi$来推。
+  * 中央明纹：$\varphi=0$
+  * 其他明纹：$\varphi=\pm \frac{(2k+1)}{2}\frac{\lambda}{a} (k=1,2,\cdots)$
+  * 其他暗纹：$\varphi=\pm k\frac{\lambda}{a} (k=1,2,\cdots)$
 * 条纹角宽度：  
   *（上式子$\Delta k=1$）*
   * 中央明纹：$\Delta\varphi = \frac{2\lambda}{a}$
   * 其余条纹：$\Delta\varphi = \frac{\lambda}{a}$
+* 条纹位置：  
+  $x=f\tan\varphi$
 * 衍射条纹线宽度：  
-  $x=f\tan\varphi \rightarrow \Delta x=f(\tan\varphi_2-\tan\varphi_1)\approx f(\varphi_2-\varphi_1)\\ =f\cdot\Delta\varphi$
+  $\begin{aligned}x=f\tan\varphi \rightarrow \Delta x & =f(\tan\varphi_2-\tan\varphi_1)\approx f(\varphi_2-\varphi_1)\\ & =f\cdot\Delta\varphi\end{aligned}$  
+  其中$f$为透镜的焦距。
   * 中央明纹：$\Delta x =f\cdot\frac{2\lambda}{a}$
-  * 其他条纹：$\Delta x =f\cdot\frac{\lambda}{a}$
+  * 其他条纹：$\Delta x =f\cdot\frac{\lambda}{a}$  
+
+  *注意这里采用了近似，所以实际上衍射条纹不是等间距的，只是等角宽度。*
 
 各参数如图：  
 ![图 29](images/Wave%20Optics--11-09_20-35-43.png)
@@ -1054,10 +1069,11 @@ $\Psi=C\int_S \frac{\rm dS}{2r}(1+\cos\theta)\cos(\omega t +\phi_0-2\pi\frac{r}{
    * $a\uparrow \quad \Delta\varphi \downarrow$，衍射不明显；  
      $a\upuparrows$，直线传播。
 2. $a$一定：  
-   * $\lambda\uparrow \quad \Delta\phi\uparrow$  
+   * $\lambda\uparrow \quad \Delta\varphi\uparrow$  
      白光照射：中央白光；其余条纹内紫外红，并在高层次重叠。
-   * $\lambda\downarrow \quad \Delta\phi\downarrow$  
-     浸入液体中，条纹变密集。
+     > 单缝干涉中也是$k=1.33$，只有第一级清晰可见。
+   * $\lambda\downarrow \quad \Delta\varphi\downarrow$  
+     浸入液体中（$n\uparrow\rightarrow\lambda\downarrow$），条纹变密集。
 
 ---
 
@@ -1099,8 +1115,13 @@ $$I=I_0(\frac{\sin\alpha}{\alpha})^2$$
 
 其中：
 $$A_0=NA_1$$
-$$\alpha=\frac{\pi a \sin\varphi}{\lambda}$$
+$$\alpha=\pi\frac{a \sin\varphi}{\lambda}$$
 $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
+
+---
+
+对$A$求$\alpha$的导数，可得极大值和极小值，  
+即明纹和暗纹的位置。
 
 * 极值位置：  
   提醒：$a\sin\varphi$为光程差$\Delta$
@@ -1110,17 +1131,17 @@ $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
   * 极小值 - 对应各级暗纹：  
     $\sin\alpha = 0 (\alpha\ne0)$
     * $\alpha=k\pi (k=\pm1,\pm2,\cdots)$
-    * $a\sin\varphi = k\lambda$
-* 光强：
-
-> 验证 - 菲涅尔半波带法的正确性：
->
-> ![图 8](images/Wave%20Optics--11-09_16-27-45.png)  
-> 可见差别并不大。
+    * $\Delta = a\sin\varphi = k\lambda$
+* 光强：  
+  如下图的验证。
+  > 验证 - 菲涅尔半波带法的正确性：
+  >
+  > ![图 8](images/Wave%20Optics--11-09_16-27-45.png)  
+  > 可见差别并不大。
 
 ### 五、圆孔夫琅禾费衍射
 
-#### 1. 装置
+#### 1. 圆孔夫琅禾费衍射装置
 
 ![圆孔夫琅禾费衍射装置 1](images/Wave%20Optics--11-09_16-29-58.png)  
 圆孔夫琅禾费衍射装置
@@ -1133,50 +1154,63 @@ $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
 
 * 集中了大部分能量
 * 角宽度为其他的两倍
-* 半角宽度：$$
+* 半角宽度：$\Delta\varphi = 1.22\frac{\lambda}{D} (D\textrm{为圆孔直径})$（推导不能，直接给结果）  
+  *对比单缝衍射$\Delta\varphi=\frac{\lambda}{a}$*
+  * $\lambda \uparrow \qquad \Delta\varphi\uparrow$，衍射现象越显著。
+  * $D\downarrow \qquad \Delta\varphi\uparrow$，衍射现象越显著。
 
 #### 3. 光学仪器分辨率
 
 对于平常的摄像仪器：
 
 * 物镜 - 圆孔
-* 成像原理 - 干涉图样
+* 成像原理 - 衍射图样
 
 > 定义 - 瑞利准则：
 >
-> 第一个象的爱里斑边缘，恰能
+> 第一个像的爱里斑的中心，恰与第二个像的爱里斑的边缘重合时，  
+> 或者说两个爱里斑的中心的距离，为爱里斑的半径时，  
+> 是恰能分辨两个像的临界点。  
+> 此时称$\Delta\varphi$为最小分辨角，记为$\theta_R$
 >
 > 例：
 >
 > * ![图 10](images/Wave%20Optics--11-09_16-34-10.png)  
->   此时完全可以分辨出这两个物点。
-> * 此时完全分辨不出这两个物点。
-> * 此时恰好处于临界状态。
+>   $\theta=\theta_R$，此时完全可以分辨出这两个物点。  
+> * ![图 2](images/Wave%20Optics--11-13_15-12-37.png)  
+>   $\theta<\theta_R$，此时完全分辨不出这两个物点。
+> * ![图 3](images/Wave%20Optics--11-13_15-12-59.png)  
+>   $\theta>\theta_R$，此时恰好处于临界状态。
 
-故最小分辨角：$\Delta\varphi = 1.22\frac{\lambda}{D}$  
-将光学仪器分辨率定义为：
-$$\frac{1}{\Delta\varphi}$$
+故最小分辨角：$\Delta\varphi = 1.22\frac{\lambda}{D}$
+
+光学仪器的临界角越小，则分辨力越高，  
+故将光学仪器**分辨率定义为**：
+$$\frac{1}{\Delta\varphi}$$  
+为$\frac{D}{1.22\lambda}$。
 
 提高分辨率途径：
 
-* $D\uparrow$
+* $D\uparrow$，如天文望远镜。
 * $\lambda\downarrow$
 
 几个常见的显微镜分辨率：
 
-* 光学显微镜：$0.2\mu m$
-* 电子显微镜：$1\overset{\circ}{A}$
-* 扫描隧道
+* 光学显微镜：$0.2\mu\textrm{m}$
+* 电子显微镜：$1\overset{\circ}{A}$（$1\overset{\circ}{A}=10^{-10}\textrm{m}$）
+* 扫描隧道显微镜：$0.01\overset{\circ}{A}$
 
 ### 六、光栅夫琅禾费衍射
 
 > 引例 - 用单缝夫琅禾费衍射来测量光波长
 >
-> 单缝衍射中：  
-> $$
+> 单缝衍射中：$\Delta\varphi_{\textrm{中央}}=\frac{2\lambda}{a}$  
+>
+> 为了便于观察条纹，虽然可以通过减小缝宽$a$，来使条纹宽度变大，  
+> 但相应的光强会减弱，反而导致难以观察。
 >
 > 解决方法：  
-> 采用一系列的狭缝
+> 采用一系列的狭缝，每个衍射光纤叠加。
 
 #### 1. 分类
 
@@ -1185,17 +1219,24 @@ $$\frac{1}{\Delta\varphi}$$
 2. 反射光栅（闪耀光栅）  
    ![图 12](images/Wave%20Optics--11-09_16-50-29.png)
 
-**衍射光栅**：  
+*以下将采用透射光栅讲解。*
+
+#### 2. 透射光栅装置
+
+**透射光栅**：  
 通常采用刻痕玻璃的方法，  
 在玻璃片上刻画出一系列平行等距的划痕，  
 刻过的地方不透光，没刻过的地方透光。
 
-* 光栅常数
+![透射光栅装置 1](images/Wave%20Optics--11-13_16-22-04.png)  
+透射光栅装置
 
-#### 1. 装置
+![投射光栅衍射装置 1](images/Wave%20Optics--11-09_16-53-28.png)  
+透射光栅衍射实验示意图
 
-![光栅衍射装置 1](images/Wave%20Optics--11-09_16-53-28.png)  
-光栅衍射装置
+* $a$ - 一条未刻痕区域的长度
+* $b$ - 一条刻痕区域的长度
+* **光栅常数**：$⭐d=a+b=\frac{l}{N}\qquad(10^{-3}\sim10^{-4}\textrm{cm})$
 
 #### 2. 衍射图样特点
 
@@ -1209,127 +1250,191 @@ $$\frac{1}{\Delta\varphi}$$
 
 > 思路：
 >
-> 1. 先不考虑缝宽，认为一条光缝只发出一条线光源。
+> 1. 先不考虑缝宽，认为一条光缝只发出一条线光源。  
 >    故问题变为：讨论$N$个几个线光源的干涉。
 > 2. 再考虑缝宽。
 
 ##### Step.1 不计缝宽
 
-* 相邻光线光程差：$\Delta=d\sin\varphi$
-* 相邻光线相位差：$\Delta\varphi=\frac{d\sin\varphi}{\lambda}2\pi$
+* 光线光振动的振幅一样：$A_1=A_2=\cdots=A_n$
+* 相邻光线光程差：$\Delta=d\sin\varphi$*（与之前不同，这里不是$\frac{a}{N}\sin\varphi$，没有$N$，故不能令$\beta=\frac{N\delta}{2}$）*
+* 相邻光线相位差：$\delta=\Delta\varphi=\frac{d\sin\varphi}{\lambda}2\pi$
 
 故又可以转换为向量合成：  
 ![图 15](images/Wave%20Optics--11-09_16-59-13.png)
 
-令：$\beta=\frac{\delta}{2}$
+令：$\beta=\frac{\delta}{2}$  
 
----
+则：
+$$A=A_1\cdot\frac{\sin N\beta}{\sin\beta}$$
+$$I=I_1\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
 
+对其求极值，可得明暗纹的关系式。
+
+* 最大值 - 中央明纹位置：$\beta=k\pi$
 * 极小值 - 暗纹位置：$\sin N\beta = 0$
 * 极大值 - 明纹位置：$\tan N\beta = N \tan\beta$
 
+对于$(\frac{\sin N\beta}{\sin\beta})^2$，函数大致如下：  
+![图 15](images/Wave%20Optics--11-13_21-37-57.png)
+
 ---
 
+最大值 - 中央明纹位置：$\beta=k\pi$  
+对应向量合成图如下：  
+![图 11](images/Wave%20Optics--11-13_21-20-12.png)
+
+可得如下式子：
+
 * 主明纹位置公式（**光栅公式**）：
-  $$⭐d\sin\varphi = \pm k\lambda (k=0,1,2,\cdots)$$
+  $$⭐d\sin\varphi = \pm k\lambda\qquad(k=0,1,2,\cdots)$$
   * 位置：$\sin\varphi=\pm k\frac{\lambda}{d}$
   * 亮度：$I=N^2I_1$（$N$是光栅刻痕数目）
-  * **最高级次**：  
+  * **最高级次**：$k_m < \frac{d}{\lambda}$  
     $\because |\sin\varphi| < 1$  
     $\therefore k_m < \frac{d}{\lambda}$  
     *所以如果用红光照射可能看到$3$条，而紫光则可能看到$5$条。*
-* 主明纹角宽度：  
-  在$kN-1$和$kN+1$之间
-  $\Delta\varphi=\frac{2\lambda}{Nd\cos\varphi}\approx\frac{2\lambda}{Nd}(\Delta k'=2)$
-  $N\uparrow$，主明纹越细窄、明亮，故光栅的分辨本领很高。
-* 主明纹线宽度
+* 主明纹角宽度：$\Delta\varphi=\frac{2\lambda}{Nd}(\Delta k'=2)$  
+  注意这里可不是$k$级和$k+1$级之间的长度，  
+  而是**在$kN-1$和$kN+1$级暗纹之间的长度**。  
+  可见：$N\uparrow$，主明纹越细窄、明亮，故光栅的分辨本领很高。
 
 ---
 
+极小值 - 暗纹位置：$\sin N\beta = 0$  
+对应向量合成图如下：  
 ![图 16](images/Wave%20Optics--11-09_17-06-36.png)
 
-* 暗纹位置：
-  $$\sin\varphi=\pm \frac{k'}{N}\cdot\frac{\lambda}{d}$$
-  ⚠注意$k'\ne Nk$，否则就是明纹
+可得如下关系：
 
-*相邻两条主明纹间有$N-1$条暗纹。*
+* 暗纹位置公式：
+  $$\sin\varphi=\pm \frac{k'}{N}\cdot\frac{\lambda}{d}\qquad(k'\ne Nk)$$
+  ⚠注意$k'\ne Nk$，否则就是明纹。
 
----
-
-中间位置（次极大）：
-
----
-
-相邻两条主明纹间：  
-有$N-1$条暗纹，  
-这些暗纹又被$N-2$条次极大分割。
+$k$和$k'$的取值举例：  
+![图 10](images/Wave%20Optics--11-13_21-18-54.png)  
+可见相邻两条**主明纹间有$N-1$条暗纹**。
 
 ---
 
-分辨率：
+极大值 - 明纹位置：$\tan N\beta = N \tan\beta$
+对应向量合成图如下：  
+![图 12](images/Wave%20Optics--11-13_21-20-57.png)
 
+由$I=I_1(\frac{\sin N\beta}{\sin\beta})^2$的函数图像可知：  
+$N=7$时，
+![图 13](images/Wave%20Optics--11-13_21-24-35.png)  
+$N=9$时，  
+![图 14](images/Wave%20Optics--11-13_21-26-20.png)  
+
+故**两条主极大之间**，  
+**有$N-1$条暗纹**，  
+**有$N-2$条次极大**。
+
+由于$N$一般很大，  
+所以次极大的光强一般不超过主极大的$\frac{1}{23}$，  
+故两个主极大之间近似看成宽大的暗背景。
+
+---
+
+分辨率：  
+对于不同波长的两束光，其恰能分辨的情况如下：  
+![图 16](images/Wave%20Optics--11-13_22-04-02.png)
+
+需要同时满足：  
+$\left\{\begin{array}{l}d \sin \varphi=k \lambda_{1} \\d \sin \varphi=\frac{k N-1}{N} \cdot \lambda_{2}\end{array}\right.$  
+联立解得：  
+$\frac{\Delta\lambda}{\lambda}=\frac{\lambda_2-\lambda_1}{\lambda_2}=\frac{1}{kN}$
+
+定义分辨率：
 $$R=\frac{\lambda}{\Delta\lambda}=kN$$
 
-至于刻痕数$N$有关，呈正比。
+可见只与刻痕数$N$有关，呈正比。
 
 ---
 
 小结：
 
-![图 17](images/Wave%20Optics--11-09_17-22-08.png)  
+* 两个主极大间：$N-1$个暗纹，$N-2$条次极大。
+* 明纹位置（光栅公式）：$d\sin\varphi=\pm k\lambda\qquad(k=0,1,2,\cdots)$
+* 暗纹位置：$d\sin\varphi=\frac{k'}{N}\lambda\qquad(k'\ne Nk)$
 
-* 明纹位置（光栅公式）
-* 暗纹位置
+> 拓展 - 为什么公式与单缝衍射差不多，最终结果差别巨大
+>
+> 需要明确的是，单缝中有极限的思想。  
+> 我们将划分个数$N\to\infty$，导致$\delta\to0$，才能使得分母的$\sin(\delta/2)\approx(\delta/2)$。  
+>
+> 公式仍有一点不同，我们强行将其化为相同格式，  
+> 具体如下图：  
+> ![图 9](images/Wave%20Optics--11-13_21-07-42.png)
 
 ##### Step.2 考虑缝宽
 
-**每个缝的单缝衍射条纹彼此重合。**
+**每个缝的单缝衍射条纹彼此重合，故影响一致。**
 
 对于缝宽$a$：
 
-* 分为偶数个半波带：
-  缝内：自身干涉相消，  
-  故即使缝间干涉相长，合成的也是$0$，  
-  故主极大不出现，称为“缺级”现象。
+* 若分为偶数个半波带：
+  缝内：自身干涉相消$I_i=0$，  
+  故即使缝间干涉相长，合成的也是$I=N^2I_i=0$，  
+  故主极大不出现，**称为“缺级”现象**。
 * 分为奇数个半波带：
   缝内光线部分干涉相消，  
-  条纹级数越高，相消越多。  
-  故越高越暗，称为“光亮调制”。
+  且条纹级数越高，相消越多。  
+  故越级数高越暗，称为“光亮调制”。
 
 $$I=I_0(\frac{\sin\alpha}{\alpha})^2\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
+
+* $(\frac{\sin\alpha}{\alpha})^2$ - 单缝衍射因子（$\alpha=\frac{\pi a\sin\varphi}{\lambda}$）
+* $(\frac{\sin N\beta}{\sin\beta})^2$ - 多缝干涉因子（$\beta=\frac{\pi d\sin\varphi}{\lambda}$）
 
 ![图 18](images/Wave%20Optics--11-09_17-37-47.png)  
 
 * a - 单缝
-* b - 不考虑缝宽
-* c - 综合考虑后
+* b - 光栅 - 不考虑缝宽
+* c - 光栅 - 考虑缝宽后
 
 ![图 19](images/Wave%20Optics--11-09_17-40-50.png)  
 
+故影响光栅衍射光强的因素：
+
+* 缝宽$a$
+* 光栅常数$d=a+b$
+* 衍射角$\varphi$
+
 ---
 
-缺级现象：  
-满足如下条件
+**缺级现象：**
+
+需要满足如下条件
 
 * 光栅中 - 主明纹：$d\sin\varphi=(a+b)\sin\varphi=\pm k\lambda (k=0,1,2,\cdots)$
 * 单缝中 - 暗明纹：$a\sin\varphi=\pm k'\lambda (k'=1,2,\cdots)$
 
-故缺级：
+联立得，缺级：
 $$k=\pm \frac{d}{a}\cdot k'(k'=1,2,\cdots)$$
 
-中央明纹区的主极大条数：
+**中央明纹区的主极大条数：**
 
-* $2(\frac{d}{a})-1$（向上取整）
-* $2(\frac{d}{a})+1$（向零取整）
+对应$k'=1$，故$k=\frac{d}{a}$  
+若为整数，则$k=2\frac{d}{a}$+$1$条中央明纹-$2$缺级。  
+如果不为整数，则不会有缺级，向上取整后可以把减的$2$补回来。
+
+则极大条数：$2\lceil\frac{d}{a}\rceil-1$（向上取整）
 
 ### 七、晶格衍射（X光衍射）
 
 * 单晶：分立开的
 * 多晶、孪晶：连续的
 
-布拉格公式：
+**布拉格公式：**
 
 * 掠射角$\theta$：X射线到晶面时与晶面夹角。
 * 晶格常数$d$：两层晶体分子的距离。
 
-$$2d\sin\theta=k\lambda (k=1,2,3,\cdots)$$
+![图 17](images/Wave%20Optics--11-13_22-32-34.png)
+
+故可得光程差：$\Delta=2d\sin\theta$
+
+明纹（加强）条件：
+$$2d\sin\theta=k\lambda (k=0,1,2,\cdots)$$
