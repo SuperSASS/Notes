@@ -517,10 +517,15 @@ endmodule
 
 由此构成与非表达式。
 
+> 本节知识点：
+>
+> * 根据电路图写出表达式
+> * 根据表达式画出电路图
+
 ### 一、PLD的结构、表示方法及分类
 
-P - program 可编程
-L - logic 逻辑
+P - program 可编程  
+L - logic 逻辑  
 D - device 器件
 
 #### 1. PLD的基本结构
@@ -541,6 +546,13 @@ D - device 器件
 3. 互补输入缓冲器
 4. 三态输出缓冲器
 
+> 例1：  
+> ![图 1](images/Combinational%20Logic%20Circuit--11-16_09-57-55.png)
+>
+> 例2：  
+> ![图 2](images/Combinational%20Logic%20Circuit--11-16_10-00-35.png)  
+> 注意图中的新颖处 - 反馈
+
 #### 3. 编程连接技术
 
 1. 早期  
@@ -560,5 +572,87 @@ D - device 器件
 2. 按复杂程度划分：
 3. 按与、或阵列是否编程划分：
    1. 与阵列固定，或阵列可编程(PROM)
-   2. 与阵列、或阵列均可变成(PLA)
+   2. 与阵列、或阵列均可编程(PLA)
    3. 与阵列可编程，或称列固定
+
+## 第六节 用Verilog描述组合逻辑电路
+
+一般语法结构：
+
+```verilog
+module 模块名(端口_1, 端口_2, 端口_3, ...);
+
+   输出数据类型定义(wire, reg) //只有行为描述才用reg
+   其他变量定义(integer)
+```
+
+### 1. 组合逻辑电路的行为级建模
+
+1. `if` - 跟C一样。
+2. `case`  
+
+   ```verilog
+   case (case_expr)
+     item_expr1:
+     begin
+       statement1_1;
+       statement1_2;
+     end
+     item_expr2: statement2;
+     ...
+     default: default_statement; //可省略
+   endcase
+
+   casex (...) //包含未知项（优先编码器）
+   endcase
+
+   casez (...) //包含高阻态
+   endcase
+   ```
+
+3. `for`  
+
+   ```verilog
+   integer k;
+   ...
+   for (k = 0; k <= 7; k++)
+   ```
+
+### 2. 分模块、分层次的电路设计
+
+一般采用“自顶向下”的设计方法。
+
+![图 3](images/Combinational%20Logic%20Circuit--11-16_10-36-10.png)
+
+---
+
+*模块的引用，与C++的函数还是有点区别。*
+
+父模块引用子模块时：
+
+1. 实例引用名不能省略。
+2. 实例引用名在父模块中必须且唯一。
+
+即有几个集成模块引用几个。
+
+定义方法：
+
+1. 位置关联法
+
+   ```verilog
+   module halfadder(A, B, S, C);
+   ...
+   endmodule
+
+   module main(...);
+     halfadder HA1(S,C,A,B)
+   endmodule;
+   ```
+
+2. 名称关联法：
+   `.A`是子模块中的参数
+   `(B)`是主模块中的参数
+
+   ```verilog
+     halfadder HA2(.A(S1),.B(Ci),.S(Sum),.C(D2))
+   ```
