@@ -71,9 +71,9 @@ $f_Z(z)=\int_{-\infty}^{+\infty}f_X(z-y)f_Y(y)\textrm{d}x$
 > $f_Z(z)=\int_{-\infty}^{+\infty}f(x,z-x)\textrm{d}x$  
 > 需要满足：$\left\{\begin{array}{l} 0<x<1\\0<(y=)z-x<x \end{array}\right.\rightarrow\left\{\begin{array}{l} 0<x<1\\\frac{z}{2}<x<z \end{array}\right.$
 >
-> 同样：$\frac{z}{2}=0,\quad \frac{z}{2}=1,\quad z=0,\quad z-1$，  
+> 同样：$\frac{z}{2}=0,\quad \frac{z}{2}=1,\quad z=0,\quad z=1$，  
 > 最后得四个分段范围：  
-> $f_{Z}(z)\overset{y=z-x}{=} \left\{\begin{array}{cc}0 & z<0 \text { 或 } z>2 \\\int_{\frac{z}{2}}^{z} 24(1-x)(z-x) d x & 0 \leq z \leq 1 \\\int_{\frac{z}{2}}^{1} 24(1-x)(z-x) d x & 1 \leq z<2\end{array}\right.$  
+> $f_{Z}(z)\overset{y=z-x}{=} \left\{\begin{array}{cc}0 & z<0 \textrm { 或 } z>2 \\\int_{\frac{z}{2}}^{z} 24(1-x)(z-x) d x & 0 \leq z \leq 1 \\\int_{\frac{z}{2}}^{1} 24(1-x)(z-x) d x & 1 \leq z<2\end{array}\right.$  
 > 求积即可。
 
 ## 二、两随机变量极值的分布
