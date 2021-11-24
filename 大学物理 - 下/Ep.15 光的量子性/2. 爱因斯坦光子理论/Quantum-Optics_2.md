@@ -16,7 +16,7 @@
 因此爱因斯坦假设光是一种粒子流，  
 频率为$\nu$的光波的每一个粒子，对应能量$E=h\nu$
 
-## 一、光电效应
+## ⭐一、光电效应
 
 *之前的光都认为只具有波动性。*
 
@@ -237,11 +237,18 @@ $$\Delta\lambda=\frac{2h}{m_0c}\sin^2\frac{\varphi}{2}(=\frac{h}{m_0c}(1-\cos\va
 >
 > ![图 33](images/Quantum-Optics_2--11-16_18-09-51.png)  
 
+* $\nu$越高,$\lambda$越短，$E$越大的光子，粒子性越显著
+* $\nu$越低,$\lambda$越长，$E$越小的光子，波动性越显著
+
+---
+
 对于光子：
 
 $E=h\nu=\frac{hc}{\lambda}$  
 $P=mc=\frac{h}{\lambda}$  
-前者为粒子性，后者为波动性。
+$E,p,m$为粒子性，$\nu,\lambda$为波动性。
+
+---
 
 $\left.\begin{array}{l}I \propto A^{2} \\I \propto N\end{array}\right\} N \propto A^{2}$  
 振幅越大，光子数密度越大，光子到达该处的概率越大。  
