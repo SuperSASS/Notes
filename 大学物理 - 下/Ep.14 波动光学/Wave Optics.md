@@ -17,7 +17,8 @@
 >
 > 引起视觉和化学效应的是电磁场的电场强度矢量$E(t)$，  
 > 故将该矢量成为**光矢量**(light vector)。  
-> ![图 1](images/Wave%20Optics--11-06_16-19-05.png)
+
+![图 1](images/Wave%20Optics--11-06_16-19-05.png)
 
 注意：光的电矢量只与传播方向垂直，  
 所以光矢量可以在与传播方向**垂直平面的任意方向**。  
@@ -46,7 +47,7 @@
 >
 > ![图 4](images/Wave%20Optics--11-06_16-40-50.png)  
 
-* 图示：
+* 图示：  
   ![图 5](images/Wave%20Optics--11-06_16-27-21.png)
 
 #### 2. 线偏振光
@@ -56,8 +57,8 @@
 
 光振动**只有一个确定方向**（只有一个振动面）。
 
-> * 振动面：光矢量的振动方向与光的传播方向构成的平面。
-> ![图 6](images/Wave%20Optics--11-06_16-34-07.png)
+> * 振动面：光矢量的振动方向与光的传播方向构成的平面。  
+>   ![图 6](images/Wave%20Optics--11-06_16-34-07.png)
 
 * 图示：  
   ![图 7](images/Wave%20Optics--11-06_16-35-33.png)
@@ -120,14 +121,20 @@
 > 反应光线通过偏振片后的强度变化规律。
 >
 > * 自然光：
->   $$I_0 \rightarrow I=\frac{1}{2}I_0$$
+>   $$
+>   I_0 \rightarrow I=\frac{1}{2}I_0
+>   $$
 > * 线偏振光：
->   $$I_0 \rightarrow I=I_0\cos^2\alpha$$
+>   $$
+>   I_0 \rightarrow I=I_0\cos^2\alpha
+>   $$
 >   其中$\alpha$为线偏振光振动方向与偏振化方向的夹角。  
 >   ![夹角图示 1](images/Wave%20Optics--11-06_17-35-46.png)  
 >   夹角图示
 > * 部分偏振光：
->   $$I_0 = I_1+I_2 \rightarrow I=\frac{1}{2}I_1 + I_2\cos^2\alpha$$
+>   $$
+>   I_0 = I_1+I_2 \rightarrow I=\frac{1}{2}I_1 + I_2\cos^2\alpha
+>   $$
 
 ### 四、反射折射起偏 布儒斯特定律
 
@@ -146,14 +153,18 @@
 
 > 上述的$i_0$称为布儒斯特角（起偏角），  
 > 满足条件：
-> $$\tan i_0 = \frac{n_o}{n_i}$$
+> $$
+> \tan i_0 = \frac{n_o}{n_i}
+> $$
 >
 > * $n_o$代表出射（折射）处介质的折射率，  
 > * $n_i$代表入射处介质的折射率。
 >
 > 又$\because \frac{\sin i_0}{\sin \gamma}=\frac{n_o}{n_i}$（折射定律）  
 > 得：
-> $$i_0+\gamma = \frac{\pi}{2}$$
+> $$
+> i_0+\gamma = \frac{\pi}{2}
+> $$
 
 #### 3. 光强关系
 
@@ -230,7 +241,9 @@ e光不在入射面示意（垂直入射）
 * 光波：交变电磁场在空间传播。
 * 光矢量$\vec{E}$：引起**视觉和感光**作用。
 * 光振动$\vec{E}(t)$：方向、大小随$t$周期性变化。  
-  $$E=E_0\cos(\omega t+\varphi)$$
+  $$
+  E=E_0\cos(\omega t+\varphi)
+  $$
 * 光强：$I \propto E_0^2$（注意这里的$E$是光振动的振幅）
 * 相对光强：$I = E_0^2$
 
@@ -240,9 +253,13 @@ e光不在入射面示意（垂直入射）
 >
 > * 相干条件相同（见上）
 > * 光强分布：
->   $$I=I_1+I_2+\underline{2\sqrt{I_1I_2}\cos \Delta\varphi}$$
+>   $$
+>   I=I_1+I_2+\underline{2\sqrt{I_1I_2}\cos \Delta\varphi}
+>   $$
 >   （划线部分为干涉项）
->   $$\Delta\varphi=\varphi_2-\varphi_1-2\pi\frac{r_2-r_1}{\lambda}$$
+>   $$
+>   \Delta\varphi=\varphi_2-\varphi_1-2\pi\frac{r_2-r_1}{\lambda}
+>   $$
 >
 > 不同处：
 >
@@ -268,7 +285,9 @@ e光不在入射面示意（垂直入射）
 >
 > 正因为原子发光的时间极短，  
 > 所以在人的观测反应时间内，干涉现象为平均结果，即：
-> $$I=I_1+I_2+2\sqrt{I_1I_2}\frac{1}{\tau}\int_0^\tau\cos\Delta\varphi \rm d t=I_1+I_2$$
+> $$
+> I=I_1+I_2+2\sqrt{I_1I_2}\frac{1}{\tau}\int_0^\tau\cos\Delta\varphi \rm d t=I_1+I_2
+> $$
 > 为均匀分布，非相干叠加，故观测不到干涉现象。
 
 则：两普通光源或同一光源的不同部分是不相干的。
@@ -315,7 +334,9 @@ e光不在入射面示意（垂直入射）
 
 > * 光程(optical path):  
 >   将光在介质中的**几何路程与介质折射率的乘积**定义为等效真空程，称为“光程”。
->   $$d'=nd$$
+>   $$
+>   d'=nd
+>   $$
 
 光在折射率为$n$的介质中前进$d$距离引起的相位改变，  
 与在真空中前进$nd$距离引起的相位改变相同。
@@ -333,21 +354,31 @@ e光不在入射面示意（垂直入射）
 > 推导过程：
 >
 > 相干光源两束光在$P$点相遇时，其光振动**取决于两个光振动的相位差**：
-> $$\Delta\varphi=\varphi_2-\varphi_1-\frac{2\pi(r_2-r_1)}{\lambda}$$
+> $$
+> \Delta\varphi=\varphi_2-\varphi_1-\frac{2\pi(r_2-r_1)}{\lambda}
+> $$
 > 为了简化讨论，一般都控制初相差为$0$，即：
-> $$\Delta\varphi=\frac{2\pi(r_1-r_2)}{\lambda}$$
+> $$
+> \Delta\varphi=\frac{2\pi(r_1-r_2)}{\lambda}
+> $$
 >
 > 在不同介质中，波长会变化，如下图：  
 > ![图 4](images/Wave%20Optics--11-07_12-12-38.png)  
 > 则相位差应表示为：
-> $$\Delta\varphi=2\pi\frac{r_1}{\lambda}-2\pi(\frac{r_2-d}{\lambda}+\frac{d}{\lambda'})$$
+> $$
+> \Delta\varphi=2\pi\frac{r_1}{\lambda}-2\pi(\frac{r_2-d}{\lambda}+\frac{d}{\lambda'})
+> $$
 >
 > 又$\because \lambda'=\frac{u}{v}=\frac{\frac{c}{n}}{v}=\frac{\lambda}{n}$，可以转化为：
-> $$\Delta\varphi=2\pi\frac{r_1}{\lambda}-2\pi(\frac{r_2-d}{\lambda}+\frac{nd}{\lambda})$$
+> $$
+> \Delta\varphi=2\pi\frac{r_1}{\lambda}-2\pi(\frac{r_2-d}{\lambda}+\frac{nd}{\lambda})
+> $$
 > 其中$nd$刚好对应上述的“光程”。
 
 将两束光的光程之差定义为光程差，用$\Delta$表示。  
-$$⭐\qquad\Delta\varphi=2\pi\frac{\Delta}{\lambda}$$
+$$
+⭐\qquad\Delta\varphi=2\pi\frac{\Delta}{\lambda}
+$$
 > 上推导过程中，$\Delta=r_1-(r_2-d+nd)=r_1-[r_2+(n-1)d]$
 
 计算光程差的常见情况：
@@ -375,7 +406,8 @@ $$
 $$
 
 又因为一般调节$\varphi_1=\varphi_2$，故：
-> $$⭐\qquad
+> $$
+> ⭐\qquad
 > \Delta=\left\{
 > \begin{array}{l}
 > \pm k\lambda & \textsf{（明）}\\
@@ -416,7 +448,8 @@ $S$的作用是提供点光源，发出柱面波。
 
 如上图，记观察屏点$P$距离屏中心$O$的距离为$x$，  
 则：
-> $$⭐\qquad
+> $$
+> ⭐\qquad
 > x=\left\{
 > \begin{array}{l}
 > \pm k\frac{D}{d}\lambda & \textsf{（明）}\\
@@ -440,7 +473,9 @@ $S$的作用是提供点光源，发出柱面波。
   * 亮处：$I_{max}=4I_0$
   * 暗处：$I_{min}=0$
 * 条纹宽度：
-  $$⭐ \Delta x = \frac{D}{d}\lambda$$
+  $$
+  ⭐ \Delta x = \frac{D}{d}\lambda
+  $$
   *注意这里有近似，所以实际上是不等宽度的。*
   * $\lambda$一定：$\Delta x \propto D$，$\Delta x \propto \frac{1}{d}$，  
     观察屏$D$越远、双缝间隙$d$越小 → 条纹$\Delta x$越宽。
@@ -536,14 +571,18 @@ $M$为一个水平放置的反射镜，
 当$\Delta=\frac{\lambda}{2}$时，干涉条纹完全模糊（各处光强一样），  
 由这个临界点计算得到单缝缝宽的临界值：  
 ![图 16](images/Wave%20Optics--11-07_17-34-16.png)
-$$⭐ b < \frac{B}{d}\lambda$$
+$$
+⭐ b < \frac{B}{d}\lambda
+$$
 
 也可以转换为波阵面$d$的关系式：
-$$d < \frac{B}{b}\lambda$$
+$$
+d < \frac{B}{b}\lambda
+$$
 
 因此给出定义：
 
-> * **空间相干性(spatial coherence):**
+> * **空间相干性(spatial coherence):**  
 >   光缝宽度$b$（或者宽度为$b$的普通光源），  
 >   他的波阵面距离$d$，需要小于$\frac{B}{b}\lambda$，才能产生干涉现象。  
 >   这一性质称为“空间相干性”。
@@ -619,7 +658,7 @@ $$d < \frac{B}{b}\lambda$$
   >   * 对于光线$3$，没有半波损失。
   >
   >   因此总的来说会有一个半波损失。  
-  > * $n_2<n_1时$：
+  > * $n_2<n_1$时：
   >   * 对于光线$2$，没有半波损失。
   >   * 对于光线$3$，有$1$个半波损失。
   >
@@ -628,10 +667,14 @@ $$d < \frac{B}{b}\lambda$$
   > 故真正的光程差：$\Delta_\textrm{反}=n_2(AB+BC)-n_1AD+\frac{\lambda}{2}$
   >
   由几何关系、折射定律，可以将式子转化为：
-  $$\Delta_\textrm{反}=2e\sqrt{n_2^2-n_1^2\sin^2i}+\frac{\lambda}{2}$$
+  $$
+  \Delta_\textrm{反}=2e\sqrt{n_2^2-n_1^2\sin^2i}+\frac{\lambda}{2}
+  $$
 * 对于透射反射光，同理分析（注意这里面会出现某一束光有两次半波损失的情况，则抵消），  
   得光程差：
-  $$\Delta_\textrm{透}=2e\sqrt{n_2^2-n_1^2\sin^2i}$$
+  $$
+  \Delta_\textrm{透}=2e\sqrt{n_2^2-n_1^2\sin^2i}
+  $$
 
 无论反射还是透射光，都能[明暗条纹条件](#3-明暗条纹条件)，分析出明暗纹。
 
@@ -639,7 +682,7 @@ $$d < \frac{B}{b}\lambda$$
 因该**根据具体情况来分析**。
 
 **⚠需要注意**：  
-光程差表达式恒为正（含根式），套用明暗条纹条件时**不用加$\plusmn$**，  
+光程差表达式恒为正（含根式），套用明暗条纹条件时**不用加$\pm$**，  
 但因为半波损失的存在，在**明纹处$k$不能取$0$**，否则会使根式等于负值。
 
 总结为“**薄膜干涉明暗纹条件**”：
@@ -658,7 +701,9 @@ $$
 则$\Delta$与$e,i$有关。
 
 对于$\Delta$：
-$$\Delta = 2e\sqrt{n_2^2-n_1^2\sin^2i}(+\frac{\lambda}{2})$$
+$$
+\Delta = 2e\sqrt{n_2^2-n_1^2\sin^2i}(+\frac{\lambda}{2})
+$$
 
 1. 平行光入射 - $i$一定  
    $\Delta$随着膜厚度$e$变化。
@@ -693,7 +738,9 @@ $$\Delta = 2e\sqrt{n_2^2-n_1^2\sin^2i}(+\frac{\lambda}{2})$$
 且$\theta$非常小，可以认为光束①、②重合，不需要透镜和观察屏。
 
 则光程差近似为：
-$$\Delta=2ne+\frac{\lambda}{2}$$
+$$
+\Delta=2ne+\frac{\lambda}{2}
+$$
 
 ###### Ⅰ. 劈尖条纹特点
 
@@ -805,10 +852,12 @@ $r=\sqrt{\frac{kR\lambda}{n}}$
 $r_m^2-r_k^2=\frac{mR\lambda-kR\lambda}{n}$  
 $\lambda=\frac{(r_m^2-r_k^2)n}{(m-k)R}$
 
+利用不同明纹（第$k=1,m=2$级）之间半径的差值计算。
+
 ##### ⑤ 利用薄膜干涉制成增透膜或增反膜
 
 * 增透膜：减少反射光，反射光的干涉相消。  
-  光程差满足奇数倍半波长：$\Delta=2e\sqrt{n_2^2-\sin^2i}(+\frac{\lambda}{2}=(2k+1)\frac{\lambda}{2}$  
+  光程差满足奇数倍半波长：$\Delta=2e\sqrt{n_2^2-\sin^2i}(+\frac{\lambda}{2})=(2k+1)\frac{\lambda}{2}$  
   *因为对感光底片最敏感的是黄绿光，所以反射蓝紫光，平时看到镜片都是蓝紫色*
 * 增反膜：减少透光率，增加反射光，反射光的干涉相长。
 
@@ -841,7 +890,9 @@ $\lambda=\frac{(r_m^2-r_k^2)n}{(m-k)R}$
 
 当视线中有一条条纹移动（湮灭或出现），即$k=1$时，$M_1$移动$\frac{\lambda}{2n}$。
 
-$$\Delta d = \Delta N \cdot \frac{\lambda}{2n}$$
+$$
+\Delta d = \Delta N \cdot \frac{\lambda}{2n}
+$$
 
 * $\Delta d$ - 移动$M_1$的距离
 * $\Delta N$ - 湮灭或出现了多少个条纹
@@ -995,7 +1046,8 @@ $\Psi=C\int_S \frac{\rm dS}{2r}(1+\cos\theta)\cos(\omega t +\phi_0-2\pi\frac{r}{
 故综上：
 
 ⭐**明暗纹条件：**
-> $$⭐
+> $$
+> ⭐
 > \Delta=a\sin\varphi=\left\{
 > \begin{array}{l}
 > 0 & （\textrm{中央明纹中心）}\\
@@ -1106,16 +1158,31 @@ $\Psi=C\int_S \frac{\rm dS}{2r}(1+\cos\theta)\cos(\omega t +\phi_0-2\pi\frac{r}{
 > * $\alpha=\frac{N\delta}{2}\xrightarrow{\delta= \frac{2\pi}{\lambda} \cdot \frac{a}{N}\sin\varphi}=\frac{\pi a \sin\varphi}{\lambda}$  
 >
 > 则可将$A$表示为：  
-> $$A=A_0\frac{\sin\alpha}{\alpha}$$
-> $$I=I_0(\frac{\sin\alpha}{\alpha})^2$$
+> $$
+> A=A_0\frac{\sin\alpha}{\alpha}
+> $$
+>
+> $$
+> I=I_0(\frac{\sin\alpha}{\alpha})^2
+> $$
 
 结论：
-$$⭐A=A_0\frac{\sin\alpha}{\alpha}$$
-$$I=I_0(\frac{\sin\alpha}{\alpha})^2$$
+$$
+⭐A=A_0\frac{\sin\alpha}{\alpha}
+$$
+
+$$
+I=I_0(\frac{\sin\alpha}{\alpha})^2
+$$
 
 其中：
-$$A_0=NA_1$$
-$$\alpha=\pi\frac{a \sin\varphi}{\lambda}$$
+$$
+A_0=NA_1
+$$
+
+$$
+\alpha=\pi\frac{a \sin\varphi}{\lambda}
+$$
 $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
 
 ---
@@ -1154,7 +1221,7 @@ $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
 
 * 集中了大部分能量
 * 角宽度为其他的两倍
-* 半角宽度：$\Delta\varphi = 1.22\frac{\lambda}{D} (D\textrm{为圆孔直径})$（推导不能，直接给结果）  
+* 中央明纹的半角宽度：$\Delta\varphi = 1.22\frac{\lambda}{D} (D\textrm{为圆孔直径})$（推导不能，直接给结果）  
   *对比单缝衍射$\Delta\varphi=\frac{\lambda}{a}$*
   * $\lambda \uparrow \qquad \Delta\varphi\uparrow$，衍射现象越显著。
   * $D\downarrow \qquad \Delta\varphi\uparrow$，衍射现象越显著。
@@ -1186,7 +1253,9 @@ $A_0$代表中央明纹振幅，$I_0$代表中央明纹光强。
 
 光学仪器的临界角越小，则分辨力越高，  
 故将光学仪器**分辨率定义为**：
-$$\frac{1}{\Delta\varphi}$$  
+$$
+\frac{1}{\Delta\varphi}
+$$  
 为$\frac{D}{1.22\lambda}$。
 
 提高分辨率途径：
@@ -1266,8 +1335,13 @@ $$\frac{1}{\Delta\varphi}$$
 令：$\beta=\frac{\delta}{2}$  
 
 则：
-$$A=A_1\cdot\frac{\sin N\beta}{\sin\beta}$$
-$$I=I_1\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
+$$
+A=A_1\cdot\frac{\sin N\beta}{\sin\beta}
+$$
+
+$$
+I=I_1\cdot(\frac{\sin N\beta}{\sin\beta})^2
+$$
 
 对其求极值，可得明暗纹的关系式。
 
@@ -1287,7 +1361,9 @@ $$I=I_1\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
 可得如下式子：
 
 * 主明纹位置公式（**光栅公式**）：
-  $$⭐d\sin\varphi = \pm k\lambda\qquad(k=0,1,2,\cdots)$$
+  $$
+  ⭐d\sin\varphi = \pm k\lambda\qquad(k=0,1,2,\cdots)
+  $$
   * 位置：$\sin\varphi=\pm k\frac{\lambda}{d}$
   * 亮度：$I=N^2I_1$（$N$是光栅刻痕数目）
   * **最高级次**：$k_m < \frac{d}{\lambda}$  
@@ -1308,7 +1384,9 @@ $$I=I_1\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
 可得如下关系：
 
 * 暗纹位置公式：
-  $$\sin\varphi=\pm \frac{k'}{N}\cdot\frac{\lambda}{d}\qquad(k'\ne Nk)$$
+  $$
+  \sin\varphi=\pm \frac{k'}{N}\cdot\frac{\lambda}{d}\qquad(k'\ne Nk)
+  $$
   ⚠注意$k'\ne Nk$，否则就是明纹。
 
 $k$和$k'$的取值举例：  
@@ -1322,7 +1400,7 @@ $k$和$k'$的取值举例：
 ![图 12](images/Wave%20Optics--11-13_21-20-57.png)
 
 由$I=I_1(\frac{\sin N\beta}{\sin\beta})^2$的函数图像可知：  
-$N=7$时，
+$N=7$时，  
 ![图 13](images/Wave%20Optics--11-13_21-24-35.png)  
 $N=9$时，  
 ![图 14](images/Wave%20Optics--11-13_21-26-20.png)  
@@ -1342,12 +1420,14 @@ $N=9$时，
 ![图 16](images/Wave%20Optics--11-13_22-04-02.png)
 
 需要同时满足：  
-$\left\{\begin{array}{l}d \sin \varphi=k \lambda_{1} \\d \sin \varphi=\frac{k N-1}{N} \cdot \lambda_{2}\end{array}\right.$  
+$\left\{\begin{array}{l}d \sin \varphi=k \lambda_{1} \\d \sin \varphi=\frac{k N-1}{Nd} \cdot \lambda_{2}\end{array}\right.$  
 联立解得：  
 $\frac{\Delta\lambda}{\lambda}=\frac{\lambda_2-\lambda_1}{\lambda_2}=\frac{1}{kN}$
 
 定义分辨率：
-$$R=\frac{\lambda}{\Delta\lambda}=kN$$
+$$
+R=\frac{\lambda}{\Delta\lambda}=kN
+$$
 
 可见只与刻痕数$N$有关，呈正比。
 
@@ -1383,7 +1463,9 @@ $$R=\frac{\lambda}{\Delta\lambda}=kN$$
   且条纹级数越高，相消越多。  
   故越级数高越暗，称为“光亮调制”。
 
-$$I=I_0(\frac{\sin\alpha}{\alpha})^2\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
+$$
+I=I_0(\frac{\sin\alpha}{\alpha})^2\cdot(\frac{\sin N\beta}{\sin\beta})^2
+$$
 
 * $(\frac{\sin\alpha}{\alpha})^2$ - 单缝衍射因子（$\alpha=\frac{\pi a\sin\varphi}{\lambda}$）
 * $(\frac{\sin N\beta}{\sin\beta})^2$ - 多缝干涉因子（$\beta=\frac{\pi d\sin\varphi}{\lambda}$）
@@ -1412,15 +1494,17 @@ $$I=I_0(\frac{\sin\alpha}{\alpha})^2\cdot(\frac{\sin N\beta}{\sin\beta})^2$$
 * 单缝中 - 暗明纹：$a\sin\varphi=\pm k'\lambda (k'=1,2,\cdots)$
 
 联立得，缺级：
-$$k=\pm \frac{d}{a}\cdot k'(k'=1,2,\cdots)$$
+$$
+k=\pm \frac{d}{a}\cdot k'(k'=1,2,\cdots)
+$$
 
 **中央明纹区的主极大条数：**
 
 对应$k'=1$，故$k=\frac{d}{a}$  
-若为整数，则$k=2\frac{d}{a}$+$1$条中央明纹-$2$缺级。  
+若为整数，则中央明纹区$2\frac{d}{a}$条次极大$+1$条中央明纹$-2$条缺级$=2\frac{d}{a}-1$。  
 如果不为整数，则不会有缺级，向上取整后可以把减的$2$补回来。
 
-则极大条数：$2\lceil\frac{d}{a}\rceil-1$（向上取整）
+则中央明纹区主极大条数：$2\lceil\frac{d}{a}\rceil-1$（向上取整）
 
 ### 七、晶格衍射（X光衍射）
 
@@ -1437,4 +1521,6 @@ $$k=\pm \frac{d}{a}\cdot k'(k'=1,2,\cdots)$$
 故可得光程差：$\Delta=2d\sin\theta$
 
 明纹（加强）条件：
-$$2d\sin\theta=k\lambda (k=0,1,2,\cdots)$$
+$$
+2d\sin\theta=k\lambda (k=0,1,2,\cdots)
+$$
