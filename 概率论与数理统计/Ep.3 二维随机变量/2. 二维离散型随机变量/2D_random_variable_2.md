@@ -93,7 +93,7 @@ $$P(X=x_i|Y=y_w)=\frac{P(X=x_i,Y=y_w)}{P(Y=y_w)}=\frac{P_{iw}}{P_{\centerdot w}}
 ### 3. 通过边缘和联合分布律求得
 
 利用“乘法公式”：  
-$$P(X=i,Y=j)=P(X=i|Y=j)P(Y=j)*P(Y=i|X=j)P(X=j)$$
+$$P(X=i,Y=j)=P(X=i|Y=j)P(Y=j)=P(Y=i|X=j)P(X=j)$$
 
 则步骤：
 
