@@ -76,6 +76,8 @@ $f_Z(z)=\int_{-\infty}^{+\infty}f_X(z-y)f_Y(y)\textrm{d}x$
 > $f_{Z}(z)\overset{y=z-x}{=} \left\{\begin{array}{cc}0 & z<0 \textrm { 或 } z>2 \\\int_{\frac{z}{2}}^{z} 24(1-x)(z-x) d x & 0 \leq z \leq 1 \\\int_{\frac{z}{2}}^{1} 24(1-x)(z-x) d x & 1 \leq z<2\end{array}\right.$  
 > 求积即可。
 
+[123](#二两随机变量极值的分布)
+
 ## 二、两随机变量极值的分布
 
 设$X,Y$是**两个相互独立**的随机变量，其概率密度为$f_X(x),f_Y(y)$，  
