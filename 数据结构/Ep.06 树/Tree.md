@@ -120,8 +120,8 @@ struct typeBiThrNode
     则后继是该节点右子树中最左下的节点。  
     即沿着右子树的左指针链向下，直到找到左标示为`1`的节点
 * 查找节点`p`的前驱节点：
-  * 左标示为`0`，直接。
-  * 左标示为`1`，找左子树中最右下的节点。
+  * 左标示为`1`，直接。
+  * 左标示为`0`，找左子树中最右下的节点。
 
 ```c++
 typeBiTNode prev(typeBiTNode bt)
@@ -131,12 +131,12 @@ typeBiTNode prev(typeBiTNode bt)
   return bt;
 }
 
-typeBiTNode last(typeBiTNode bt)
-{
-  while (bt && bt.rTag == link)
-    bt = bt.r;
-  return bt;
-}
+// typeBiTNode last(typeBiTNode bt)
+// {
+//   while (bt && bt.rTag == link)
+//     bt = bt.r;
+//   return bt;
+// }
 ```
 
 ## 树和森林

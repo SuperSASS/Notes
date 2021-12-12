@@ -19,7 +19,7 @@
 
 故最终的波函数：
 $$
-\psi(x t)=\sqrt{\frac{2}{a}} \sin \frac{n i x}{a} e^{-\frac{i}{bar{h}} E t}
+\psi(x t)=\sqrt{\frac{2}{a}} \sin \frac{n i x}{a} e^{-\frac{i}{\bar{h}} E t}
 $$
 
 ### 3. 物理意义
