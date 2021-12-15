@@ -93,7 +93,7 @@ $$
 
 $Z=f(x,y)$是关于二维离散型随机变量$X,Y$的函数，  
 则$E(Z)$为：
-$$E(Z)=\sum_i\sum_jf(x_i,y_j)p_{ij}$$
+$$E(Z)=\sum_i\sum_jz\cdot f(x_i,y_j)p_{ij}$$
 即为$z$的所有取值乘上它的概率之和。
 
 ### 2. 连续性函数
@@ -156,3 +156,26 @@ $$E(XY)^2\le E(X^2)\cdot E(Y^2)$$
 > 证明：
 >
 > 利用高数性质：$|\int_a^bf(x)g(y)\textrm{d}x\textrm{d}y|^2\le \int_a^bf(x^2)\textrm{d}x\cdot\int_a^bg(y^2)\textrm{d}y$
+
+## 五、常见分布的数学期望
+
+* 均匀分布：$X\sim U(a,b)$
+  $$
+  E(X)=\frac{a+b}{2}
+  $$
+* 二项分布：$X\sim B(n,p)$
+  $$
+  E(X)=np
+  $$
+* 泊松分布：$X\sim\Pi(\lambda)$
+  $$
+  E(X)=\lambda
+  $$
+* 指数分布：$X\sim Z(\alpha)$
+  $$
+  E(X)=\frac{1}{\alpha}
+  $$
+* 正态分布：$E\sim N(\mu,\sigma)$
+  $$
+  E(X)=\mu
+  $$

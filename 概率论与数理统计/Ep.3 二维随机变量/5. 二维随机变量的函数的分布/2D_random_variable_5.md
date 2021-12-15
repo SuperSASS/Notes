@@ -33,7 +33,8 @@ $f_Z(z)=\int_{-\infty}^{+\infty}f_X(z-y)f_Y(y)\textrm{d}x$
 > 两变量独立，用以下步骤。
 >
 > 1. 算出两变量边缘概率密度  
->    $f_{X}(x)=\left\{\begin{array}{cc}1 & 0<x<1 \\0 & \textrm { 其它 }\end{array} \quad f_{Y}(y)=\left\{\begin{array}{cc}1 & 0<y<1 \\0 & \textrm { 其它 }\end{array}\right.\right.$
+>    $f_{X}(x)=\left\{\begin{array}{cc}1 & 0<x<1 \\0 & \textrm { 其它 }\end{array}\right.$  
+>    $f_{Y}(y)=\left\{\begin{array}{cc}1 & 0<y<1 \\0 & \textrm { 其它 }\end{array}\right.$
 > 2. 求$\int f(x,z-x)\textrm{d}x$的分段积分区域$x$  
 >    $\left\{\begin{array}{c}0<x<1 &\rightarrow& 0<x<1 \\0<(y=)z-x<1 &\rightarrow& z-1<x<z\end{array}\right.$，求其交集。  
 >
@@ -75,8 +76,6 @@ $f_Z(z)=\int_{-\infty}^{+\infty}f_X(z-y)f_Y(y)\textrm{d}x$
 > 最后得四个分段范围：  
 > $f_{Z}(z)\overset{y=z-x}{=} \left\{\begin{array}{cc}0 & z<0 \textrm { 或 } z>2 \\\int_{\frac{z}{2}}^{z} 24(1-x)(z-x) d x & 0 \leq z \leq 1 \\\int_{\frac{z}{2}}^{1} 24(1-x)(z-x) d x & 1 \leq z<2\end{array}\right.$  
 > 求积即可。
-
-[123](#二两随机变量极值的分布)
 
 ## 二、两随机变量极值的分布
 
@@ -129,13 +128,16 @@ $F_M(z)=F_1(z)F_2(z)\cdots F_n(z)$
      > $$a_1X_1+a_2X_2+\cdots+a_nX_n=\sum a_iX_i\sim N(\sum a_iX_i, \sum a_i^2\sigma_i^2)$$
   2. 泊松分布 - 泊松分布的和一定是**线性泊松分布**  
      > $X_i\sim \pi(\lambda_i)$，则：  
-     > $$X_1+X_2 \sim \pi(\lambda_1+\lambda_2)$$
-  3. 二项分布 - 等概率的二项分布和一定是**线性二项分布**
+     > $$X_1+X_2 \sim \Pi(\lambda_1+\lambda_2)$$
+  3. 二项分布 - **等概率**的二项分布和一定是**线性二项分布**
      > $X_i\sim B(n_i,p)$，则：
      > $$X_1+X_2\sim B(n_1+n_2,p)$$
   4. 0-1分布 - 等概率的0-1分布和一定是**线性二项分布**  
      > $X_i\sim B(1,p)$。则：
      > $$X_1+\cdots+X_n = \sum X_i \sim B(n,p)$$
+
+   两个函数的分布，他们的和也属于该分布，称为“**可加性**”，  
+   具有可加性的分布有：等概率的二项）、泊松、正态、卡方、负二项。
 * 连续型要求：
   1. $X+Y$的和。
   2. **相互独立**$X,Y$的极值。

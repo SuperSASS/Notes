@@ -4,7 +4,8 @@
 >
 > 若不满足独立：
 >
-> $\begin{aligned}D(X+Y) &=E\left[(X+Y)^{2}\right]-E^{2}(X+Y) \\&=E\left(X^{2}+2 X Y+Y^{2}\right)-[E(X)+E(Y)]^2\\&=E(X^2)+2E(XY)+E(Y^2)-E^2(X)-2E(X)E(Y)-E^2(Y) \\&=\left[E\left(X^{2}\right)-E^{2}(X)\right]+\left[E\left(Y^{2}\right)-E^{2}(Y)\right]+2[E(X Y)-E(X) E(Y)] \\&=P(X)+P(Y)+2 \operatorname{Cov}(X, Y)\end{aligned}$
+> $\begin{aligned}D(X+Y) &=E\left[(X+Y)^{2}\right]-E^{2}(X+Y) \\&=E\left(X^{2}+2 X Y+Y^{2}\right)-[E(X)+E(Y)]^2\\&=E(X^2)+2E(XY)+E(Y^2)-E^2(X)-2E(X)E(Y)-E^2(Y) \\&=\left[E\left(X^{2}\right)-E^{2}(X)\right]+\left[E\left(Y^{2}\right)-E^{2}(Y)\right]+2[E(X Y)-E(X) E(Y)] \\&=D(X)+D(Y)+2 \operatorname{Cov}(X, Y)\end{aligned}$  
+> 注意**为$2$倍**！
 
 ## 一、协方差的概念
 

@@ -88,5 +88,5 @@ $$D(X+Y)=D(X)+D(Y)$$
 | 二项分布 | $n\ge1\\0<p<1$ | $np$            | $np(1-p)$            |
 | 泊松分布 | $\lambda>0$    | $\lambda$       | $\lambda$            |
 | 均匀分布 | $a<b$          | $\frac{a+b}{2}$ | $\frac{(b-a)^2}{12}$ |
-| 指数分布 | $\theta>0$     | $\theta$        | $\theta^2$           |
-| 正态分布 | $\mu,\rho>0$   | $\mu$           | $\rho^2$             |
+| 指数分布 | $\lambda>0$     | $\frac{1}{\lambda}$        | $(\frac{1}{\lambda})^2$           |
+| 正态分布 | $\mu,\sigma>0$   | $\mu$           | $\sigma^2$             |

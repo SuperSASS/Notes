@@ -101,7 +101,7 @@
 3. 得到理想气体压强公式：  
    $\begin{aligned}P&=\frac{\sum I_i}{\textrm{d}s\textrm{d}t}\\&=\sum_i mv_{ix}^2n_i\\&=\frac{n m\sum_i v_{ix}^2n_i}{n}\\&=nm\bar{v^2}\end{aligned}$
    $$
-   P=\frac{1}{3}nm\bar{v^2}=\frac{2}{3}n\bar{\epsilon_t}
+   ⭐P=\frac{1}{3}nm\bar{v^2}=\frac{2}{3}n\bar{\epsilon_t}
    $$
 
    $\bar{\epsilon_t}=\frac{1}{2}m\bar{v^2}$，为分子的平均平动动能。
@@ -125,7 +125,7 @@ $$
 ## 五、理想气体的温度公式
 
 $$
-\bar{\epsilon_t}=\frac{3}{2}kT
+⭐\bar{\epsilon_t}=\frac{3}{2}kT
 $$
 
 理想气体温度$T$是分子平均平动动能的量度，是分子热运动剧烈程度的标志。
