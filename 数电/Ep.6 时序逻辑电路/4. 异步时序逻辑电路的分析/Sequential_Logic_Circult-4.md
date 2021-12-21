@@ -29,4 +29,3 @@
 > 写转换表的例子：
 >
 > ![转换表例](images/Sequential_Logic_Circult-4--12-14_10-07-39.png)  
-
