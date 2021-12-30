@@ -30,19 +30,20 @@
 故作数量级估算时，采用简化公式：
 
 $$
-\Delta x \cdot \Delta p \geqslant \bar{h}\left\{\begin{array}{l}
-\Delta x \cdot \Delta P_{x} \geqslant \bar{h} \\
-\Delta y \cdot \Delta P_{y} \geqslant \bar{h} \\
-\Delta z \cdot \Delta P_{z} \geqslant \bar{h}
+\Delta \cdot \Delta p \geqslant \hbar\left\{\begin{array}{l}
+\Delta x \cdot \Delta P_{x} \geqslant \hbar \\
+\Delta y \cdot \Delta P_{y} \geqslant \hbar \\
+\Delta z \cdot \Delta P_{z} \geqslant \hbar
 \end{array}\right.
 $$
+其中$\hbar=\frac{h}{2\pi}$
 
 ## 二、能量与时间的不确定关系
 
 粒子**能量与其寿命**的不确定度相互制约。  
 *寿命指在能级中稳定存在的时间。*
 
-$$\Delta E\cdot \Delta t \ge \frac{\bar{h}}{2}$$
+$$\Delta E\cdot \Delta t \ge \frac{\hbar}{2}$$
 
 > 基态$E_1$ - 稳定：  
 > $\Delta t\to\infty,\Delta E\to0$，  
@@ -59,7 +60,8 @@ $$\Delta E\cdot \Delta t \ge \frac{\bar{h}}{2}$$
    * 当粒子的动量分量完全确定时，位置完全不确定。
 
    *波尔的轨道理论完全失去意义，采用“电子云”来代替。*
-2. 存在零点能，绝对零度永远不能达到。
+2. 存在零点能，绝对零度永远不能达到。  
+   $E=(n+\frac{1}{2})h\nu$
 3. 不确定关系是量子力学过渡到经典力学的一种渠道。
 4. 不确定关系不是因为实验仪器或者理论的缺陷导致的。
 
