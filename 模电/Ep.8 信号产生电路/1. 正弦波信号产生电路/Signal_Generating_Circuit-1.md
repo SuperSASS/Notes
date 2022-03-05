@@ -105,7 +105,10 @@
 $$
 \dot{F}=\frac{1}{3+\textrm{j}(\frac{f}{f_0}-\frac{f_0}{f})}
 $$
-其中$f=\frac{1}{2\pi RC}$。
+其中频率：
+$$
+f_0=\frac{1}{2\pi RC}
+$$
 
 **当$f=f_0$时，$|\dot{F}|_{max}=\frac{1}{3}$，且$\varphi=0$**
 

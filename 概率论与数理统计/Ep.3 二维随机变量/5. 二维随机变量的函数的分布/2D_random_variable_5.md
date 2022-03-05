@@ -12,7 +12,7 @@
 > $$f_Z(z)=\int_{-\infty}^{+\infty}f(x,z-x)\textrm{d}x$$
 *注意此时$z-x$相当于$f(x,y)$中的$y$。*
 
-或者为$f_Z(z)=\int_{-\infty}^{+\infty}f(z-y,y)\textrm{d}x$  
+或者为$f_Z(z)=\int_{-\infty}^{+\infty}f(z-y,y)\textrm{d}y$  
 称为“卷积函数”。
 
 *不推导、直接用。*
@@ -22,6 +22,9 @@
 若$X,Y$相互独立，则可化为：  
 $f_Z(z)=\int_{-\infty}^{+\infty}f_X(x)f_Y(z-x)\textrm{d}x$  
 $f_Z(z)=\int_{-\infty}^{+\infty}f_X(z-y)f_Y(y)\textrm{d}x$
+
+难点：求积分区间。  
+根据$z$分段，每段对应不同的$x$求积。
 
 > 例题 1 - 两变量独立：
 >
@@ -107,7 +110,7 @@ $$F_N(z)=1-(1-F_X(z))(1-F_Y(z))$$
 
 可以推广到$n$个：  
 $X_1\sim X_n$相互独立，$X_i$的分布函数为$F_I(x_i)$，  
-则$M=\max\{X_1,X_2,\cdots,X_n\}的分布函数为$：  
+则$M=\max\{X_1,X_2,\cdots,X_n\}$的分布函数为：  
 $F_M(z)=F_1(z)F_2(z)\cdots F_n(z)$  
 最小值同理。
 
@@ -126,6 +129,9 @@ $F_M(z)=F_1(z)F_2(z)\cdots F_n(z)$
   1. 正态分布 - 正态分布的和一定是**线性正态分布**  
      > $X_1\sim X_n$独立且服从$N(\mu_i,\sigma_i^2)$，则：
      > $$a_1X_1+a_2X_2+\cdots+a_nX_n=\sum a_iX_i\sim N(\sum a_iX_i, \sum a_i^2\sigma_i^2)$$
+
+     ⭐特别之处：两正态相减仍正态，$\mu$相减，**$\sigma^2$相加。**（只有正态可以相减）  
+     $X\pm Y\sim N(\mu_x\pm\mu_y,\sigma_x^2+\sigma_y^2)$
   2. 泊松分布 - 泊松分布的和一定是**线性泊松分布**  
      > $X_i\sim \pi(\lambda_i)$，则：  
      > $$X_1+X_2 \sim \Pi(\lambda_1+\lambda_2)$$
@@ -137,7 +143,7 @@ $F_M(z)=F_1(z)F_2(z)\cdots F_n(z)$
      > $$X_1+\cdots+X_n = \sum X_i \sim B(n,p)$$
 
    两个函数的分布，他们的和也属于该分布，称为“**可加性**”，  
-   具有可加性的分布有：等概率的二项）、泊松、正态、卡方、负二项。
+   具有可加性的分布有：等概率的二项、泊松、正态、卡方、负二项。
 * 连续型要求：
   1. $X+Y$的和。
   2. **相互独立**$X,Y$的极值。

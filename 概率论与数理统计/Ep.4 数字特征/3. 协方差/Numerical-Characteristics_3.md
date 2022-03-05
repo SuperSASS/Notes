@@ -62,7 +62,7 @@ $$\textrm{Cov}(aX+b,cY+d)=ac\cdot\textrm{Cov}(X,Y)$$
 
 ### 2.加法性质
 
-$$\textrm{Cov}(X_1\pm X_2,Y)=\textrm{Cov}(X_1,Y)+\textrm{Cov}(X_2,Y）$$
+$$\textrm{Cov}(X_1\pm X_2,Y)=\textrm{Cov}(X_1,Y)\pm\textrm{Cov}(X_2,Y)$$
 
 拓展：$\textrm{Cov}(A+B,C+D)=\textrm{Cov}(A,C)+\textrm{Cov}(A,D)+\textrm{Cov}(B,C)+\textrm{Cov}(B,D)$
 
@@ -71,6 +71,8 @@ $$\textrm{Cov}(X_1\pm X_2,Y)=\textrm{Cov}(X_1,Y)+\textrm{Cov}(X_2,Y）$$
 $$|\textrm{Cov}(X,Y)|\le \sqrt{D(X)}\sqrt{D(Y)}$$
 
 ## ⭐四、相关系数
+
+### 1. 相关系数定义
 
 因为协方差算出来带有单位，不好准确刻画关系，  
 所以考虑将单位消除，则可以准确刻画。
