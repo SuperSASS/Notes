@@ -85,7 +85,9 @@ $$
 即温度公式中：$\overline{\epsilon_t}\xlongequal{i=t=3}\frac{3}{2}kT$，  
 则每一个自由度的平均动能：$\frac{1}{2}kT$。
 
-![能均分定理三种动能](images/Kinetic_Theory_of_Gases-4--12-19_19-51-23.png)  
+![能均分定理三种动能](images/Kinetic_Theory_of_Gases-4--12-19_19-51-23.png)
+
+⚠注意：**对低温系统不成立**。
 
 ## 三、理想气体的内能
 

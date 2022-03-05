@@ -106,6 +106,6 @@ $$
 变式：
 
 * $pV=\frac{m_g}{M}RT=\frac{N}{N_A}RT$
-* $p=\frac{N}{V}\frac{R}{N_A}T=n'\cdot kT$
-  * $n'$ - 分子数密度。（注：原来没有$'$，为了与物质浓度区分加了个$'$）
+* $p=\frac{N}{V}\frac{R}{N_A}T=n\cdot kT$
+  * $n$ - 分子数密度。（⚠注意与物质浓度区分）
   * $K$ - 玻尔兹曼常数。（单位：$\textrm{J}\cdot \textrm{K}^{-1}$）

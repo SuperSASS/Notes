@@ -21,3 +21,41 @@
   * 量子光学
   * 非线性光学（强光光学）
   * 傅里叶光学（信息光学）
+
+## 总结
+
+* 斯特潘-玻尔兹曼定律：
+  $$
+  E_0=\sigma T^4
+  $$
+  反映（单位面积）总辐射本领随温度升高而升高。
+* 维恩位移定律：
+  $$
+  \lambda_m\cdot T=b
+  $$
+  反映最大辐出波长随温度升高而减小。
+* 爱因斯坦光子理论
+   $$
+   E=h\nu=\frac{hc}{\lambda}
+   $$
+
+   $$
+   p=mc=\frac{h}{\lambda}
+   $$
+   光强是光的能流密度：$I=Nh\nu$
+* 光电效应方程：
+  $$
+  h\nu=A+\frac{1}{2}mv_m^2
+  $$
+  * $A=h\nu_0$，只与材料有关。
+  * $\frac{1}{2}mv_m^2=eU_0$，与截止电压有关。
+* ⭐康普顿散射：  
+  用光子碰撞静止的电子。
+  $$
+  \Delta\lambda=2\lambda_c\sin^2\frac{\varphi}{2}
+  $$
+  其中$\lambda_c=\frac{h}{m_0c}\approx0.024\overset{\circ}{A}$
+
+  * 反冲光子波长：$\lambda=\lambda_0+\Delta\lambda$
+  * 电子动能：$E_{ke}=-\Delta E_p$，为光子损失动能
+  * 电子动量：画碰前碰后的示意图，根据水平和竖直方向动量守恒（$p_e\cos\theta=\frac{h}{\lambda}$之类）解得。

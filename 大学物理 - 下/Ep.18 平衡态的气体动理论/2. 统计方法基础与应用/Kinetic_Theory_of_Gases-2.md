@@ -120,7 +120,7 @@ $$
 ⭐P=\frac{1}{3}nm\bar{v^2}=\frac{2}{3}n\bar{\epsilon_t}
 $$
 其中：  
-$n=\frac{N}{V}$  
+$n=\frac{N}{V}$，为**分子数密度**，单位：$\textrm{个}/m^3$  
 $\bar{\epsilon_t}=\frac{1}{2}m\bar{v^2}$，为分子的**平均平动动能**。
 
 > 补充 - 道尔顿分压定律：
