@@ -62,14 +62,20 @@
 
 ![图 2](images/3-Description_of_motion--03-05_20-34-55.png)
 
-* 切向加速度：$\vec{a}_\tau=\frac{\text{d}v}{\text{d}t}\vec{\tau}$  
+* 切向加速度
+  $$
+  \vec{a}_\tau=\frac{\text{d}v}{\text{d}t}\vec{\tau}
+  $$
   为**速率**对时间的一阶导，乘上**切向的单位向量**。  
   > 来源：
   >
   > $\vec{v_{\tau}}'=v'$，切向上速度变化就是速率变化。
 
   描述速度大小改变的快慢，不影响速度的方向。
-* 法向加速度：$\vec{a}_n=\frac{v^2}{\rho}\vec{n}$，  
+* 法向加速度
+  $$
+  \vec{a}_n=\frac{v^2}{\rho}\vec{n}
+  $$
   为**速率的平**方除以**曲率半径**，乘上法向的单位向量。  
   其中$\rho$为曲率半径，为曲率（圆心角对路程的一阶导）的倒数，$\frac{1}{\rho}=\frac{\textrm{d}\theta}{\textrm{d}s}$。  
   > 来源：
@@ -86,7 +92,8 @@
 
 速度加速度的值不等于速率加速度，即$|\vec{v}'|\ne v'$
 
-特性：在曲线运动中,加速度的方向一般指向曲线凹的一侧。
+特性：在曲线运动中,加速度的方向一般指向曲线凹的一侧。  
+![曲线运动加速度示意图](images/3-Description_of_motion--03-20_16-02-37.png)
 
 ### 三、圆周运动的角量描述
 
@@ -100,13 +107,13 @@
 * 角速度
   * 平均角速度$\bar\omega=\frac{\Delta\theta}{\Delta t}$
   * （瞬时）角速度$|\omega|=\frac{\textrm{d}\theta}{\textrm{d}t}$  
-    方向：采用右手法则——垂直运动平面，四指沿旋转方向，大拇指指向即为角速度矢量$\vec{\omega}的方向$。
+    方向：采用右手法则——垂直运动平面，四指沿旋转方向，大拇指指向即为角速度矢量$\vec{\omega}$的方向。
 * 角加速度  
   单位：$\textrm{rad/s}^2$
   * 平均角加速度$\bar\beta=\frac{\Delta\omega}{\Delta t}$
   * （瞬时）角加速度$|\beta|=\frac{\textrm{d}\omega}{\textrm{d}t}=\frac{\textrm{d}^2\theta}{\textrm{d}t^2}$
 
-#### 2. 角量和线量的关系
+#### ⭐2. 角量和线量的关系
 
 $$
 \textrm{线量}=R\cdot\textrm{角量}
@@ -164,3 +171,13 @@ $$
    * 绝对速度：在静止不动的参考系中观察到的速度。
    * 相对速度：在相对运动的参考系中观察到的速度。
    * 牵连速度：运动的参考系相对于静止的参考系运动的速度。
+3. 加速度变换：
+   $$
+   \vec{a_{PO}}=\vec{a_{PO'}}+\vec{a_{O'O}}
+   $$
+
+   当S与S'相对匀速直线运动时，$\vec{a_{O'O}}=0$
+
+### 二、伽利略变换
+
+![伽利略变换](images/3-Description_of_motion--03-20_16-12-13.png)
