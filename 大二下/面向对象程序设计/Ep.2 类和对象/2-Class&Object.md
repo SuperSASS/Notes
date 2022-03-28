@@ -44,6 +44,96 @@ int main()
 {
     classStudent stu();
     stu.checkStuGrade();
-    stu.updateStuGrade(); //非法
+    //stu.updateStuGrade(); //非法 - 为private
 }
 ```
+
+## 二、类成员访问控制权限
+
+类的成员抽象为“数据成员”和“函数成员”两种，  
+分别描述问题的“属性”和“行为”。
+
+类的数据成员与一般的变量相同，  
+但区别在于可以控制访问权限。
+
+权限如上所说，有三种：
+
+1. `private` - 私有成员
+2. `public` - 公有成员
+3. `protected` - 受保护成员  
+   与`private`差别在于继承的时候对衍生类影响不同。
+
+## 三、类的成员函数定义
+
+### 1. 内联模式与非内联模式
+
+存在两种模式：
+
+1. 内联模式：在类内声明和定义成员函数  
+   此时函数自动声明为`inline`。
+2. 非内联模式：类内声明成员函数、内外定义成员函数。  
+   此时函数需要手动声明内联。
+
+一般小型函数都采用第一种，大型函数采用第二种方法。
+
+```cpp
+//Student.h
+#ifndef STUDENT_H
+#define STUDENT_H
+class Student
+{
+public:
+  string stu_name;
+  string stu_code;
+private:
+  double stu_score[3];
+
+protected:
+  int count_NoPass();
+  double total_Score();
+public:
+  void set_stuInfo();
+  bool is_better() { return score[1]>90 && score[2]>90 }; //内联模式，自动为inline
+};
+#endif
+```
+
+```c++
+//Student.cpp
+void Student::set_stuInfo()
+{
+  cin>>...;
+}
+
+inline bool Student::total_Score() // 需要手动加inline
+{
+  return score[1]+score[2];
+}
+```
+
+### 2. 带默认值与重载
+
+1. 默认值  
+   在参数中直接附上值。  
+   “警告”注意：带默认值的参数需要满足**从右至左连续性**！
+
+   ```c++
+   class A
+   {
+     int func(int a, int b, int c=1)
+     {
+       ...;
+     }
+   };
+   ```
+
+2. 重载  
+   函数名相同，参数类型/个数/顺序不同。
+
+## 四、对象
+
+类定义后，只是一个概念，并不能直接使用。  
+需要实例化为对象后才可访问。  
+即像定义变量`int a`，用类定义个对象`Student stu`。
+
+*【其他没什么难的，都会用.jpg*……
