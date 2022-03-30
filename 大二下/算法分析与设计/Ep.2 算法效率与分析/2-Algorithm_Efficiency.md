@@ -133,3 +133,65 @@ $$
 
 假设一个基本函数形式，再确定参数。
 
+---
+
+对另一些递归式可以用该式求解。
+
+$$
+T(x)=\sum_{i=1}^{k} a_{i} T\left(b_{i} x+h_{i}(x)\right)+f(x) (\text { for } x \geq x_{0})
+$$
+
+满足：
+
+* 所有的$i$，$a_i>0$，$0<b_i<1$（为真分数）。
+* $|f(x)|\in O(x^c)$（$c$为常数）。  
+  即$f(x)$要为$x^c$的形式。
+* 所有的$i$，$|h_i(x)|\in O(\frac{x}{(\log x)^2})$。
+* $x_0$为一个常数。  
+  一般表述为：$T(n)$，$n$是一个很大的数。
+
+则：
+$$
+T(n)=O(x^P(1+\int_1^x\frac{g(u)}{u^{P+1}}\textrm{d}u))
+$$
+
+其中$p$满足：
+$$
+\sum_{i=1}^ka_ib_i^P=1
+$$
+
+光看可能不懂，看下例：
+> 例1：
+> $$
+> T(n)=\frac{7}{4} T\left(\frac{1}{2} n\right)+T\left(\frac{3}{4} n\right)+n^{2}, \text { for } n \geq 3
+> $$
+>
+> 解：  
+>
+> 先解$P$：$\frac{7}{4}*(\frac{1}{2})^P+(\frac{3}{4})^P=1\Rightarrow P=2$  
+> 然后直接套：
+> $$
+> \begin{aligned}
+> T(n) & =O(x^2(1+\int_1^x\frac{n^2}{n^3}\textrm{d}u))\\
+> & =O(x^2+x^2\ln x) \\
+> & =O(x^2\log x)
+> \end{aligned}
+> $$
+>
+> ---
+>
+> 例2：
+> $$
+> T(n)=\frac{1}{4} T\left(\frac{3}{4} n\right)+\frac{3}{4} T\left(\frac{1}{4} n\right)+1
+> $$
+>
+> 解：
+> 先解$P$：$\frac{1}{4}*(\frac{3}{4})^P+\frac{3}{4}*(\frac{1}{4})^P=1\Rightarrow P=0$  
+> 然后直接套：
+> $$
+> \begin{aligned}
+> T(n) & =O(x^0(1+\int_1^x\frac{1}{n^1}\textrm{d}u))\\
+> & =O(1+\ln x) \\
+> & =O(\log x)
+> \end{aligned}
+> $$
