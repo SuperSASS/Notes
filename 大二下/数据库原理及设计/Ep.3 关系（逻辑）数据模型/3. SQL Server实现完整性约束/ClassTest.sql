@@ -52,7 +52,7 @@ CREATE TABLE Course
 
 /* Test 5 */
 CREATE TABLE Ctake
-()
+(
     SID char(10) Foreign Key references Stu(SID)
     CID char(10) Foreign Key references Class(CID),
     Grede tinyint CONSTRAINT Gread_constraint CHECK(Gread between 0 and 100)
