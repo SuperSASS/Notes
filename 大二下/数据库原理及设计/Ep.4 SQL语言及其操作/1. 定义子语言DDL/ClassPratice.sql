@@ -30,3 +30,10 @@ CREATE VIEW M_Track2018_SV AS
         Telephone
     FROM S
     WHERE Major = '轨道' AND EntryYear = 2018
+
+/* P56 创建索引 */
+CREATE CLUSTERED INDEX W_id_index
+    ON writers(w_Id DESC)
+
+CREATE INDEX Multildx
+    ON writers(w_name, w_address)
