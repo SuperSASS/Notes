@@ -215,3 +215,26 @@ virtual 函数类型 函数名 (参数表) = 0;
 * 不能创建抽象类的对象
 * 只能定义抽象类的指针，链接到派生对象。
 
+
+---
+
+## 运算符重载
+
+需要注意，对于`+`这样的二元运算符，  
+如果要支持`int + CType`，  
+则需要把运算符重载为**友元函数**。
+
+```c++
+class Complex
+{
+  friend Complex operator+ (double r, const Complex &c);
+}
+
+Complex::opeartor+(double r, const Complex &c)
+{
+  return ...
+}
+// 之后才可以调用 5.0+ComplexVar;
+```
+
+特殊运算符重载：
