@@ -107,7 +107,8 @@
 * 角速度
   * 平均角速度$\bar\omega=\frac{\Delta\theta}{\Delta t}$
   * （瞬时）角速度$|\omega|=\frac{\textrm{d}\theta}{\textrm{d}t}$  
-    方向：采用右手法则——垂直运动平面，四指沿旋转方向，大拇指指向即为角速度矢量$\vec{\omega}$的方向。
+    方向：采用右手法则——垂直运动平面，四指沿旋转方向，大拇指指向即为角速度矢量$\vec{\omega}$的方向。  
+    ⚠即：角速度的方向是沿着转轴，而非沿着平面。
 * 角加速度  
   单位：$\textrm{rad/s}^2$
   * 平均角加速度$\bar\beta=\frac{\Delta\omega}{\Delta t}$

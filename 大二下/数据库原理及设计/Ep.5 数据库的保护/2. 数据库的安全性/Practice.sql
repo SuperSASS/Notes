@@ -35,3 +35,26 @@ AS
 GRANT SELECT
     ON V_Wedges
     TO 杨兰
+
+
+/* (1) */
+GRANT SELECT
+    ON TABLE 职工, 部门
+    TO 王明
+/* (2) */
+GRANT INSERT, DELETE
+    ON TABLE 职工, 部门
+    TO 李勇
+/* (3) */
+GRANT SELECT, UPDATE(工资)
+    ON TABLE 职工
+    TO 刘星
+/* (4) */
+GRANT UPDATE
+    ON TABLE 职工, 部门
+    TO 张新
+/* (5) */
+GRANT ALL PRIVILIGES
+    ON TABLE 职工, 部门
+    TO 周平
+    WITH GRANT OPTION
