@@ -22,10 +22,10 @@ DELETE SC
 
 DELETE SC
     FROM sc,course,teacher
-    WHERE sc.cno=course.cno AND course.tno=teacher.tno AND Tname='吕燕'​
+    WHERE sc.cno=course.cno AND course.tno=teacher.tno AND Tname='吕燕'
 
 /* P107 - GROUP BY */
-SELECT S.Sid, Sname, avg(Score), count(Cid) FROM S NATURAL JOIN SC GROUP BY Students.Sid, Sname​
+SELECT S.Sid, Sname, avg(Score), count(Cid) FROM S NATURAL JOIN SC GROUP BY Students.Sid, Sname
 
 /* P112 - Practice */
 SELECT student.sno, sname, count(cno), sum(score)

@@ -1,14 +1,14 @@
 # Ep.1 OS Introduction
 
-## 什么是操作系统
+## ⭐什么是操作系统
 
 ### Convenience
 
 **操作系统关键词**：
 
-* 软件
-* 接口
-* 资源管理器
+* Program - 软件
+* Interface - 接口
+* Resource managemer - 资源管理器
 
 ### Efficiency
 
