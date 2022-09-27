@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[ruled,linesnumbered,boxed]{algorithm2e}
+\usepackage{ctex}
+\usepackage{amsmath}
+\begin{document}
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \caption{数值微分法(DDA)}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    $\Delta x \leftarrow x_1 - x_0$, $\Delta y \leftarrow y_1 - x_0$\;
+    $steps \leftarrow \max(|\Delta x|, |\Delta y|)$\;
+    d$x \leftarrow \frac{\Delta x}{steps}$, d$y \leftarrow \frac{\Delta y}{steps}$\;
+    $P \leftarrow P_0$\;
+    \For{$i \leftarrow 1$ \KwTo $steps+1$} 
+    {
+        \putpixel($\round(P), color$)\;
+        $P \leftarrow P + ($d$x, $d$y)$\;
+    }
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \caption{中点画线法}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    \If{$x_0 > x_1$}{\swap($P_0, P_1$)\;}
+    $a\leftarrow y_0-y_1, b\leftarrow x_1-x_0, c\leftarrow x_0y_1-x_1y_0$\;
+    $P_i\leftarrow P_0$\;
+
+    \uIf{$k\in[0,1]$}
+    {
+        $d\leftarrow 2a+b$\;
+        $\Delta P_L \leftarrow (1,1), \Delta d_L \leftarrow 2(a+b)$\;
+        $\Delta P_G \leftarrow (1,0), \Delta d_G \leftarrow 2a$\;
+    }
+    \uElseIf{$k\in(1,+\infty)$}
+    {
+        $d\leftarrow a+2b$\;
+        $\Delta P_L \leftarrow (0,1), \Delta d_L \leftarrow 2b$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(a+b)$\;
+    }
+    \uElseIf{$k\in[-1,0)$}
+    {
+        $d\leftarrow 2a-b$\;
+        $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow 2a$\;
+        $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow 2(a-b)$\;
+    }
+    \Else 
+    {
+        $d\leftarrow a-2b$\;
+        $\Delta P_L \leftarrow (1,-1), \Delta d_L \leftarrow 2(a-b)$\;
+        $\Delta P_G \leftarrow (0,-1), \Delta d_G \leftarrow -2b$\;
+    }
+    \While{$P \ne P_1$}
+    {
+        \putpixel($P_i$, color)\;
+        \eIf{d < 0}{$P\leftarrow P + \Delta P_L, d\leftarrow d+\Delta d_L$\;}{$P\leftarrow P + \Delta P_G, d\leftarrow d+\Delta d_G$\;}
+    }
+    \putpixel($P_1$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \caption{Bresenham 画线法}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    \If{$x_0 > x_1$}{\swap($P_0, P_1$)\;}
+    $\Delta x = x_1-x_0, \Delta y = y_1-y_0$\;
+    $P_i\leftarrow P_0$\;
+
+    \uIf{$k\in[0,1]$}
+    {
+        $d\leftarrow 2\Delta y-\Delta x$\;
+        $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow 2\Delta y$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(\Delta y - \Delta x)$\;
+    }
+    \uElseIf{$k\in(1,+\infty)$}
+    {
+        $d\leftarrow 2\Delta x-\Delta y$\;
+        $\Delta P_L \leftarrow (0,1), \Delta d_L \leftarrow 2\Delta x$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(\Delta x - \Delta y)$\;
+    }
+    \uElseIf{$k\in[-1,0)$}
+    {
+        $d\leftarrow -2\Delta y-\Delta x$\;
+        $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow -2\Delta y$\;
+        $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow -2(\Delta y + \Delta x)$\;
+    }
+    \Else 
+    {
+        $d\leftarrow 2\Delta x+\Delta y$\;
+        $\Delta P_L \leftarrow (0,-1), \Delta d_L \leftarrow 2\Delta x$\;
+        $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow 2(\Delta x + \Delta y)$\;
+    }
+    \While{$P \ne P_1$}
+    {
+        \putpixel($P_i$, color)\;
+        \eIf{d < 0}{$P\leftarrow P + \Delta P_L, d\leftarrow d+\Delta d_L$\;}{$P\leftarrow P + \Delta P_G, d\leftarrow d+\Delta d_G$\;}
+    }
+    \putpixel($P_1$, color)\;
+\end{algorithm}
+
+\end{document}
