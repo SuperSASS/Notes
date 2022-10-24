@@ -1,0 +1,244 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[ruled,linesnumbered,boxed]{algorithm2e}
+\usepackage{ctex}
+\usepackage{amsmath}
+\begin{document}
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \caption{数值微分法(DDA)}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    $\Delta x \leftarrow x_1 - x_0$, $\Delta y \leftarrow y_1 - x_0$\;
+    $steps \leftarrow \max(|\Delta x|, |\Delta y|)$\;
+    d$x \leftarrow \frac{\Delta x}{steps}$, d$y \leftarrow \frac{\Delta y}{steps}$\;
+    $P \leftarrow P_0$\;
+    \For{$i \leftarrow 1$ \KwTo $steps+1$}
+    {
+        \putpixel($\round(P), color$)\;
+        $P \leftarrow P + ($d$x, $d$y)$\;
+    }
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \caption{中点画线法}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    \If{$x_0 > x_1$}{\swap($P_0, P_1$)\;}
+    $a\leftarrow y_0-y_1, b\leftarrow x_1-x_0, c\leftarrow x_0y_1-x_1y_0$\;
+    $P_i\leftarrow P_0$\;
+
+    \uIf{$k\in[0,1]$}
+    {
+        $d\leftarrow 2a+b$\;
+        $\Delta P_L \leftarrow (1,1), \Delta d_L \leftarrow 2(a+b)$\;
+        $\Delta P_G \leftarrow (1,0), \Delta d_G \leftarrow 2a$\;
+    }
+    \uElseIf{$k\in(1,+\infty)$}
+    {
+        $d\leftarrow a+2b$\;
+        $\Delta P_L \leftarrow (0,1), \Delta d_L \leftarrow 2b$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(a+b)$\;
+    }
+    \uElseIf{$k\in[-1,0)$}
+    {
+    $d\leftarrow 2a-b$\;
+    $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow 2a$\;
+    $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow 2(a-b)$\;
+    }
+    \Else
+    {
+        $d\leftarrow a-2b$\;
+        $\Delta P_L \leftarrow (1,-1), \Delta d_L \leftarrow 2(a-b)$\;
+        $\Delta P_G \leftarrow (0,-1), \Delta d_G \leftarrow -2b$\;
+    }
+    \While{$P \ne P_1$}
+    {
+        \putpixel($P$, color)\;
+        \eIf{d < 0}{$P\leftarrow P + \Delta P_L, d\leftarrow d+\Delta d_L$\;}{$P\leftarrow P + \Delta P_G, d\leftarrow d+\Delta d_G$\;}
+    }
+    \putpixel($P_1$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \caption{Bresenham 画线法}
+    \KwIn{直线$L$两端点坐标$P_0(x_0,y_0),P_1(x_1,y_1)$, 画线颜色$color$}
+
+    \BlankLine
+
+    \If{$x_0 > x_1$}{\swap($P_0, P_1$)\;}
+    $\Delta x = x_1-x_0, \Delta y = y_1-y_0$\;
+    $P_i\leftarrow P_0$\;
+
+    \uIf{$k\in[0,1]$}
+    {
+        $d\leftarrow 2\Delta y-\Delta x$\;
+        $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow 2\Delta y$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(\Delta y - \Delta x)$\;
+    }
+    \uElseIf{$k\in(1,+\infty)$}
+    {
+        $d\leftarrow 2\Delta x-\Delta y$\;
+        $\Delta P_L \leftarrow (0,1), \Delta d_L \leftarrow 2\Delta x$\;
+        $\Delta P_G \leftarrow (1,1), \Delta d_G \leftarrow 2(\Delta x - \Delta y)$\;
+    }
+    \uElseIf{$k\in[-1,0)$}
+    {
+    $d\leftarrow -2\Delta y-\Delta x$\;
+    $\Delta P_L \leftarrow (1,0), \Delta d_L \leftarrow -2\Delta y$\;
+    $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow -2(\Delta y + \Delta x)$\;
+    }
+    \Else
+    {
+        $d\leftarrow 2\Delta x+\Delta y$\;
+        $\Delta P_L \leftarrow (0,-1), \Delta d_L \leftarrow 2\Delta x$\;
+        $\Delta P_G \leftarrow (1,-1), \Delta d_G \leftarrow 2(\Delta x + \Delta y)$\;
+    }
+    \While{$P \ne P_1$}
+    {
+        \putpixel($P$, color)\;
+        \eIf{d < 0}{$P\leftarrow P + \Delta P_L, d\leftarrow d+\Delta d_L$\;}{$P\leftarrow P + \Delta P_G, d\leftarrow d+\Delta d_G$\;}
+    }
+    \putpixel($P_1$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \SetKwFunction{DrawCirclePoints}{DrawCirclePoints}
+    \caption{中点画圆法}
+    \KwIn{圆$C$圆心$C(x,y)$,半径$R$, 画线颜色$color$}
+
+    \BlankLine
+
+    $P_1\leftarrow (0,R)$\;
+    $d_1\leftarrow 1-R$\;
+    $i\leftarrow 1$\;
+
+    \While{$P_i \ne (\frac{R}{\sqrt{2}},\frac{R}{\sqrt{2}})$}
+    {
+        \DrawCirclePoints($P_i$, color)\;
+        \eIf{d < 0}{$P_{i+1}\leftarrow (x_i+1,y_i), d_{i+1}\leftarrow d_{i}+2x_i+3$\;}{$P_{i+1}\leftarrow (x_i+1,y_i-1), d_{i+1}\leftarrow d_i+2(x_i-y_i)+5$\;}
+        $i\leftarrow i+1$\;
+    }
+    \DrawCirclePoints($P_i$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \SetKwFunction{DrawCirclePoints}{DrawCirclePoints}
+    \caption{Bresenham画圆法}
+    \KwIn{圆$C$圆心$C(x,y)$,半径$R$, 画线颜色$color$}
+
+    \BlankLine
+
+    $P_1\leftarrow (0,R)$\;
+    $d_1\leftarrow 2(1-R)$\;
+    $i\leftarrow 1$\;
+
+    \While{$P_i \ne (\frac{R}{\sqrt{2}},\frac{R}{\sqrt{2}})$}
+    {
+        \DrawCirclePoints($P_i$, color)\;
+        \eIf{$d < 0 \And 2(d+y)-1<=0$}{$P_{i+1}\leftarrow (x_i+1,y_i), d_{i+1}\leftarrow d_{i}+2x_i+3$\;}{$P_{i+1}\leftarrow (x_i+1,y_i-1), d_{i+1}\leftarrow d_i+2(x_i-y_i + 3)$\;}
+        $i\leftarrow i+1$\;
+    }
+    \DrawCirclePoints($P_i$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \SetKwFunction{DrawLine}{DrawLine}
+    \caption{多边形逼近画圆法}
+    \KwIn{圆$C$圆心$C(x,y)$,半径$R$, 画线颜色$color$}
+
+    \BlankLine
+
+    $n\leftarrow 3\sqrt{R}$\;
+    $\theta\leftarrow \frac{2\pi}{n}$\;
+    $P_1\leftarrow (0,R)$\;
+    $i\leftarrow 2$\;
+
+    \While{$i<=n$}
+    {
+        $P_{i} = (x_{i-1}\cos\theta - y_{i-1}\sin\theta, y_{i-1}\cos\theta + x_{i-1}\sin\theta)$\;
+        \DrawLine($P_{i-1}$,$P_i$, color)\;
+        $i\leftarrow i+1$\;
+    }
+    \DrawLine($P_{n}$,$P_1$, color)\;
+\end{algorithm}
+
+\begin{algorithm}
+    \SetKwFunction{putpixel}{putpixel}
+    \SetKwFunction{round}{round}
+    \SetKwFunction{swap}{swap}
+    \SetKwFunction{isInDrawRegion}{DrawArisInDrawRegioncInRegionPoints}
+    \SetKwFunction{DrawArcInRegionPoints}{DrawArcInRegionPoints}
+    \SetKwFunction{GetRegion}{GetRegion}
+    \SetKwFunction{Fill}{Fill}
+    \SetKwFunction{DrawCircleOfArc}{DrawCircleOfArc}
+    \SetKwData{state}{state}
+    \caption{任意角度画弧法}
+    \KwIn{圆弧$\overset{\frown}{SE}$所属圆的圆心$C(x_c,y_c)$,圆弧起点$S(x_s,y_s)$, 圆弧终点方位点$E_{pos}(x_{epos},y_{epos}), $画线颜色$color$}
+    \SetKwProg{func}{Function}{:}{end}
+
+    \BlankLine
+
+    \tcp{求得平移到原点的圆其对应圆心、起点、终点方位点和实际终点}
+    $C'\leftarrow(0,0), S'\leftarrow(x_s-x_c,y_s-y_c)$\;
+    $E_{pos}'\leftarrow(x_{epos}-x_c,y_{epos}-y_c), E'\leftarrow C'E_{pos}'\cap \odot C'$\;
+
+    \tcp{确定起点和终点所属区域或界点}
+    $region_s = \GetRegion{S},region_e = \GetRegion{E}$\;
+
+    \tcp{划分完全绘制区域、部分绘制区域和非绘制区域}
+    \Fill(\state,0)\;
+    \uIf{$region_s = K_i \And region_e = K_j$}
+    {
+        \For{$R = R_i\to R_{j-1}$}{$\state[R] \leftarrow 1$\;}
+    }
+    \uElseIf{$region_s = K_i \And region_e = R_j$}
+    {
+        \For{$R = R_i\to R_{j-1}$}{$\state[R] = 1$\;}
+        $MN\leftarrow(\min(x_{K_j},x_E),\min(y_{K_j},y_{E})), MX\leftarrow(\max(x_{K_j},x_E),\max(y_{K_j},y_{E}))$\;
+        $Rect\leftarrow(MN,MX), \state[region_e]\leftarrow-1$\;
+    }
+    \uElseIf{$region_s = R_i \And region_e = K_j$}
+    {
+        \For{$R = R_{i+1}\to R_{j}$}{$\state[R] = 1$\;}
+        $MN\leftarrow(\min(x_{K_{i+1}},x_S),\min(y_{K_{i+1}},y_{S})), MX\leftarrow(\max(x_{K_{i+1}},x_S),\max(y_{K_{i+1}},y_{S}))$\;
+        $Rect\leftarrow(MN,MX), \state[region_s]\leftarrow-1$\;
+    }
+    \Else
+    {
+        \For{$R = R_{i+1}\to R_{j-1}$}{$\state[R] = 1$\;}
+        \eIf{$S,E$ 属于同一象限 $\And S$ 在 $E$顺时针侧}{$MN\leftarrow(\min(x_S,x_E),\min(y_S,y_E)), MX\leftarrow(\max(x_S,x_E),\max(y_S,y_E))$\;$Rect\leftarrow(MN,MX)$\;}
+        {
+            $MN_1\leftarrow(\min(x_{K_j},x_E),\min(y_{K_j},y_{E})), MX_1\leftarrow(\max(x_{K_j},x_E),\max(y_{K_j},y_{E}))$\;
+            $MN_2\leftarrow(\min(x_{K_{i+1}},x_S),\min(y_{K_{i+1}},y_{S})), MX_2\leftarrow(\max(x_{K_{i+1}},x_S),\max(y_{K_{i+1}},y_{S}))$\;
+            $Rect\leftarrow(MN_1,MX_2)\cup(MN_2,MX_2)$\;
+        }
+        $\state[region_s]\leftarrow-1, \state[region_e]\leftarrow-1$\;
+    }
+    
+    \tcp{八方对称遍历圆像素点，每次生成的像素点需要判断是否在绘制区域内}
+    $\DrawCircleOfArc(C, R, color, \state, Rect)$\;
+
+\end{algorithm}
+
+\end{document}
