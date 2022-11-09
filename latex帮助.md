@@ -25,6 +25,16 @@
    \overset\frown{AB}
    $$
 
+## 大型格式
+
+### 1. 左大括号
+
+$$
+\left\{\begin{array}{l}
+something
+\end{array}\right.
+$$
+
 ## 常用符号
 
 * 右箭头：→
