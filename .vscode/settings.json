@@ -1,4 +1,5 @@
 {
     "jupyter.jupyterServerType": "local",
-    "commentTranslate.hover.enabled": true
+    "commentTranslate.hover.enabled": true,
+    "kunpeng.remote.ssh.machineinfo": []
 }
