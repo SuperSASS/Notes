@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{rong2014word2vec}
+Xin Rong.
+\newblock word2vec parameter learning explained.
+\newblock {\em arXiv preprint arXiv:1411.2738}, 2014.
+
+\bibitem{enwiki:1110248242}
+{Wikipedia contributors}.
+\newblock Brown corpus --- {Wikipedia}{,} the free encyclopedia, 2022.
+\newblock [Online; accessed 30-December-2022].
+
+\bibitem{zeng2018chinese}
+Xiangkai Zeng, Cheng Yang, Cunchao Tu, Zhiyuan Liu, and Maosong Sun.
+\newblock Chinese liwc lexicon expansion via hierarchical classification of
+  word embeddings with sememe attention.
+\newblock In {\em Proceedings of the AAAI conference on artificial
+  intelligence}, volume~32, 2018.
+
+\bibitem{冯志伟2021神经网络}
+冯志伟.
+\newblock 神经网络,深度学习与自然语言处理.
+\newblock {\em 上海师范大学学报：哲学社会科学版}, 50(2):13,
+  2021.
+
+\bibitem{张冬雯2016基于}
+张冬雯, 杨鹏飞, and 许云峰.
+\newblock 基于word2vec和svmperf的中文评论情感分类研究.
+\newblock {\em 计算机科学}, (S1):5, 2016.
+
+\bibitem{李彦峰2018人工智能在自然语言处理中的应用}
+李彦峰.
+\newblock 人工智能在自然语言处理中的应用.
+\newblock {\em 襄阳职业技术学院学报}, 17(4):5, 2018.
+
+\bibitem{罗枭2020基于深度学习的自然语言处理研究综述}
+罗枭.
+\newblock 基于深度学习的自然语言处理研究综述.
+\newblock {\em 智能计算机与应用}, (4):5, 2020.
+
+\bibitem{赵京胜2019自然语言处理发展及应用综述}
+赵京胜, 宋梦雪, and 高祥.
+\newblock 自然语言处理发展及应用综述.
+\newblock {\em 信息技术与信息化}, (7):4, 2019.
+
+\end{thebibliography}
