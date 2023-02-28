@@ -1,0 +1,63 @@
+\documentclass[]{SASSTeX}
+
+\title{个人用\LaTeX{}模板}
+\author{Super SASS\thanks{QQ:1021889213……}\and 另一位作者\thanks{作者注释……}}
+\date{\today}
+
+\TitleSetInfobars[3em]{\textsf{《算法分析与设计》}}{}
+\TitleSetInfobars[1em]{\zihao{1}\textsf{实验报告}}{}
+\TitleSetInfobars[3em]{实验 4.3 —— 棋盘覆盖问题}{}
+\TitleSetInfobars{学号}{2020115178}
+\TitleSetInfobars{姓名}{Super SASS……}
+\TitleSetInfobars{学院}{计算机与人工智能学院}
+
+
+\begin{document}
+
+\MakeTitle[WithLogo]
+
+\begin{MakeAbstract}[]{富强、民主、文明、和谐}
+    这里是摘要……
+    一页摘要一般分成很多段……
+    摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要……
+\end{MakeAbstract}
+
+字体测试:
+
+\begin{table}[!htbp]
+    \caption{字体测试}\label{tab:001} \centering
+    \begin{tabular}{rcccc}
+        \toprule[1.5pt]
+          & 正常 & 粗体"textbf" & 斜体"textit" & 伪斜体"textsl" \\
+        \midrule[1pt]
+        英文衬线体"textrm" & \textrm{Experience} & \textbf{\textrm{Experience}} & \textit{\textrm{Experience}} & \textsl{\textrm{Experience}} \\
+        英文非衬线体"textsf" & \textsf{Experience} & \textbf{\textsf{Experience}} & \textit{\textsf{Experience}} & \textsl{\textsf{Experience}} \\
+        英文等宽体"texttt" & \texttt{Experience} & \textbf{\texttt{Experience}} & \textit{\texttt{Experience}} & \textsl{\texttt{Experience}} \\
+        \midrule[0.5pt]
+        中文衬线体"textrm" & \textrm{实验报告} & \textbf{\textrm{实验报告}} & \textit{\textrm{实验报告}} & \textsl{\textrm{实验报告}} \\
+        中文非衬线体"textsf" & \textsf{实验报告} & \textbf{\textsf{实验报告}} & \textit{\textsf{实验报告}} & \textsl{\textsf{实验报告}} \\
+        中文等宽体"texttt" & \texttt{实验报告} & \textbf{\texttt{实验报告}} & \textit{\texttt{实验报告}} & \textsl{\texttt{实验报告}} \\
+        中文楷体"textkt" & \textkt{实验报告} & \textbf{\textkt{实验报告}} & \textit{\textkt{实验报告}} & \textsl{\textkt{实验报告}} \\
+        \bottomrule[1.5pt]
+    \end{tabular}
+\end{table}
+
+\begin{lstlisting}[language=c++]
+#include<bits/stdc++.h>
+void Line_DDA(int x0, int y0, int x1, int y1, Color color)
+{
+    // 计算delta_x, delta_y, 确定steps，并计算dx, dy
+    char s[5] = "string";
+    int delta_x = x1 - x0, delta_y = y1 - y0,
+        steps = max(abs(delta_x), abs(delta_y));
+    double x = x0, y = y0,
+           dx = (double)delta_x / steps, dy = (double)delta_y / steps;
+    for (int i = 1; i <= steps + 1; i++)
+    {
+        putpixel((int)(x + 0.5), (int)(y + 0.5), color); // 四舍五入生成像素点
+        x += dx, y += dy;
+    }
+}
+\end{lstlisting}
+
+\end{document}
