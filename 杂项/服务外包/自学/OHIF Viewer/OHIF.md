@@ -125,11 +125,7 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 * 有关`PluginConfig.json`，存放在`platform/viewer/PluginConfig.json`，手脚架自动管理，不需要手动修改
 * [有关npm的私有仓库，如果需要用到可以参考](https://v3-docs.ohif.org/development/ohif-cli/#private-npm-repos)
 
-## 插件开发方法
-
-在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
-
-## Platform
+## Platform - 平台相关
 
 ### Scope of Project - 项目范围
 
@@ -155,5 +151,126 @@ OHIF本身是HTML+CSS+JS的集合，是静态的资源，所以只要放在能�
 
 *OpenID-Connect的概念在之后再做了解。*
 
+### Theming - 主题
 
+跟CSS相关的，本项目采用的是“Tailwind CSS”，  
+简单理解用法的话，就是直接在HTML标签的`class`属性里，加上对应样式的值，从而应用各种样式。
 
+在本项目应该配置了一些Tailwind CSS属性，部分代码如下：
+
+```js
+module.exports = {
+  prefix: '',
+  important: false,
+  separator: ':',
+  theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
+    colors: {
+      overlay: 'rgba(0, 0, 0, 0.8)',
+      transparent: 'transparent',
+      black: '#000',
+      white: '#fff',
+      initial: 'initial',
+      inherit: 'inherit',
+
+……
+```
+
+需要自定义的时候可以去改改看。
+
+同时，最后举了一个设置“White Labeling”（相当于项目logo）的教程，  
+直接在所使用的配置文件`default.json`中，按照教程修改即可。
+
+其中用到了React的`createElement()`，来创建HTML元素，简单解释一下：  
+三个参数：
+
+* 第一个 - 标签名，字符串，如`'a'`
+* 第二个 - 各类标签属性，对象，如`{className: 'w-8 h-8', href: '/'}`
+* 之后若干个（可选） - 若干子元素，每个使用`React.createElement()`创建。
+
+### Internationalization - 国际化
+
+*之后有需要再补充……*
+
+## Extension - 插件相关
+
+之后有很重要的四个层次：
+
+* Extension - 插件
+  * Modules - 模块
+* Mode - 模式
+* Service - 服务
+* Managers - 管理容器
+
+### 个人理解的一些点
+
+插件就是向模式
+
+### 1. 插件骨架代码
+
+```js
+export default {
+  /**
+   * 必要属性，每个插件不同。
+   * 一般都是有个"id.js"，里面id来源于"package.json"里的"name"
+   * 然后index.ts(x)中直接`import { id } from './id'`
+   */
+  id,
+
+  // Lifecyle - 生命周期函数
+  preRegistration() { /* */ },
+  onModeEnter() { /* */ },
+  onModeExit() { /* */ },
+  // Modules - **所有的**模块
+  /// 目前个人理解的是：**只能**有这些模块，然后提供给服务（目前作用不明确）和模式使用
+  /// 每个模块最终返回的都是一个固定格式的字典（python的概念）的列表（但还没看到有多个的情况），大致为`return [ {name: '...', component: ..., ...}, ... ]`
+  /// 特别是模式中使用，在生命的时候，格式为：`插件id.模块名(下面的去掉get, 首字母小写).返回的name`
+  getLayoutTemplateModule() { /* */ },
+  getDataSourcesModule() { /* */ },
+  getSopClassHandlerModule() { /* */ },
+  getPanelModule() { /* */ },
+  getViewportModule() { /* */ },
+  getCommandsModule() { /* */ },
+  getContextModule() { /* */ },
+  getToolbarModule() { /* */ },
+  getHangingProtocolModule() { /* */ },
+  getUtilityModule() { /* */ },
+}
+```
+
+### 2. 官方维护的插件
+
+### 3. 插件注册
+
+使用`cli`，然后在`pluginConfig.json`里可以看到。
+当插件在Viewer中注册后，利用Extension的id，可让`ExtensionManager`找到该插件，故所有被插件定义的"Modules"都在Mode中可用。
+
+### 4. 生命周期函数
+
+插件可以注入三个生命周期函数：
+
+* `preRegistration`  
+  应该是在整个Viewer应用初始化时被调用。  
+  用来初始化插件状态(State)、设置用户自定的扩展配置、为服务和命令建立扩展，并启动第三方库。
+* `onModeEnter`  
+  在每次进入有使用该插件的新模式，或者该模式的数据(data)/数据源(datasource)切换了后调用。
+  可以用来初始化数据。
+* `onModeExit`  
+  *【一般是用来清理的吧？……*
+  
+*暂时不做详细了解……*
+
+### 5. Modules
+
+Modules是插件的核心部分，也就是用来组成的各种“块”。  
+用来提供“定义”、组件(Component)、过滤(Filtering)/映射(Mapping)逻辑代，然后提供给Modes和Services使用。
+
+## 杂项
+
+* 插件开发（不一定适用）  
+  在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
