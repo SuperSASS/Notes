@@ -1,6 +1,10 @@
 # 医疗相关
 
 * 医疗影像的归类：Patient->Study->Serial->Image(Instance)
+  * Patient就是一个人，对应主页面的第一列相同的若干项
+  * Study就是对应主页面一行
+  * Serial就是一个Study里面各个项(相当于具体的一个Image)
+  * Instance就是一个Serial里的一张图
 * 医疗影像的类别(Modality)
   * PT - PET
   * CT

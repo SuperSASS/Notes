@@ -85,6 +85,15 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 
 * 可以用Vue.js/Angular.js，但比如核心业务逻辑`@ohif/core`可直接用，但组件库`@ohif/ui`需要自己重构。
 
+## Configuration - 配置
+
+### 1. Configuration Files - 配置文件
+
+Viewer的特性、注册的插件的特性，都被放在配置文件中。
+
+配置文件存放在`<root>/platform/viewer/public/config`，可以看到有很多配置文件，  
+使用的配置文件根据环境变量`APP_CONFIG`决定，默认是`APP_CONFIG`。
+
 ## OHIF CLI - OHIF手脚架
 
 用来“创建/删除/安装/卸载”各种“扩展/模式”的工具。
@@ -94,7 +103,6 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 ### 1. create-(mode/extension)
 
 用来创建新的Mode（模板）或Extension（插件）。
-
 
 注意这个与实际项目无关，这里创建的是一个通用的Mode，  
 所以需要输入绝对路径，需要添加到该项目时使用`link-mode`。
@@ -129,7 +137,7 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 
 在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
 
-## Platform
+## Platform - 整个平台
 
 ### Scope of Project - 项目范围
 
@@ -146,7 +154,7 @@ OHIF本身是HTML+CSS+JS的集合，是静态的资源，所以只要放在能�
 > 是谷歌提出的新时代的Web应用方式，让网页变为类似于手机的原生App应用，  
 > 可以像App一样“安装”在手机上，以某种程度离线使用，拥有通知推送，以及就像原生App而非Web运行（有应用图表、打开没有地址栏等）。  
 > 就类似于Chrome中“添加到桌面上”，以及Chromebook中各种网页应用。
-> 
+>
 > 核心原理是Servive Worker，内部的Cache技术让其可以离线使用，Web App Manifest允许定义应用的metadata，使其类似于App。
 
 因此"Viewer"只是个**不提供任何Image数据的浏览器**，  
@@ -155,5 +163,49 @@ OHIF本身是HTML+CSS+JS的集合，是静态的资源，所以只要放在能�
 
 *OpenID-Connect的概念在之后再做了解。*
 
+### Extensions - 插件
 
+插件就像之前说的，提供了各种模块功能(Module)，供各种Mode使用，创建不同的工作流。
 
+**基本骨架**：
+
+```js
+export default {
+  id, // 必要属性，必须独一无二（一般是从id.js，其又从package.json中的name得到）
+
+  // Lifecyle - 生命周期钩子函数
+  preRegistration() { /* */ },
+  onModeEnter() { /* */ },
+  onModeExit() { /* */ },
+  // Modules - 功能模块
+  getFirstModule() { /* */ }, // 模块名字为去掉get和，即FirstMoudule
+  getViewportModule() { /* */ }, // 模块名字为ViewportModule
+}
+```
+
+**官方插件**：
+
+| Extension | Description | Modules |
+| --- | --- | --- |
+| [default](https://v3-docs.ohif.org/platform/extensions/) | 默认插件，提供默认的Viewer布局、Study/Series的浏览器，映射到DICOM服务器的后端 | `commandsModule`, `ContextModule`, `DataSourceModule`, `HangingProtocolModule`, `LayoutTemplateModule`, `PanelModule`, `SOPClassHandlerModule`, `ToolbarModule` |
+| [cornerstone](https://v3-docs.ohif.org/platform/extensions/) | 提供2D/3D渲染函数 | `ViewportModule`, CommandsModule, UtilityModule |
+| [dicom-pdf](https://v3-docs.ohif.org/platform/extensions/) | Renders PDFs for a [specific SopClassUID](https://github.com/OHIF/Viewers/blob/master/extensions/dicom-pdf/src/OHIFDicomPDFSopClassHandler.js#L4-L6). | Viewport, SopClassHandler |
+| [dicom-video](https://v3-docs.ohif.org/platform/extensions/) | Renders DICOM Video files. | Viewport, SopClassHandler |
+| [cornerstone-dicom-sr](https://v3-docs.ohif.org/platform/extensions/) | Maintained extensions for cornerstone and visualization of DICOM Structured Reports | ViewportModule, CommandsModule, SOPClassHandlerModule |
+| [measurement-tracking](https://v3-docs.ohif.org/platform/extensions/) | 在测量面板最终测量 | ContextModule,PanelModule,ViewportModule,CommandsModule |
+
+**注册方法**：
+
+直接在`cli`中注册，最终体现在`platform/viewer/pluginConfig.json`（不要手动操作这个文件），  
+当插件在Viewer中注册后，其所有的功能模块Module，都能被Modes通过`ExtensionManager`用`id`来获取到。
+
+###
+
+---
+
+## 杂项
+
+### CSS
+
+使用了[Tailwind CSS](https://www.tailwindcss.cn/docs)，  
+直接把各种样式定义为类Class，要变换样式变换类即可。
