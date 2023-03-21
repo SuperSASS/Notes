@@ -301,3 +301,6 @@ Modules是插件的核心部分，也就是用来组成的各种“块”。
 
 * 插件开发（不一定适用）  
   在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
+
+* 插件开发（不一定适用）  
+  在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
