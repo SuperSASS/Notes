@@ -85,6 +85,15 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 
 * 可以用Vue.js/Angular.js，但比如核心业务逻辑`@ohif/core`可直接用，但组件库`@ohif/ui`需要自己重构。
 
+## Configuration - 配置
+
+### 1. Configuration Files - 配置文件
+
+Viewer的特性、注册的插件的特性，都被放在配置文件中。
+
+配置文件存放在`<root>/platform/viewer/public/config`，可以看到有很多配置文件，  
+使用的配置文件根据环境变量`APP_CONFIG`决定，默认是`config/default.js`。
+
 ## OHIF CLI - OHIF手脚架
 
 用来“创建/删除/安装/卸载”各种“扩展/模式”的工具。
@@ -94,7 +103,6 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 ### 1. create-(mode/extension)
 
 用来创建新的Mode（模板）或Extension（插件）。
-
 
 注意这个与实际项目无关，这里创建的是一个通用的Mode，  
 所以需要输入绝对路径，需要添加到该项目时使用`link-mode`。
@@ -125,7 +133,11 @@ Extensions可以传送到应用配置中，并被应用在需要的时候初始�
 * 有关`PluginConfig.json`，存放在`platform/viewer/PluginConfig.json`，手脚架自动管理，不需要手动修改
 * [有关npm的私有仓库，如果需要用到可以参考](https://v3-docs.ohif.org/development/ohif-cli/#private-npm-repos)
 
-## Platform - 平台相关
+## 插件开发方法
+
+在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
+
+## Platform - 整个平台
 
 ### Scope of Project - 项目范围
 
@@ -142,7 +154,7 @@ OHIF本身是HTML+CSS+JS的集合，是静态的资源，所以只要放在能�
 > 是谷歌提出的新时代的Web应用方式，让网页变为类似于手机的原生App应用，  
 > 可以像App一样“安装”在手机上，以某种程度离线使用，拥有通知推送，以及就像原生App而非Web运行（有应用图表、打开没有地址栏等）。  
 > 就类似于Chrome中“添加到桌面上”，以及Chromebook中各种网页应用。
-> 
+>
 > 核心原理是Servive Worker，内部的Cache技术让其可以离线使用，Web App Manifest允许定义应用的metadata，使其类似于App。
 
 因此"Viewer"只是个**不提供任何Image数据的浏览器**，  
@@ -153,7 +165,7 @@ OHIF本身是HTML+CSS+JS的集合，是静态的资源，所以只要放在能�
 
 ### Theming - 主题
 
-跟CSS相关的，本项目采用的是“Tailwind CSS”，  
+跟**CSS**相关的，本项目采用的是“Tailwind CSS”，  
 简单理解用法的话，就是直接在HTML标签的`class`属性里，加上对应样式的值，从而应用各种样式。
 
 在本项目应该配置了一些Tailwind CSS属性，部分代码如下：
@@ -195,11 +207,11 @@ module.exports = {
 
 ### Internationalization - 国际化
 
-*之后有需要再补充……*
+*之后有需要再补充*……
 
-## Extension - 插件相关
+### 四个重要层次
 
-之后有很重要的四个层次：
+很重要的四个层次：
 
 * Extension - 插件
   * Modules - 模块
@@ -207,70 +219,41 @@ module.exports = {
 * Service - 服务
 * Managers - 管理容器
 
-### 个人理解的一些点
-
-插件就是向模式
-
-### 1. 插件骨架代码
-
-```js
-export default {
-  /**
-   * 必要属性，每个插件不同。
-   * 一般都是有个"id.js"，里面id来源于"package.json"里的"name"
-   * 然后index.ts(x)中直接`import { id } from './id'`
-   */
-  id,
-
-  // Lifecyle - 生命周期函数
-  preRegistration() { /* */ },
-  onModeEnter() { /* */ },
-  onModeExit() { /* */ },
-  // Modules - **所有的**模块
-  /// 目前个人理解的是：**只能**有这些模块，然后提供给服务（目前作用不明确）和模式使用
-  /// 每个模块最终返回的都是一个固定格式的字典（python的概念）的列表（但还没看到有多个的情况），大致为`return [ {name: '...', component: ..., ...}, ... ]`
-  /// 特别是模式中使用，在生命的时候，格式为：`插件id.模块名(下面的去掉get, 首字母小写).返回的name`
-  getLayoutTemplateModule() { /* */ },
-  getDataSourcesModule() { /* */ },
-  getSopClassHandlerModule() { /* */ },
-  getPanelModule() { /* */ },
-  getViewportModule() { /* */ },
-  getCommandsModule() { /* */ },
-  getContextModule() { /* */ },
-  getToolbarModule() { /* */ },
-  getHangingProtocolModule() { /* */ },
-  getUtilityModule() { /* */ },
-}
-```
-
-### 2. 官方维护的插件
-
-### 3. 插件注册
-
-使用`cli`，然后在`pluginConfig.json`里可以看到。
-当插件在Viewer中注册后，利用Extension的id，可让`ExtensionManager`找到该插件，故所有被插件定义的"Modules"都在Mode中可用。
-
-### 4. 生命周期函数
-
-插件可以注入三个生命周期函数：
-
-* `preRegistration`  
-  应该是在整个Viewer应用初始化时被调用。  
-  用来初始化插件状态(State)、设置用户自定的扩展配置、为服务和命令建立扩展，并启动第三方库。
-* `onModeEnter`  
-  在每次进入有使用该插件的新模式，或者该模式的数据(data)/数据源(datasource)切换了后调用。
-  可以用来初始化数据。
-* `onModeExit`  
-  *【一般是用来清理的吧？……*
-  
-*暂时不做详细了解……*
-
-### 5. Modules
-
-Modules是插件的核心部分，也就是用来组成的各种“块”。  
-用来提供“定义”、组件(Component)、过滤(Filtering)/映射(Mapping)逻辑代，然后提供给Modes和Services使用。
+---
 
 ## 杂项
 
-* 插件开发（不一定适用）  
-  在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。
+### 插件/模式开发
+
+~~在[Contributing](https://v3-docs.ohif.org/development/contributing#when-changes-impact-multiple-repositories)中展示了，在本地开发插件的方法。~~
+
+不知道是这个方法是远古方法还是什么，总之不用这样……  
+直接在Viewer的`cli`中`link`模式或插件，然后就可以联调了……
+
+### propTypes - 类型严格检查
+
+#### (1) Panel
+
+可选传三个Manager，如下：
+
+```js
+PanelTest.propTypes = {
+  commandsManager: PropTypes.shape({
+    runCommand: PropTypes.func.isRequired,
+  }),
+  servicesManager: PropTypes.shape({
+    services: PropTypes.shape({
+      SegmentationService: PropTypes.shape({
+        getSegmentation: PropTypes.func.isRequired,
+        getSegmentations: PropTypes.func.isRequired,
+        toggleSegmentationVisibility: PropTypes.func.isRequired,
+        subscribe: PropTypes.func.isRequired,
+        EVENTS: PropTypes.object.isRequired,
+      }).isRequired,
+    }).isRequired,
+  }),
+  extensionManager: PropTypes.shape({
+    getModuleEntry: PropTypes.func.isRequired,
+  }),
+};
+```
