@@ -1,0 +1,69 @@
+# Service - 服务相关
+
+## 介绍
+
+Service是“特定关注点”的代码模块，可以跨越不同层（如Extension和Mode）使用，  
+Service提供了一些操作，操作内部通常都共享某些状态(State)，  
+通过`ServiceManager`使得整个App可随时得到服务。
+
+Service用来解决“横切关注点”问题(Cross-Cutting Concerns)。
+
+> 简单理解 - 横切关注点问题：
+>
+> 就是对于一些功能，需要在不同功能模块中复用（所以叫横切）。
+>
+> 解决方法：
+>
+> * 多继承/继承共同基类
+> * **依赖注入** - 本框架的Service应当就是采用的这种解决方法，通过Manager，向需要某公用**功能集**(即Service)的地方注入。
+> * 面向协议编程
+>
+> 详细可以看[面向对象困境之 —— 横切关注点](https://zhuanlan.zhihu.com/p/76618283)。
+
+*个人理解：*
+
+本框架最大的两顶层 - “Extension”和“Mode”，前者提供功能，后者提供交互。  
+两者成上下层关系，但在两者中可能存在横切的公用功能，  
+举例：弹窗服务，可能Mode中刚加载进去需要弹窗；而Extension中出错也需要弹窗。  
+所以需要抽象出Service横切层。
+
+**分类：**
+
+* Data Service - 数据相关服务（非UI服务）
+* UI Service - UI相关服务
+
+---
+
+**服务总览：**
+
+| Service | Type | Description |
+| --- |  --- |  --- |
+| [DicomMetadataStore (NEW)](https://v3-docs.ohif.org/platform/services/data/DicomMetadataStore) | Data Service | DicomMetadataStore |
+| [DisplaySetService (NEW)](https://v3-docs.ohif.org/platform/services/data/DisplaySetService) | Data Service | DisplaySetService |
+| [segmentationService (NEW)](https://v3-docs.ohif.org/platform/services/data/SegmentationService) | Segmentation Service | segmentationService |
+| [HangingProtocolService (NEW)](https://v3-docs.ohif.org/platform/services/data/HangingProtocolService) | Data Service | HangingProtocolService |
+| [MeasurementService (MODIFIED)](https://v3-docs.ohif.org/platform/services/data/MeasurementService) | Data Service | MeasurementService |
+| [ToolBarService (NEW)](https://v3-docs.ohif.org/platform/services/data/ToolBarService) | Data Service | ToolBarService |
+| [ViewportGridService (NEW)](https://v3-docs.ohif.org/platform/services/ui/viewport-grid-service) | UI Service | ViewportGridService |
+| [Cine Service (NEW)](https://v3-docs.ohif.org/platform/services/ui/cine-service) | UI Service | cine |
+| [CustomizationService](https://v3-docs.ohif.org/platform/services/ui/customization-service) | UI Service | customizationService (NEW) |
+| [UIDialogService](https://v3-docs.ohif.org/platform/services/ui/ui-dialog-service) | UI Service | UIDialogService |
+| [UIModalService](https://v3-docs.ohif.org/platform/services/ui/ui-modal-service) | UI Service | UIModalService |
+| [UINotificationService](https://v3-docs.ohif.org/platform/services/ui/ui-notification-service) | UI Service | UINotificationService |
+| [UIViewportDialogService (NEW)](https://v3-docs.ohif.org/platform/services/ui/ui-viewport-dialog-service) | UI Service | UIViewportDialogService |
+
+补充：
+
+* `ToolGroupService` - 有关（上方）工具栏的Service
+
+## Data Service
+
+Data Service用来处理与UI无关的状态，因此每个Data Service
+
+## 1. Toolbar&ToolGroup Service - 工具栏
+
+* `ToolBarService` - 只负责工具栏的工具注册（相当于UI层）
+* `ToolGroupService` - 负责工具的逻辑实现（相当于逻辑代码层）
+
+### (1) toolbarButtons.js
+
