@@ -67,12 +67,18 @@ export default {
 * `onModeExit`  
   *【一般是用来清理的吧？……*
 
-## 5. ⭐Modules
+## 5. Context
+
+上下文，个人感觉就是用来区分不同“环境”的，  
+然后让一些功能（特别是Command），在不同环境下有不同表现（不启用/有不同逻辑功能），  
+因为特别是Command会用到上下文，故应该是由Command Manager管理，由一串字符串（如`TMTV:CORNERSTONE`）定义。
+
+## 6. ⭐Modules
 
 Modules是插件的核心部分，也就是用来组成的各种“块”。  
 用来提供“定义”、组件(Component)、过滤(Filtering)/映射(Mapping)逻辑代，然后提供给Modes和Services使用。
 
-### Panel - 侧边栏
+### Panel - 侧边栏模组
 
 #### 定义与编写
 
@@ -201,4 +207,56 @@ const getPanelModule = () => {
     },
   ];
 };
+```
+
+### Command - 命令模组
+
+顾名思义，就是定义各种命令的，  
+用来完成特定功能、激活工具、与服务器通信、打开弹窗(Modal)等等、以及其启用条件（或者复用）。
+
+插件可以通过定义`getCommandModule`来定义命令，  
+该模组许限定在特定Context下，注册若干个命令。
+
+Command因为以下特性功能很强大：
+
+* 同一命令允许有多种实现
+* 根据应用的Context，只有正确的一种命令实现会被运行
+* Command能被快捷键、工具栏按钮、渲染设置执行
+
+有关commandModule，一般都是单独建一个文件`commandsModule.js`，在其中配置，  
+很好的模板为：
+
+```js
+// extensions/myExtension/commandModule.js
+// ---------------------------------------
+/* 各种导入，除了核心包中的东西，还有各个工具类(./utils) */
+
+const commandsModule = ({ /* 3个Manager */ }) => {
+    /// 1. 定义常量部分：如所需服务
+    const {
+        /* 需要的各种服务，如SegementationService */
+    } = servicesManager.services;
+
+    /// 2. 定义内部函数：一般如以下两个
+    
+    function _getActiveViewportsEnabledElement() {
+    }
+
+    function _getMatchedViewportsToolGroupIds() {
+    };
+
+    // 3. 关键部分 - 定义返回所需的actions - 即所有命令函数
+    const actions = {
+        getSomething: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
+        setSomething: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
+        calculateSometing: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
+        exportSomething: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
+        // ...
+    }
+
+    // 4. 关键部分 - 根据上方的actions，定义所对应的definitions - 即所提到的command的基础结构
+    const defin
+
+    return toolGroupIds;
+}
 ```
