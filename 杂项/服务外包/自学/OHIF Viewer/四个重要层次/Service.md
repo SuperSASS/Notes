@@ -2,7 +2,7 @@
 
 ## 介绍
 
-Service是“特定关注点”的代码模块，可以跨越不同层（如Extension和Mode）使用，  
+Service是“特定关注点”(concern-specific)的代码模块，可以跨越不同层（如Extension和Mode）使用，  
 Service提供了一些操作，操作内部通常都共享某些状态(State)，  
 通过`ServiceManager`使得整个App可随时得到服务。
 
@@ -114,7 +114,6 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
   经过个人测试，在比如进入Mode后，会加载所有的Series；然后每加载完一个Series，就会触发一次。  
   ![广播来源](images/Service--03-23_01-11-10.png)
 
-
 **API：**
 
 **注意：**  
@@ -125,3 +124,39 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 import { DicomMetadataStore } from '@ohif/core';
 ```
 
+### 3. Hanging Protocol Service
+
+目前大致看了下，感觉是有关**Viewport配置**的模组。
+
+比如"imageLoadStrategy"，可能是影像加载顺序的策略；  
+还有"stages"里的"viewportStructure"，规定了各个Viewport的布局；  
+后面的"viewports"应该规定了Viewport的属性。
+
+#### API
+
+补充API：
+
+* `getViewportsRequireUpdate(viewportIndex, displaySetInstanceUID)`
+  * 
+
+### 4. DisplaySet Service
+
+有关目前的DisplaySet相关的服务。
+
+`DisplaySetService`负责处理从`instanceMetadata`（DICOM标准下的文件）转换到`DisplaySet`（OHIF下的可展示数据）。  
+在 Mode 初始化时，Mode 的所有`SOPClassHandlerIds`，会被添加到`DisplaySetService`里（这个Id来自于每个`SOPClassHandler`的`id.js`，就是Mode里引用这个Module的字符串，加上name）。
+
+根据每个Handler的Id，OHIF就能找到DICOM格式数据，调用相应Handler里的`getDisplaySetsFromSeries`方法，将Series转换为DisplaySet。
+
+在有被查询得到的Instances的元数据(metadata)添加到`DicomMetaDataStore`中后，对应的`DisplaySet`会被同步创建。
+
+#### API
+
+**补充API：**
+
+* `getDisplaySetsForSeries()`  
+  应该是来自Handler里的方法，但不知道为什么能直接调用。
+  * 参数：`seriesUID: String` - 就是Series的UID
+  * 返回：相应Series的DisplaySet
+
+### 5. 

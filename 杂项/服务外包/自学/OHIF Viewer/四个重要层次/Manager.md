@@ -44,7 +44,7 @@ const extensionManager = new ExtensionManager({
 >
 > 临时笔记#1有些记录。
 
-**访问Module：**
+### 访问Module
 
 通过`getModuleEntry`，可以得到Module里的某一实体，  
 如`extensionManager.getModuleEntry("@ohif/extension-measurement-tracking.panelModule.seriesList")`，  
@@ -56,7 +56,7 @@ const extensionManager = new ExtensionManager({
 每个服务都需要一个`name`属性以区分各服务；一个`create()`方法以在容器中调用来实例化该服务。  
 可在应用中通过`service`属性提供的服务容器，来访问各种注册的服务。
 
-**服务容器骨架：**
+### 1. 服务容器的骨架
 
 ```js
 export default class ServicesManager {
@@ -85,7 +85,45 @@ export default class ServicesManager {
 }
 ```
 
+### 2. 默认注册的服务
 
+```js
+// platform/viewer/src/appInit.js
+// ------------------------------
+servicesManager.registerServices([
+  CustomizationService,
+  UINotificationService,
+  UIModalService,
+  UIDialogService,
+  UIViewportDialogService,
+  MeasurementService,
+  DisplaySetService,
+  ToolBarService,
+  ViewportGridService,
+  HangingProtocolService,
+  CineService,
+]);
+```
+
+*具体的含义将在"Service"层次中讲到。*
+
+### 3. 服务架构（服务的骨架）
+
+看上面的骨架，就可以知道每个服务都需要暴露为拥有`name`属性和`create`方法的一个对象。
+
+```js
+// platform/core/src/services/ToolBarService/index.js
+// --------------------------------------------------
+import ToolBarService from './ToolBarService'; // 在这里面实现ToolBarService
+
+// 导出Service
+export default {
+  name: 'ToolBarService',
+  create: ({ configuration = {}, commandsManager }) => {
+    return new ToolBarService(commandsManager);
+  },
+};
+```
 
 ## 3. Command Manager - 命令容器
 

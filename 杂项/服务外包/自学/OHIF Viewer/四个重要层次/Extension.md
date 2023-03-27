@@ -238,7 +238,6 @@ const commandsModule = ({ /* 3个Manager */ }) => {
     } = servicesManager.services;
 
     /// 2. 定义内部函数：一般如以下两个
-    
     function _getActiveViewportsEnabledElement() {
     }
 
@@ -255,8 +254,49 @@ const commandsModule = ({ /* 3个Manager */ }) => {
     }
 
     // 4. 关键部分 - 根据上方的actions，定义所对应的definitions - 即所提到的command的基础结构
-    const defin
+    const definitions = {
+        getSomething: {
+            commandFn: actions.getSomething,
+            storeContexts: [], // 这个上下文会覆盖下方的defaultContext
+            options: {},
+        },
+        // 把其它在actions里的补完
+    }
 
-    return toolGroupIds;
+    // return的时候，这样写就可以
+    return {
+        actions,
+        definitions,
+        defaultContext: 'TMTV:CORNERSTONE', // 这里指定所有命令的默认上下文
+    };
 }
+
+export default commandsModule;
+
 ```
+
+### 3. SOP Class Handler - SOP类处理器
+
+就是把通过DICOM-Web的REST API得到的DICOM SOP类，转化为可供OHIF**展示**的`displaySet`，  
+从而可展示(hung)在一个Viewport内。
+
+*一般不用自己写，直接用别人的。*
+
+最后返回的三个东西：
+
+```js
+return [
+  {
+    name: 'dicom-seg', // 简单的name，用来在Mode中区分，进行加载
+    sopClassUids, // 指定可以处理的 SOP Class UID
+    getDisplaySetsFromSeries: (instances) => { /* ... */ }, // 将Series转换为DisplaySet
+  },
+];
+```
+
+**作用：**
+
+在`DisplayService`中会用这个Module，会注册到该服务中（只要是在Mode中所有插件加载的这个Module都会），  
+然后可将"DICOM raw metadata"格式转化为OHIF的"DisplaySet"格式，  
+以供Viewport展示。
+
