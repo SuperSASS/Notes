@@ -78,7 +78,7 @@ export default {
 Modules是插件的核心部分，也就是用来组成的各种“块”。  
 用来提供“定义”、组件(Component)、过滤(Filtering)/映射(Mapping)逻辑代，然后提供给Modes和Services使用。
 
-### Panel - 侧边栏模组
+### 1. Panel - 侧边栏模组
 
 #### 定义与编写
 
@@ -209,7 +209,7 @@ const getPanelModule = () => {
 };
 ```
 
-### Command - 命令模组
+### 2. Command - 命令模组
 
 顾名思义，就是定义各种命令的，  
 用来完成特定功能、激活工具、与服务器通信、打开弹窗(Modal)等等、以及其启用条件（或者复用）。
@@ -272,7 +272,6 @@ const commandsModule = ({ /* 3个Manager */ }) => {
 }
 
 export default commandsModule;
-
 ```
 
 ### 3. SOP Class Handler - SOP类处理器
@@ -300,3 +299,9 @@ return [
 然后可将"DICOM raw metadata"格式转化为OHIF的"DisplaySet"格式，  
 以供Viewport展示。
 
+### 4. Hanging Protocol - 挂片协议
+
+Hanging Protocol对于所有的放射影像浏览器都是非常必要的。OHIF用Hanging Protocol来将Images（已转化为了DisplaySet）安排到Viewport中。  
+可能存在多个Protocol，会计算分数，分数最高者被应用。
+
+可以做如下事：
