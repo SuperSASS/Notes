@@ -83,3 +83,24 @@ $$
 性质：
 
 存在$R^s=R^t$
+
+## 六、关系的性质
+
+$R$是$A$上的性质：
+
+* 自反：$\forall x(x\in A\rightarrow <x,x>\in R)$  
+  关系图上，所有**结点都有环**
+* 反自反：$\forall x(x\in A\rightarrow <x,x>\not\in R)$  
+  关系图上，所有**结点都不能有环**
+* 对称：$\forall x\forall y(x,y\in A\land\quad <x,y>\in R\rightarrow<y,x>\in R)$  
+  就是有$<x,y>$就要**有对称的边**$<y,x>$，**必须为双向边**（自环不考虑）
+* 反对称：$\forall x\forall y(x,y\in A\land\quad (<x,y>\in R\land <y,x>\in R )\rightarrow x=y)$  
+  如果两个顶点有边，只能是一个顶点到另一个顶点，两顶点不能有环，**必须为单向边**（自环不考虑）
+* 传递关系：$\forall x,y,z(x,y,z\in A\land\quad(<x,y>\in R\land <y,z>\in R)\rightarrow <x,z>\in R$  
+  就是如果点$A$连$B$，点$B$连$C$，则必须$A$连$C$
+
+## 七、闭包
+
+就是想让一关系$R$，本来没有上面的某一性质，但又想要其拥有，  
+可以添加最少的有序对，使得其有，  
+新出来的关系$R'$就是闭包。
