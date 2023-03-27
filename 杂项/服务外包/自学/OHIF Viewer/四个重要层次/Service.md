@@ -107,8 +107,13 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 
 **事件：**
 
-* `SERIES_ADDED` - 当打开的Study中，所有Series，都把其summary metadata添加到了DicomMetaDataStore中
-* `INSTANCES_ADDED` - 当打开的Series中，所有Instance，都把其metadata添加到了DicomMetaDataStore中
+* `SERIES_ADDED` - 当打开的Study中，所有Series，都把其summary metadata添加到了DicomMetaDataStore中  
+  ![广播来源](images/Service--03-23_01-11-50.png)  
+  可以从上图中，看到每次广播所传的参数。
+* `INSTANCES_ADDED` - 当打开的Series中，所有Instance，都把其metadata添加到了DicomMetaDataStore中  
+  经过个人测试，在比如进入Mode后，会加载所有的Series；然后每加载完一个Series，就会触发一次。  
+  ![广播来源](images/Service--03-23_01-11-10.png)
+
 
 **API：**
 

@@ -257,3 +257,85 @@ PanelTest.propTypes = {
   }),
 };
 ```
+
+### 等待页面相关、事件(Event)特殊订阅方式
+
+在加载进应用，或者加载进影像的时候，会弹出等待页面。  
+实际上就是UI组件`LoadingIndicatorProgress`。
+
+在App处有一个属性`showLoadingIndicator`，在配置中定义，为真则显示。  
+或通过状态`useState`，然后通过`setShowLoadingIndicator`，在组件处加上判断，从而使得加载出影像后（订阅`HangingProtocolService.EVENTS.HANGING_PROTOCOL_APPLIED_FOR_VIEWPORT`事件），进行设置。
+
+一个加载的事件发布顺序：
+
+1. 若干个`DicomMetadataStore.EVENTS.INSTANCES_ADDED`，加载Serial中的任意一组Instance发布
+2. 一个`DicomMetadataStore.EVENTS.SERIES_ADD`，加载完该Series发布
+3. 一个`HangingProtocolService.EVENTS.PROTOCOL_CHANGED`
+4. 一个`HangingProtocolService.EVENTS.HANGING_PROTOCOL_APPLIED_FOR_VIEWPORT`
+
+发现一个特殊的事件说明方法：
+![图 1](images/OHIF--03-23_01-27-50.png)  
+订阅的时候，直接`Event.STUDY_ADDED`
+
+### 自定义服务
+
+可用自定义服务(Customization Service)，来做很多事情。
+
+比如说自定义路由，在`extensions/default/src/getCustomizationModule.js`中，定义了一个自定义路由`customRoutes`，  
+路由是`/custom`，内容就是一句"Hello Custom Route"。
+
+然后有很多种方法激活这些自定义服务，比如简单的在`appConfig.js`的`customizationService`里添加【`default.json`里面有一个示例，取消注释后，就可以访问`http://localhost:3000/custom`……
+
+---
+
+添加一点目前有关自定义路由了解到的东西：  
+格式都是如下：
+
+```js
+// .../getCustomizationModule.js
+// -----------------------------
+export default function getCustomizationModule() {
+  return [
+    {
+      name: 'Routes',
+      value: {
+        id: 'customRoutes', // id必须为这个！！！！
+        routes: [ // 路由列表
+          {
+            path: '/custom1',
+            children: () => (
+              <h1 style={{ color: 'red' }}>Hello Custom Route#1</h1>
+            ),
+          },
+          {
+            path: '/custom2',
+            children: () => (
+              <h1 style={{ color: 'blue' }}>Hello Custom Route#2</h1>
+            ),
+          },
+        ],
+      },
+    },
+  ];
+}
+```
+
+但！存在问题：因为都是相同id，所以在配置文件中的`customizationService`，添加该`name`的自定义路由后，  
+因为id相同，后添加的`routes`列表会**覆盖**前面的！！
+
+所以，感觉只能一个插件专门管理自定义路由，然后只在`customizationService`添加这一个自定义路由，  
+而不能若干个自定义服务都添加自定义路由。  
+现在暂无解决方法。
+
+### WorkList和Viewer、与路由的理解
+
+在架构图中的Templates，出现了这两个。  
+个人理解：WorkList就是主界面（选择影像(工作)列表）；Viewer就是浏览器界面。
+
+这里的两个就是路由的基础（第一级），可以在`platform/viewer/src/routes`里看到。  
+可以看到还存在几个路由，如：
+
+* `loacl`/`debug`
+* `Mode` - 对应各个模式的路由
+* `WorkList` - 主页面（根）路由
+* `NotFound` - 404路由【但根本没发现这个orz……
