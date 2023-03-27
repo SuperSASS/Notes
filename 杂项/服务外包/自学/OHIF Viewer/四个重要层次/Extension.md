@@ -202,3 +202,14 @@ const getPanelModule = () => {
   ];
 };
 ```
+
+---
+
+### Hanging Protocol
+
+Hanging Protocol对于所有的放射影像浏览器都是非常必要的。OHIF用Hanging Protocol来将Images（已转化为了DisplaySet）安排到Viewport中。  
+可能存在多个Protocol，会计算分数，分数最高者被应用。
+
+可以做如下事：
+
+* 

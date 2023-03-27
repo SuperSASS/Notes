@@ -120,3 +120,27 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 import { DicomMetadataStore } from '@ohif/core';
 ```
 
+---
+
+### 3. Hanging Protocol Service
+
+相当于DisplaySet和Viewport的桥梁（展示协议），负责管理将影像展示到Viewport上，  
+一般存在多个Hanging Protocol Service，对于所有DisplaySet，会计算的到一个分数(score)，  
+分数最高的protocol会被应用到该DisplaySet，当该DisplaySet被安排到某个Viewport上后，该protocol的配置将被应用。
+
+Protocol来自于一个Mode所用到所有插件的`getHangingProtocolModule`，会自动注册到该服务中。    
+在`getHangingProtocolModule`中，返回Protocol的骨架如下：
+
+```js
+import MyProtocol from './MyProtocol';
+export default function getHangingProtocolModule() {
+  return [
+    {
+      id: MyProtocol.id,    // 每个protocol都要有唯一id字段
+      protocol: MyProtocol, // 每个protocol都要有protocol字段
+    },
+    // { ... },
+  ];
+}
+```
+
