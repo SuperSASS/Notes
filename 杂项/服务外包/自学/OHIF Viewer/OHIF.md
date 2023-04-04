@@ -219,7 +219,11 @@ module.exports = {
 * Service - 服务
 * Managers - 管理容器
 
----
+## 统领性知识点
+
+* DICOM SOP Class：属于DICOM标准的东西，可以理解为**DICOM标准下可展示的各类**Image(或Non-Image)
+* Viewport：各个可展示Image的视口，但只是视口而已，不存在数据
+* DisplaySet：就是用来在**OHIF展示的影像**，可以放在Viewport里【应该……
 
 ## 杂项
 

@@ -84,7 +84,9 @@ return (
 返回两个值：
 
 * 第一个：状态变量，只读，用来传递给子组件
-* 第二个：setter，用来在父组件中更新状态（数据）
+* 第二个：setter，用来在父组件中更新状态（数据）  
+  这个调用方法还有待商榷，我感觉是直接赋值的，  
+  但看到还有**用箭头函数**的：`setTheme((v) => (v === "light" ? "dark" : "light"))`
 
 ```js
 // 单纯一个子组件（列表的每一项）而已，不用看
@@ -154,9 +156,10 @@ useEffect(
   * 不传：无限执行（每次刷新都执行）
   * 空数组`[]`：只在组件挂载的时候执行，即`componentDidMount`
   * 特定依赖项`[name]`：在依赖项发生变化（数据）或被调用（函数）后执行【注意：此时组件挂载时**仍会执行**！】  
-    提醒：当逻辑处理函数中，**用到了组件的State数据**后，就最好**添加到“依赖数组”中**【就像数电里的`always`一样……、
+    提醒：当逻辑处理函数中，**用到了组件的State数据**后，就最好**添加到“依赖数组”中**【就像数电里的`always`一样……
     * 数据依赖项：数据改变时调用
-    * 函数依赖项：当**监听函数被调用**时，调用该逻辑处理函数
+    * 函数依赖项：当**监听函数被调用**时，调用该逻辑处理函数【存疑：如果函数是递归函数呢（就是监听内部调用的函数）？……  
+      ![图 1](images/React--03-30_03-48-04.png)
 
 ### 2. 副作用操作
 
@@ -257,3 +260,204 @@ useEffect(
 ```
 
 ## 回调 - callback
+
+就可以理解为创建一个回调函数。
+
+如果用普通地方法创建回调(`const comHandler = () => {}`)，然后传入子组件props后，  
+每当父组件刷新，不仅会重新创建函数实例（虽然花销小），更重要的是，会让子组件props变化，从而重新渲染。
+
+因此可以用`callback`创建一个回调函数，  
+使得父组件重新渲染时，该回调函数不会重新生成（或根据依赖项判断是否重新生成），  
+从而使得子组件不重新渲染（或根据依赖判断是否因重新生成而重新渲染）。
+
+```js
+const commandHandler = useCallback((/* params */) => {
+        /* Logics */
+    },
+    [/* deps */]
+)
+```
+
+* 第一个参数 - 回调函数，正常的写即可
+* 第二个参数 - 依赖项（跟`useEffect()`类似）
+  * 不传：每次刷新都新建函数
+  * 空数组`[]`：只在组件挂载的时候新建函数，即`componentDidMount`
+  * 特定依赖项`[name]`：在依赖项发生变化（数据）或被调用（函数）后新建函数【注意：此时组件挂载时**仍会执行**！】  
+    * 数据依赖项
+    * 函数依赖项
+
+## 上下文 - context
+
+* 创建上下文 - `const MyContext = createContext(defaultValue)`  
+  注意：`defaultValue`指的时，当不处于上下文环境（子组件在组件树中，没搜索到该名字的Context），默认返回该值。
+* 使用上下文 - `const ctx = useContext(MyContext)`，  
+  一般写作`const useMyContext = () => useContext(MyContext);`，  
+  然后就可以像hook一样用`useMyContext()`得到上下文了。
+
+个人理解：就是可以用`createContext()`创建一个全局上下文；  
+一般是**父层**创建Context，然后用Provider给所有子组件；  
+然后自组件可以用`useContext()`获取上下文的值。
+
+```ts
+// 父组件.jsx
+//-----------
+const initContext = 0;
+
+const MyContext = createContext(); // 这里一般不传参，上下文要在Provider中指定数据，一般用state或reducer指定
+// 因此MyContext更多地只是像个名字
+
+const ParentComponent = () => {
+    const [someVarSonWillUse, setSomeVarSonWillUse] = useState(initContext); // 用状态存context
+
+    return (
+        <div>
+            <MyContext.Provider value={someVarSonWillUse}> // 在这里的Provider中，才利用上下文进行传值
+                <SonComponent /> // 只有在这里面的可以存在上下文环境，类似于C#
+            </MyContext.Provider>
+        </div>
+    )
+}
+```
+
+```ts
+// 子组件.tsx
+//-----------
+const SonComponent = () => {
+    const iWantUseContext = useContext(MyContext); // 可以看到，父方标签为MyContext，这里只是作用名字，最后获得的是useContext里的
+
+    // 拿到父组件中的值后的逻辑代码
+}
+```
+
+## 高级状态 - reducer
+
+### 一般用法
+
+类似state一样，都是存状态的（就是私有变量），  
+但`reducer`更适合复杂状态（比如复杂对象）；以及更新逻辑复杂（应该指的是`setState()`）。
+
+格式：
+
+```js
+const [stateObj, stateObjDispatch] = useReducer(reducer, initStateObj);
+```
+
+* `initStateObj` - 初始状态【因为状态复杂，一般都是对象】，会赋给`stateObj`
+* `reducer` - 一个函数【但不能直接调用，是给后面的`dispatch`的，接受两个参数
+  * `state` - 就是要更改的状态，会**自动**根据dispatch的绑定`stateObj`关系**赋值**
+  * `action` - 代表对这个状态的不同操作（或就当成参数也行）
+  
+  ```js
+  const reducer = (state, action) => {
+    switch (action.type) {
+        case 'action1_Add' : {}
+        case 'action2_Sub' : {}
+        default: {}
+    }
+  };
+  ```
+
+* `stateObjDispatch` - 就用来触发`reducer()`的，根据其函数计算得到新`stateObj`的返回值  
+  虽然`reducer()`有两个参数，但`state`是自动传进去的，也就是说只用传`action`。  
+  `action`是对象，最好有一个属性为`type`，定义更新状态的方式。
+
+  调用该方法时一般用如下形式：
+
+  ```js
+  stateObjDispatch({
+    type: 'action1_Add',
+    // 往后随便加，相当于参数
+    args: ['args1', 'args2']
+  })
+  ```
+
+* `stateObj` - 类比于`useState`得到的`state`【不过这里一般复杂，故为对象】
+
+因此，综合运用：
+
+```js
+const initialState = {count: 0};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + action.val};
+    case 'decrement':
+      return {count: state.count - action.val};
+    default:
+      throw new Error();
+  }
+};
+
+function CounterComponent() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <div>
+      Count: {state.count} // 可以看到这里调用都要用对象的方法
+      <button onClick={() => dispatch({type: 'decrement', val: 1})}>-1</button> // 不仅传type，还可以传参给action
+      <button onClick={() => dispatch({type: 'increment', val: 1})}>+1</button>
+    </div>
+  );
+}
+```
+
+### 高级/规格用法 - 搭配context实现状态管理
+
+```js
+DEFAULT_STATE = {
+    name: 'Super SASS',
+    sex: 'qwq',
+    x: 0,
+    ifClosed: true,
+    numbers: [1, 3, 5],
+    response: {
+        code: 200,
+        data: {}
+    },
+    objs: [
+        {},
+        {}
+    ]
+}
+
+const SuperSASSContext = createContext(DEFAULT_STATE); // 注意哈，这个只是个名字，
+
+export default ComplexComponent() {
+    // 定义Reducer
+    /// 1. 判断action类型(action.type)
+    /// 2. 根据不同类型，以及参数(action.payload, 跟state格式大致一致)，执行不同逻辑代码
+    /// 3. 每个case返回的时候，都用{ ...state, ...{...} }的格式
+    const SuperSASSReducer = (state, action) => {
+        switch (action.type) {
+            case 'CHANGE_SEX': {
+                return { ...state, ...{ sex: action.payload } };
+            }
+            case 'CHANGE_objs':{
+                const payload = action.payload;
+                const { newObjs } = payload; // 如[ {obj1arr1:1, obj1arr2:2}, {obj2arr1:3, obj2arr2:4} ]
+                const objs = newObjs;
+                return { ...state, ...{ objs } } // 会将objs属性覆盖为新数组
+            }
+            // Other case
+            default:
+                return action.payload;
+        }
+    };
+
+    // 根据Reducer和初始状态，定义状态变量State和设置方法Dispatch
+    const [SuperSASSState, SuperSASSDispatch] = useReducer(SuperSASSReducer, DEFAULT_STATE);
+
+    // 定义一些回调方法
+    const setSex = useCallback(
+        sex => SuperSASSDispatch({ type:'CHANGE_SEX', payload: {sex} }),
+        [SuperSASSDispatch] // 使得每次在setSex被调用后，调用Dispatch后，才会进行重渲
+    )
+
+    // 返回该父组件，调用子组件并传递上下文
+    return (
+        <SuperSASSContext.Provider value={/* 任意想传递的东西，就比如状态 */SuperSASSState}>
+            {children}
+        </SuperSASSContext.Provider>
+    )
+}
+```
