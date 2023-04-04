@@ -276,12 +276,30 @@ export default commandsModule;
 
 ### 3. SOP Class Handler - SOP类处理器
 
+**关键词**： DICOM SOP Class → displaySet
+
 就是把通过DICOM-Web的REST API得到的DICOM SOP类，转化为可供OHIF**展示**的`displaySet`，  
-从而可展示(hung)在一个Viewport内。
+从而可展示(hung, 挂片)在一个Viewport内。
 
-*一般不用自己写，直接用别人的。*
+> 解释 - 什么是 **DICOM SOP Class**：
+>
+> 目前可以简单理解为“成像类型”或影片类型，  
+> 比如为影片的CT/MR等等；或者非影像的SEG/RT等。
+>
+> 具体的各SOP Class可见[B.5 Standard SOP Classes](https://dicom.nema.org/dicom/2013/output/chtml/part04/sect_B.5.html)，  
+> 同时，可以在[DICOM标准（标签）浏览器](https://dicom.innolitics.com/ciods)中查看各种DICOM SOP Class。
 
-最后返回的三个东西：
+Mode会选择使用何种SOPClassHandler，所以在该Viewer应用中，可以将同一个Series，根据Mode采用的不同SOPClassHandler，呈现不同的展示方式。
+
+#### 作用
+
+在`DisplayService`中会用这个Module，会注册到该服务中（只要是在Mode中所有插件加载的这个Module都会），  
+然后可将"DICOM raw metadata"格式转化为OHIF的"DisplaySet"格式，  
+以供Viewport展示。
+
+#### 骨架图
+
+最后要**返回**的三个东西：
 
 ```js
 return [
@@ -293,15 +311,466 @@ return [
 ];
 ```
 
-**作用：**
+故**骨架图**：
 
-在`DisplayService`中会用这个Module，会注册到该服务中（只要是在Mode中所有插件加载的这个Module都会），  
-然后可将"DICOM raw metadata"格式转化为OHIF的"DisplaySet"格式，  
-以供Viewport展示。
+```js
+import { id } from './id';
+import sopClassDictionary from '@ohif/core/src/utils/sopClassDictionary'; // 所有的 SOP Class UID
+// import ImageSet from '@ohif/core/src/classes/ImageSet'; // 创建Image影像（相反的为Non-Image影像）的displaySet的数据类型
+
+// 常量定义
+const sopClassHandlerName = 'myHandler'; // ID
+const sopClassUids = [ // sopClassUids
+  sopClassDictionary.CTImageStorage,
+  sopClassDictionary.MRImageStorage,
+]; // 需要注意：在Mode里的SOPClassUIDs需要在数组中是有序的【应该就按照那个字典中的顺序吧……
+
+
+function getDisplaySetsFromSeries(instances) {
+  const displaySets = [];
+  /* 生成 displaySet 里的每一个 displaySet（只有Image影像数据类型为ImageSet() */
+  return displaySets;
+}
+
+export default function getSopClassHandlerModule() {
+  return [
+    {
+      name: sopClassHandlerName,
+      sopClassUids,
+      getDisplaySetsFromSeries,
+    },
+  ];
+}
+```
+
+#### 已知的SOP Class Handler
+
+*一般不用自己写，直接用别人的。*
+
+* 几乎所有Image类型的 - `@ohif/extension-default.sopClassHandlerModule.stack`
+* SR（报告，就是批注的那些） - `@ohif/extension-cornerstone-dicom-sr.sopClassHandlerModule.dicom-sr`
+  * 1.2.840.10008.5.1.4.1.1.88.11 - Basic Text SR
+  * 1.2.840.10008.5.1.4.1.1.88.22 - Enhanced SR
+  * 1.2.840.10008.5.1.4.1.1.88.33 - Comprehensive SR
+  * 1.2.840.10008.5.1.4.1.1.88.34- Comprehensive 3D SR
+* Video（影像？） - `@ohif/extension-dicom-video.sopClassHandlerModule.dicom-video`
+  * 1.2.840.10008.5.1.4.1.1.77.1.2.1 - Video Microscopic Image Storage
+  * 1.2.840.10008.5.1.4.1.1.77.1.4.1 - Video Photographic Image Storage
+  * 1.2.840.10008.5.1.4.1.1.77.1.1.1 - Video Endoscopic Image Storage
+  * 1.2.840.10008.5.1.4.1.1.7 - Secondary Capture Image Storage
+  * 1.2.840.10008.5.1.4.1.1.7.4 -  Multi-frame True Color Secondary Capture Image Storage
+* PDF（？） - `@ohif/extension-dicom-pdf.sopClassHandlerModule.dicom-pdf`
+  * 1.2.840.10008.5.1.4.1.1.104.1 - Encapsulated PDF Storage
+* SEG - `@ohif/extension-cornerstone-dicom-seg.sopClassHandlerModule.dicom-seg`
+  * 1.2.840.10008.5.1.4.1.1.66.4 - Segmentation Storage  
+    **注**：采用`dcmjs`生成应该
 
 ### 4. Hanging Protocol - 挂片协议
 
-Hanging Protocol对于所有的放射影像浏览器都是非常必要的。OHIF用Hanging Protocol来将Images（已转化为了DisplaySet）安排到Viewport中。  
+**重点**：DisplaySet → Viewport
+
+Hanging Protocol对于所有的放射影像浏览器都是非常必要的。  
+OHIF用Hanging Protocol来将Images（已转化为了DisplaySet）安排到Viewport中，注册的协议会与可用的DisplaySets匹配。  
 可能存在多个Protocol，会计算分数，分数最高者被应用。
 
 可以做如下事：
+
+* 定义Viewport以何种布局(layout)开始  
+  e.g. 2*2网格布局
+* 指定Viewport的种类、方向(Orientation)  
+  e.g. stack(堆叠?)/在Sagittal(矢状面)的Volume(体素)
+* 定义哪些**DisplaySets**会**显示在**Layout的**哪个Viewport**中  
+  e.g. 某一个`displaySet`在Modality(成像类型)中含有`CT` & 在`SeriesDescription`是`Coronary Arteries`(冠状动脉)，其会被显示到该Layout的第一个Viewport
+* 应用某些初始视口设置  
+  e.g. 反转对比度，或跳转到某一特定的切片
+* 为视口添加特定的同步规则  
+  e.g. 同步第1、2号视口的缩放(Zoom)；同步第2、3号视口的VOI  
+  > 扩展 - VOI(Volume of Interst, 感兴趣体素)：
+  >
+  > 在二维图中，存在ROI概念，  
+  > 在三维图中，若干个ROI组合取来，形成的区域，就是VOI。
+  >
+  > 可见[【影像组学导论】第二部分：具体应用方向？十大维度供你参考！](https://blog.csdn.net/weixin_40166430/article/details/115006239)
+
+#### 例子与模块框架
+
+官网举的这个例子：  
+
+![图 4](images/Extension--03-31_11-05-16.png)
+
+这个Protocol采用1*3Layout；  
+在第一个Viewport展示了CT图像，在第二个Viewport展示了PT图像，在第三个Viewport展示了PET-CT融合图像；  
+所有的Viewport都呈矢状面(Sagittal)。
+
+其对应的Hanging Protocol定义为：
+
+```js
+// 注释带*代表可能是很重要的属性
+const oneByThreeProtocol = {
+  id: 'oneByThreeProtocol', // *唯一ID，可用来在Mode配置中指明是哪种协议({extension}.{module}.{id})
+  locked: true,
+  hasUpdatedPriorsInformation: false,
+  name: 'Default', // 这又有个名字，应该只是用来描述性取名的
+  createdDate: '2021-02-23T19:22:08.894Z',
+  modifiedDate: '2022-10-04T19:22:08.894Z',
+  availableTo: {},
+  editableBy: {},
+  imageLoadStrategy: 'interleaveTopToBottom', // *影响加载策略，一般就interleaveTopToBottom
+  protocolMatchingRules: [ // *协议选择策略
+    {
+      attribute: 'ModalitiesInStudy',
+      constraint: {
+        contains: ['CT', 'PT'],
+      },
+    },
+  ],
+  displaySetSelectors: {
+    ctDisplaySet: {
+      seriesMatchingRules: [
+        {
+          weight: 1,
+          attribute: 'Modality',
+          constraint: {
+            equals: {
+              value: 'CT',
+            },
+          },
+          required: true,
+        },
+        {
+          weight: 1,
+          attribute: 'isReconstructable',
+          constraint: {
+            equals: {
+              value: true,
+            },
+          },
+          required: true,
+        },
+      ],
+    },
+    ptDisplaySet: {
+      seriesMatchingRules: [
+        {
+          attribute: 'Modality',
+          constraint: {
+            equals: 'PT',
+          },
+          required: true,
+        },
+        {
+          weight: 1,
+          attribute: 'isReconstructable',
+          constraint: {
+            equals: {
+              value: true,
+            },
+          },
+          required: true,
+        },
+        {
+          attribute: 'SeriesDescription',
+          constraint: {
+            contains: 'Corrected',
+          },
+        },
+      ],
+    },
+  },
+  stages: [
+    {
+      id: 'hYbmMy3b7pz7GLiaT',
+      name: 'default',
+      viewportStructure: {
+        layoutType: 'grid',
+        properties: {
+          rows: 1,
+          columns: 3,
+        },
+      },
+      viewports: [
+        {
+          viewportOptions: {
+            viewportId: 'ctAXIAL',
+            viewportType: 'volume',
+            orientation: 'sagittal',
+            initialImageOptions: {
+              preset: 'middle',
+            },
+            syncGroups: [
+              {
+                type: 'voi',
+                id: 'ctWLSync',
+                source: true,
+                target: true,
+              },
+            ],
+          },
+          displaySets: [
+            {
+              id: 'ctDisplaySet',
+            },
+          ],
+        },
+        {
+          viewportOptions: {
+            viewportId: 'ptAXIAL',
+            viewportType: 'volume',
+            orientation: 'sagittal',
+            initialImageOptions: {
+              preset: 'middle',
+            },
+          },
+          displaySets: [
+            {
+              id: 'ptDisplaySet',
+            },
+          ],
+        },
+        {
+          viewportOptions: {
+            viewportId: 'fusionSAGITTAL',
+            viewportType: 'volume',
+            orientation: 'sagittal',
+            initialImageOptions: {
+              preset: 'middle',
+            },
+            syncGroups: [
+              {
+                type: 'voi',
+                id: 'ctWLSync',
+                source: false,
+                target: true,
+              },
+            ],
+          },
+          displaySets: [
+            {
+              id: 'ctDisplaySet',
+            },
+            {
+              options: {
+                colormap: 'hsv',
+                voi: {
+                  windowWidth: 5,
+                  windowCenter: 2.5,
+                },
+              },
+              id: 'ptDisplaySet',
+            },
+          ],
+        },
+      ],
+      createdDate: '2021-02-23T18:32:42.850Z',
+    },
+  ],
+  numberOfPriorsReferenced: -1,
+};
+
+
+function getHangingProtocolModule() {
+  return [
+    {
+      id: 'oneByThreeProtocol',
+      protocol: oneByThreeProtocol,
+    },
+  ];
+}
+```
+
+##### id
+
+协议的唯一标识符，这个id可以在Mode configuration中用来指定该模式应该使用哪个协议。  
+一个Mode可以通过协议的id来请求一个协议；或者提供一个id数组，这将使得`ProtocolEngine`(管理所有protocol的)选择最佳的匹配协议（基于`protocolMatching`规则）
+
+##### imageLoadStrategy
+
+“图像加载策略”指定了OHIF内置“图像加载策略”函数的名称（就是直接选OHIF提供的策略），根据策略的不同会加载较早查看的图片比较晚加载的图片更早完成【？】。
+
+就三种：
+
+* `interleaveTopToBottom` - 从头到尾按顺序加载，适用于所有正在加载的Series。
+* `interleaveCenter` - 也是按顺序加载，不过是从中心开始（具有现实意义，因为一般医学影像的最开始切片并无意义）
+* `nth` - 从中心和终点开始，加载所有第$n$个Instance（应该就是切片），然后沿着各切片逐步填充。
+
+*【说的是`nth`策略可以很快的加载影像，不过我没看懂【】，这里统一用`interleaveTopToBottom`就行……*
+
+##### protocolMatchingRules
+
+有关这个协议的一些标准（或者就说Rule规则），用来提供排名点（当存在多个挂片协议时）。
+
+*文档写的跟实际上的代码不同，这里以实际上的代码为准：*
+
+为Rules，是有关Rule的数组，每个Rule对象格式如下：
+
+```js
+[
+    {
+      attribute: 'ModalitiesInStudy',
+      constraint: {
+        contains: ['CT', 'PT'],
+      },
+    },
+]
+```
+
+* `attribute` - 在**Study层级**上的一些tag(metadata)  
+  比如`StudyInstanceUID`、`StudyDescription`、`ModalitiesInStudy`、`NumberOfStudyRelatedSeries`、`NumberOfSeriesRelatedInstances`，  
+  以及一些自定义标签(Custom attribute)
+* `constraint` - 匹配的选项，有五种模式
+  * `equals`
+  * `doesNotEuqal`
+  * `contains`
+  * `doesNotContain`
+  * `startsWith`
+  * `endsWith`
+
+##### displaySetSelectors
+
+定义这个协议将会进行安排（到Viewport）的displaySets。  
+
+```js
+  displaySetSelectors: {
+    ctDisplaySet: { // 这个算是这个Selector的id，将在后面Viewports配置时用到
+      seriesMatchingRules: [ // 只有这一个属性：里面跟上面差不多一样，但注意是series层！
+        {
+          weight: 1,
+          attribute: 'Modality',
+          constraint: {
+            equals: {
+              value: 'CT',
+            },
+          },
+          required: true, // 是否是必要条件
+        },
+        {
+          weight: 1,
+          attribute: 'isReconstructable',
+          constraint: {
+            equals: {
+              value: true,
+            },
+          },
+          required: true,
+        },
+      ],
+    },
+    ptDisplaySet: {
+      seriesMatchingRules: [
+        {
+          attribute: 'Modality',
+          constraint: {
+            equals: 'PT',
+          },
+          required: true,
+        },
+        {
+          weight: 1,
+          attribute: 'isReconstructable',
+          constraint: {
+            equals: {
+              value: true,
+            },
+          },
+          required: true,
+        },
+        {
+          attribute: 'SeriesDescription',
+          constraint: {
+            contains: 'Corrected',
+          },
+        },
+      ],
+    },
+  }
+```
+
+需注意，这里的`seriesMatchingRules`与上面的`protocolMatchingRules`不同，这里是 Series 层。  
+也就**对应了`displaySet`里的所有Attributes**！如下图：  
+![图 5](images/Extension--03-31_12-29-39.png)
+
+并且在Rule里多了这几个属性：
+
+* `weight` - 权重  
+  最终，所有注册的Protocol都会根据Weight进行排序，获胜的协议会被应用到Viewer上。  
+  *【但个人并不知道这是怎么算的【……*
+* `required` - 就是是否是必要条件【非必要的话就只是增加权重吧……
+
+##### stage
+
+**Stage**用来描述**有关Viewports的Layout布局**（区别layoutTemplate描述的是整体页面的布局（包括左右上下侧栏等））、以及定义**具体每一个Viewport**（种类、朝向、同步、应用的displaySet）。
+
+![图 1](images/Extension--03-29_04-32-30.png)
+
+* `viewportStructure` - 每个Viewport的布局结构  
+  **注意**：Viewport编号顺序是先行后列。
+  * `layoutType` - 一般grid
+  * `properties` - 网格属性
+    * `rows` - 行数
+    * `columns` - 列数
+    * `layoutOptions`：规定每一个窗口的位置、长宽  
+      ![图 2](images/Extension--03-29_04-34-12.png)  
+      根据$rows*columns$划分好gird后，一个Viewport可占用更多的长宽。
+* `viewports` - 定义具体每个窗口的行为，为`[{}, {}, {}, ...]`按上面每个Viewport的顺序  
+  ![图 3](images/Extension--03-29_04-36-45.png)
+  * `viewportOptions` - 定义这个Viewport的选项
+    * `viewportId`(可选) - 对这个Viewport的唯一id
+    * `viewportType` - 两个选择：`stack`(默认)或`volumn`
+    * `background` - 
+    * `orientation`
+    * `toolGroupId`
+    * `initialImageOptions`
+    * `syncGroups`
+  * `displaySets`
+
+### 5. Viewport - 视窗
+
+关键词：在Mode中决定展示的初始窗口。
+
+### 6. Utility - 工具类
+
+该 Extension 的一些功能代码，可以暴露给其他 Extension/Mode 使用，作为“工具”。
+
+**该 Extension 导出：**
+
+```js
+getUtilityModule({ servicesManager }) {
+    return [
+      {
+        name: 'common',
+        exports: {
+          getCornerstoneLibraries: () => { // comman下的工具1
+            return { cornerstone, cornerstoneTools };
+          },
+          getEnabledElement, // comman下的工具2
+          CornerstoneViewportService, // ...3
+          dicomLoaderService, // ...4
+        },
+      },
+      {
+        name: 'core',
+        exports: {
+          Enums: cs3DEnums, // core下的工具1（实际上应该不是工具，只是一个枚举类型，作为静态变量
+        },
+      },
+      {
+        name: 'tools',
+        exports: {
+          toolNames,
+          Enums: cs3DToolsEnums,
+        },
+      },
+    ];
+  },
+};
+```
+
+**其他 Extension/Mode 使用：**
+
+```js
+const utilityModule = extensionManager.getModuleEntry( // .comman对应上面的name
+  '@ohif/extension-cornerstone.utilityModule.common'
+);
+
+const { CornerstoneViewportService } = utilityModule.exports; // 然后从该组的exports中取出utils
+```

@@ -50,6 +50,11 @@ const extensionManager = new ExtensionManager({
 如`extensionManager.getModuleEntry("@ohif/extension-measurement-tracking.panelModule.seriesList")`，  
 可以访问：EMT插件→panelModule→seriesList，这个panel。
 
+### 有关Data Sources
+
+这是比较迷惑的地方，`dataSources`在这里管理。  
+*【其应当作为一个服务的，比如在`DataSourcesService`中获得，但并不是orz……*
+
 ## 2. Services Manager - 服务容器
 
 服务容器用来进行服务注册的。  

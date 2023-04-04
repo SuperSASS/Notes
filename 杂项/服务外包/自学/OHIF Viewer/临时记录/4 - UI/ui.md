@@ -19,13 +19,13 @@ import { useViewportGrid } from '@ohif/ui';
 
 ```js
 const DEFAULT_STATE = {
-  numRows: null,
-  numCols: null,
-  layoutType: 'grid',
+  numRows: null, // Grids的行数
+  numCols: null, // Grids的列数
+  layoutType: 'grid', // 一般都是grid吧
   viewports: [
     {
-      displaySetInstanceUIDs: [],
-      viewportOptions: {},
+      displaySetInstanceUIDs: [], // 正在展示的DisplaySet的UID（OHIF中的UID）？
+      viewportOptions: {}, // 
       displaySetOptions: [{}],
       x: 0, // left
       y: 0, // top
@@ -34,7 +34,7 @@ const DEFAULT_STATE = {
       viewportLabel: null,
     },
   ],
-  activeViewportIndex: 0,
+  activeViewportIndex: 0, // 当前选中（就是被高亮）的Viewport Index
   cachedLayout: {},
 };
 
@@ -51,17 +51,31 @@ const api = {
 }; // 有些类似于Service中的Viewport Grid Service，但也有一点区别
 ```
 
-> 调用示例：
->
-> ```js
-> // extensions/measurement-tracking/src/panels/PanelStudyBrowserTracking.tsx
-> //-------------------------------------------------------------------------
-> import { useViewportGrid } from '@ohif/ui';
->
-> function name() {
->     const [
->         { activeViewportIndex, viewports, numCols, numRows },
->         viewportGridService,
->     ] = useViewportGrid();
-> }
-> ```
+**调用示例：**
+
+```js
+// extensions/measurement-tracking/src/panels/PanelStudyBrowserTracking.tsx
+//-------------------------------------------------------------------------
+import { useViewportGrid } from '@ohif/ui';
+
+function name() {
+    const [
+        { activeViewportIndex, viewports, numCols, numRows },
+        viewportGridService,
+    ] = useViewportGrid();
+}
+```
+
+## 2. Segmentation Group Table
+
+说明：
+
+* `Segmentation` - 标签组
+* `Segment` - 具体到某一个标签
+
+具体UI组件：
+
+* `SegmentationGroupTable` - 整个组件
+  * `GetSegmentationConfig` - 上方的配置栏
+  * `SegmentationGroup` - 一个标签组
+  * AddSegmentation
