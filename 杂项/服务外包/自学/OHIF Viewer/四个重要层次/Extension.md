@@ -774,3 +774,8 @@ const utilityModule = extensionManager.getModuleEntry( // .comman对应上面的
 
 const { CornerstoneViewportService } = utilityModule.exports; // 然后从该组的exports中取出utils
 ```
+
+### 7. Toolbar
+
+这个可能是自动注册的，并没有在Mode中看到直接的引用，但在定义Toolbar Button时又确实在用。
+

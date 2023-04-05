@@ -226,7 +226,7 @@ export default function getHangingProtocolModule() {
 
 ![图 4](images/Service--03-29_05-02-07.png)
 
-### 5. Viewport Grid Service
+## 5. Viewport Grid Service
 
 * **关键词：**有关Viewport和Grid的服务。  
 * **相关内容**
@@ -254,5 +254,5 @@ export default function getHangingProtocolModule() {
 
 *注：感觉可以在UI中获得这些服务，可见[OHIF-UI](../临时记录/4%20-%20UI/ui.md)。*
 
-## Segmentation Service
+## 6. Segmentation Service
 
