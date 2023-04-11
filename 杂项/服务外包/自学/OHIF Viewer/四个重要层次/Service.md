@@ -77,7 +77,9 @@ servicesManager.registerServices([
 
 * `ToolGroupService` - 有关（上方）工具栏的Service
 
-## Data Service
+## Data Service与
+
+**Data Service：**
 
 Data Service用来处理与UI无关的状态，因此每个Data Service都有自己要处理的内部状态。
 
@@ -90,44 +92,69 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 * State Sync Service - 状态同步服务
 * Panel Service - 侧边栏服务
 
+**Non Data Service：**
+
+……
+
 *添加自定义服务见"Service Manager"中。*
 
-### 1. Toolbar&ToolGroup Service - 工具栏服务
+---
+
+下面是具体的各个服务
+
+## 1. Toolbar&ToolGroup Service - 工具栏服务
 
 * `ToolBarService` - 只负责工具栏的工具注册（相当于UI层）
 * `ToolGroupService` - 负责工具的逻辑实现（相当于逻辑代码层）
 
-#### (1) toolbarButtons.js
+### API
 
-工具栏每一个按钮的定义：
+* `recordInteraction(interaction: object, options?: Record<string, unknown>)` - 执行所提供Tool的交互(Interaction)命令，  
+  其中`interaction`具体有以下属性：
+  * `interactionType`：就是`Tool.props.type`里三种(`tool`/`toggle`/`action`)  
+    具体差别可见[Mode里讲的](../%E5%9B%9B%E4%B8%AA%E9%87%8D%E8%A6%81%E5%B1%82%E6%AC%A1/Mode.md#有关props)或下方流程中的代码级差别。
+  * `itemId`：Tool的name（`Tool.id`）
+  * `groupId`：只有当为SpiltButton（`props`存在`groupId`）时，选择备选工具会有，代表工具选项组的id
+  * `commands`：就是用来给Command Manager进行`runCommand`的  
+    *不了解，可以看Extension里有关Command的内容，以及Manager里的Command Manager内容。*
+    * `commandName`
+    * `commaneOptions`
+    * `context`
 
-```json
-{
-  "id": "Zoom", // 唯一标识
-  "type": "ohif.radioGroup", // 种类，感觉有以下几个
-  "props": { // 具体该工具的属性
-    // ...
-  }
-}
-```
+### 点击后命令的调用流程
 
-有关type：
+首先，对于上方的工具栏"[Toolbar](../%E4%B8%B4%E6%97%B6%E8%AE%B0%E5%BD%95/4%20-%20UI/ui.md#上方header的工具栏toolbar组件)"，其是管理所有的工具Tool的，可在`extensions/default/src/Toolbar/Toolbar.tsx`中看到：  
+![图 10](images/Service--04-06_19-22-08.png)  
+对于每个Component（即Tool），都会传一个`onInteraction`为`{args => toolbarService.recordInteraction(args)}`，就是调上面说的按钮命令API，暂时称为"默认的`recordInteraction`函数"。
 
-* `ohif.radioGroup` - 可能是单个工具
-* `ohif.splitButton` - 工具组（Nested Buttons)
-* `ohif.action` - 
-* `ohif.layoutSelector` - 专门选择layout的
+[Toolbar]()上面的四种组件：`ToolbarButton`/`ToolbarSplitButton`/`ToolbarLayoutSelector`/`ToolbarDivider`，除开最后一个无命令，其他三个的层次分别为：  
 
-有关`props`：
+* `ToolbarLayoutSelector` - 对于点击Tool后，根据`onInteractionHandler`，只会弹出布局选项框(3*3那个)  
+  再点击布局选项框后，根据`onSelectionHandler`，会调用`toolbarService.recordInteraction`。  
+  ![图 6](images/Service--04-06_15-29-38.png)
+* `ToolbarSplitButton` - 有两种分别
+  * `PrimaryButton`即主要Tool：直接赋值了`onInteraction`为"默认的`recordInteraction`函数"  
+    ![图 9](images/Service--04-06_19-03-43.png)
+  * `SplitButtonItems`即候选项：在`onClick`里会调用传过来的`onInteraction`  
+    ![图 8](images/Service--04-06_19-02-53.png)  
+    而这个传过来的`onInteraction`，就是Toolbar传过来的"默认的`recordInteraction`函数"  
+    ![图 7](images/Service--04-06_19-02-25.png)
+* `ToolbarButton` - 点击Tool后，`onClick`里会调用传过来的`onInteraction`  
+  跟上面一样，也是由Toolbar传过来的"默认的`recordInteraction`函数"
 
-```js
-    type: 'tool',
-    icon: 'tool-zoom',
-    label: 'Zoom',
-    commands: _createSetToolActiveCommands('Zoom'),
-```
+---
 
-### 2. DICOM Metadata Store - DICOM元数据存储服务
+汇总进入到Service里的`recordInteraction`函数后，则会根据传进来的不同`interactionType`，执行不同操作。
+*在"ToolbarService"里`recordInteraction()`(68行)可以看到怎么运行commands的。*
+
+* `action` - 直接对传进来的`commands`**遍历**，通过Command Manager进行`runCommand`。  
+  直接`runCommand(Name, {commandOptions, 其他options(虽然有但不存在)}, context)`
+* `tool` - 对所有的`command`遍历，**只**执行`setToolActive`命令，并且更改Toolbar Service状态的`primaryToolId`（选中的Tool）为当前Id。  
+* `toggle` - 先切换开关量`toggle[itemId]`（如果没有，赋值为真），没`command`的话到这里就停止，  
+  然后如果存在`command`的话就执行，这个command一般是与控制开关量有关的（不是简单的切换，而是根据条件变化），当前的开关状态存在`commandOptions.toggleState`，  
+  但如果存在`command`，但却没有任何`command`被执行的话（比如`command`输错了），就又会切换一遍开关量`toggle[itemId]`（就是切换回去），感觉很奇怪，但能理解。
+
+## 2. DICOM Metadata Store - DICOM元数据存储服务
 
 `DicomMetaDataStore`将metadata存储在其中，  
 有一些API可以添加/获得有关Study/Series/Instance的元数据，  
@@ -152,7 +179,7 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 import { DicomMetadataStore } from '@ohif/core';
 ```
 
-#### 有关DataSource本身的API
+### 有关DataSource本身的API
 
 DataSource要从Extension Manager中获得。
 
@@ -160,7 +187,7 @@ DataSource要从Extension Manager中获得。
 ![图 5](images/Service--03-30_05-29-34.png)  
 具体可以看`extensions/default/src/DicomWebDataSource/index.js`里的`implementation`。
 
-### 3. Hanging Protocol Service
+## 3. Hanging Protocol Service
 
 目前大致看了下，感觉是有关**Viewport配置**的模组。
 
@@ -188,17 +215,17 @@ export default function getHangingProtocolModule() {
 }
 ```
 
-#### 3.1. API
+### 3.1. API
 
 补充API：
 
 * `getViewportsRequireUpdate(HangingProtocolModule, displaySetInstanceUID)`
 
-#### 3. 截图示例
+### 3.2. 截图示例
 
 ![图 3](images/Service--03-29_04-56-53.png)
 
-### 4. DisplaySet Service
+## 4. DisplaySet Service
 
 有关目前的DisplaySet相关的服务。
 
@@ -209,7 +236,7 @@ export default function getHangingProtocolModule() {
 
 在有被查询得到的Instances的元数据(metadata)添加到`DicomMetaDataStore`中后，对应的`DisplaySet`会被同步创建。
 
-#### 4.1. API
+### 4.1. API
 
 * `getActiveDisplaySets()` - 获得当前加载好的所有DisplaySet  
   所以并不是当前激活（正在展示的DisplaySet），有多少个Series就返回多少个对应的应该是。
@@ -222,7 +249,7 @@ export default function getHangingProtocolModule() {
     * `seriesUID: String` - 就是Series的UID
   * 返回：相应Series的DisplaySet
 
-#### 4. 截图示例
+### 4. 截图示例
 
 ![图 4](images/Service--03-29_05-02-07.png)
 

@@ -238,13 +238,11 @@ const commandsModule = ({ /* 3个Manager */ }) => {
     } = servicesManager.services;
 
     /// 2. 定义内部函数：一般如以下两个
-    function _getActiveViewportsEnabledElement() {
-    }
+    function _getActiveViewportsEnabledElement() {}
 
-    function _getMatchedViewportsToolGroupIds() {
-    };
+    function _getMatchedViewportsToolGroupIds() {}
 
-    // 3. 关键部分 - 定义返回所需的actions - 即所有命令函数
+    // 3. 关键部分(?) - 定义返回所需(?)的actions - 即所有命令函数
     const actions = {
         getSomething: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
         setSomething: ({ /* 需要的参数 */ }) => { /* 逻辑代码、返回结果 */ },
@@ -257,15 +255,15 @@ const commandsModule = ({ /* 3个Manager */ }) => {
     const definitions = {
         getSomething: {
             commandFn: actions.getSomething,
-            storeContexts: [], // 这个上下文会覆盖下方的defaultContext
             options: {},
+            context: "", // 可选，这个上下文会覆盖下方的defaultContext
         },
         // 把其它在actions里的补完
     }
 
     // return的时候，这样写就可以
     return {
-        actions,
+        // actions, // 或许可以不要
         definitions,
         defaultContext: 'TMTV:CORNERSTONE', // 这里指定所有命令的默认上下文
     };
@@ -273,6 +271,35 @@ const commandsModule = ({ /* 3个Manager */ }) => {
 
 export default commandsModule;
 ```
+
+#### 每个单独命令的骨架
+
+就是`definitions`里的东西：
+
+```js
+{
+  exampleActionDef: {
+      commandFn: ({ param1, options }) => { }, // 一般可以提出来写为action.exampleAction
+      options: { param1: 'measurement' },
+      context: 'DEFAULT',
+  }
+}
+```
+
+| 属性 | 类型 | 描述 |
+| --- |  --- |  --- |
+| `commandFn` | `function` | 当这个command被run的时候所调用的函数，会接受`options`(和`contexts`？) |
+| `options` | `object` | (可选) 传给`commandFn`的参数 |
+| `context` | `string[]` 或者 `string` | (可选) 覆盖`defaultContext`，让CommandManager知道这个命令在现在（当前上下文）能否运行 |
+
+#### 命令的运行方式
+
+* 当有多个Command同时符合运行条件（context匹配） - 所有Command都会运行  
+  可以在清除数据状态时用，比如`clearData`命令，用来清除多个插件的状态
+* 当没有Command符合运行条件（context没有匹配的） - 展示warning信息  
+  可用在当快捷键不可用，比如`invert`快捷键，在PDF类型的viewport是不可用的
+
+#### 
 
 ### 3. SOP Class Handler - SOP类处理器
 
@@ -779,3 +806,53 @@ const { CornerstoneViewportService } = utilityModule.exports; // 然后从该组
 
 这个可能是自动注册的，并没有在Mode中看到直接的引用，但在定义Toolbar Button时又确实在用。
 
+目前不考虑自己创建Toolbar种类，所以不做太详细扩展，  
+本身的理解（利用原有的Toolbar）可以见Mode、UI、Service中相应内容。
+
+#### 模组的骨架（默认的按钮种类）
+
+```js
+export default function getToolbarModule({ commandsManager, servicesManager }) {
+  return [
+    // 竖直的分割线
+    /// 但一般不直接用，而是作为splitButton里面的分割线
+    {
+      name: 'ohif.divider', 
+      defaultComponent: ToolbarDivider,
+      clickHandler: () => {},
+    },
+    // 下面三种都是单独的点击按钮，但真不知道具体是什么区别【……
+    {
+      name: 'ohif.action', // 可能是按了后会执行什么副作用命令的
+      defaultComponent: ToolbarButton,
+      clickHandler: () => {},
+    },
+    {
+      name: 'ohif.radioGroup', // 这个是最常用的，就是
+      defaultComponent: ToolbarButton,
+      clickHandler: () => {},
+    },
+    {
+      name: 'ohif.toggle', // 这个就纯没用到【……
+      defaultComponent: ToolbarButton,
+      clickHandler: () => {},
+    },
+    // 工具组，会有下拉列表然后有很多工具
+    {
+      name: 'ohif.splitButton',
+      defaultComponent: ToolbarSplitButton,
+      clickHandler: () => {},
+    },
+    // 特指那个会变n*m布局的选择器
+    {
+      name: 'ohif.layoutSelector',
+      defaultComponent: ToolbarLayoutSelector,
+      clickHandler: (evt, clickedBtn, btnSectionName) => {},
+    },
+  ];
+}
+```
+
+#### 在Mode中的使用
+
+*【我决定还是转到Mode里具体讲解，这OHIF的文档编排太怪了*……

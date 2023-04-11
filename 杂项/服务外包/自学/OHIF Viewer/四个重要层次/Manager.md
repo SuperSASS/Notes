@@ -203,7 +203,7 @@ const commandsManagerConfig = {
 const commandsManager = new CommandsManager(commandsManagerConfig);
 ```
 
-**命令/上下文管理：**
+### 命令/上下文注册与管理
 
 一般来说，Extension Manager会根据插件，自动处理上下文创建和命令注册，所以一般不需要手动注册所有命令，  
 只需要在个人的插件中，创建一个`commandsModule`，就能自动在提供的上下文中进行注册。
@@ -271,6 +271,42 @@ export default class ExtensionManager {
 ```
 
 【所以就不管手动创建注册了！……
+
+### API
+
+```js
+// 运行一个command，这会运行在所有context里的所有叫"speak"的command
+// 传参只能是一个object，里面包含了所有要传的参数
+commandsManager.runCommand('speak', { command: 'hello' });
+
+// 运行一个command，但只针对"DEFAULT"上下文里的"speak"
+// 传参只能是一个object，里面包含了所有要传的参数
+commandsManager.runCommand('speak', { command: 'hello' }, ['DEFAULT']);
+
+// 返回指定上下文里的所有commands
+commandsManager.getContext('string');
+```
+
+### Command的用处
+
+* 对于工具(Tool)，其只能运行一个个Command  
+  所以所有的工具逻辑都要写在并调用Command才行。
+
+### 记录一下目前的Command
+
+有三种上下文：
+
+* `default` - default插件里的commandModule
+* `CORNERSTONE` - cornerstone插件
+* `TMTV:CORNERSTONE` - tmtv插件
+
+#### default
+
+#### CORNERSTONE
+
+* `setToolActive` - 设置激活选中Tool
+  * 参数：`{ toolName, toolGroupId = null }`  
+    当`toolGroupId`不给予时，会自动获取为当前激活选中的Viewport的GroupId。
 
 ## 4. Hotkeys Manager
 

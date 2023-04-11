@@ -138,3 +138,28 @@ class DicomLoaderService{
 ```
 
 还有些用法可以见[js-function*](https://zhuanlan.zhihu.com/p/387328357)或补充里面的文章。
+
+## 3. bind函数
+
+对于一个`function`，可以通过`bind`来更改其上下文对象(`this`)和绑定参数(`args`)。
+
+需要注意，绑定参数是按从左到右的顺序，**被绑定的参数就不能再被赋值**了！【应该……
+
+```js
+const obj = {
+  attr1: 233,
+  attr2: "改变上下文到这个obj里了"
+}
+
+function func(arg1, arg2) { console.log(this.attr2 + ", " + arg1 + ", " + arg2); }
+func("没有bind");
+// underfind, 没有bind, underfind
+
+const func_1 = func.bind(obj, "我是arg1的默认参数");
+func_1();
+// 改变上下文到这个obj里了, 我是arg1的默认参数, undefined
+func_1("我想赋值到arg1，结果却到了arg2");
+// 改变上下文到这个obj里了, 我是arg1的默认参数, 我想赋值到arg1，结果却到了arg2
+```
+
+这个bind：第一个参数会将该函数绑定到一个对象（相当于改函数内部的this），第二个参数按顺序作为被bind函数的参数
