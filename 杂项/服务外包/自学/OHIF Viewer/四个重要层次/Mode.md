@@ -133,6 +133,9 @@ Mode的配置还接受`sopClassHandler`模组字段，会根据所提供的SOP C
 在现版本中，多了一个`ToolGroupService`服务，用来定义和管理Viewport的工具组(Tool Group)，【所以经常看到别人的`ToolGroupService`在这里配置，比如可参考默认Mode……  
 这是借鉴于Cornerstone的新玩意，所以需要深究请看[官方文档](https://www.cornerstonejs.org/docs/concepts/cornerstone-tools/toolgroups/)。
 
+**目前理解：**  
+就是主要用来**初始化工具组**(ToolGroup)和**工具**(ToolBar)的。
+
 ```js
 function modeFactory() {
   return {
@@ -265,7 +268,7 @@ Mode下的每个route都可以有自己的`init`，但共享该Mode的`onModeEnt
 **默认的`init`：**
 
 * 调用`retriveSeriesMetaData`，获取在URL定义的"studyInstanceUIDs"的这个研究的元数据。
-* 订阅`instanceAdded`事件（感觉是Service->DICOM Metadata Store->INSTANCES_ADDED），用来在一个Series获取(retrieving)完他instances的元数据后，产生DisplaySet。
+* 订阅`instanceAdded`事件（感觉是Service->DICOM Metadata Store->INSTANCES_ADDED），用来在一个Series获取(retrieving)完所有的instances的元数据后，产生DisplaySet。
 * 订阅`seriesAdded`事件（感觉一样），用来在这个Study的所有Series都获取完后，运行"HangingProtocolService"。
 
 简化的伪代码如下：
@@ -302,6 +305,7 @@ async function defaultRouteInit(
   
   // 就是根据StudyUID，到数据源进行所有Series的查询【注意顺序可能不能在上个订阅的前面
   // 【这里暂时存在疑惑：每次打开的时候应该只会加载一个Study呀？为什么会遍历……
+  /// 暂时的回答：实际上可以看到，左侧栏在All选项中还会打开属于该Patient的其他Study，所以这里在遍历
   studyInstanceUIDs.forEach(StudyInstanceUID => {
     dataSource.retrieve.series.metadata({ StudyInstanceUID });
   });
@@ -311,7 +315,7 @@ async function defaultRouteInit(
   DicomMetadataStore.subscribe('seriesAdded', ({ StudyInstanceUID }) => {
     const displaySets = DisplaySetService.getActiveDisplaySets(); // 得到DisplaySets
     const studies = displaySets.reduce(/* ... */) // 得到所有Studies【reduce应该是去重】
-    const activeStudy = studies[0]; // 默认让第一个Study作为活跃的（被选中的）【应该是让Viewport#0现实Studies#0（的Serial#0）……
+    const activeStudy = studies[0]; // 默认让第一个Study作为活跃的（被选中的）【应该是让Viewport#0显示Studies#0（的Serial#0）……
     // 这个暂时不明，对挂片协议服务还不了解【run是干嘛的？】
     HangingProtocolService.run({studies, activeStudy, displaySets}, hangingProtocol);
   });
@@ -332,6 +336,8 @@ async function defaultRouteInit(
 1. `dataSource.retrieve.series.metadata`获取所有Series
 2. `makeDisplaySets`产生Series的DisplaySets
 3. `run`挂片协议
+
+*以下这段是文档举的一个例子，用在跳转到有批注测量的切片上【但我没看出来在哪跳转了orz*……
 
 ```js
 init: async ({
@@ -379,8 +385,6 @@ init: async ({
   return unsubscriptions;
 };
 ```
-
-*这段是文档举的一个例子，用在跳转到有批注测量的切片上【但我没看出来在哪跳转了orz*……
 
 ### 3. layoutTemplate
 
@@ -434,4 +438,200 @@ A1：这正是OHIF-v3的闪光点（<ゝω・）☆Kira……，因为默认的`
       1. 查询StudyInstanceUIDs的所有Series
       2. 上一步完成后，生成对应的DisplaySets【通过触发EVENTS.INSTANCES_ADDED订阅时，里面的makeDisplaySets实现的
       3. Promise实现，run挂片协议【但暂时还是不了解这个run……
-  
+
+### ⭐有关工具和工具组
+
+`Toolbar`和`ToolGroup`几乎都是每个Mode都要配置的，都在`onModeEnter`钩子中配置，  
+分别涉及到Extension的`ToolbarModule`（但这里一般都是用"default"插件的工具）和Service的`ToolbarService, ToolGroupService`。
+
+首先是**有关Toolbar的配置**：
+
+```js
+import toolbarButtons from './toolbarButtons.js';
+
+function modeFactory({ modeConfiguration }) {
+  return {
+    id: 'viewer',
+    displayName: '基础影像浏览器',
+
+    onModeEnter: ({ servicesManager, extensionManager }) => {
+      const { ToolBarService } = servicesManager.services;
+
+      /* 这要先处理有关工具组ToolbarGroup的东西 */
+
+      ToolBarService.init(extensionManager); // 服务初始化
+      ToolBarService.addButtons(toolbarButtons); // 添加按钮，有关按钮的具体介绍在下toolbarButtons.js，但此时并不会展示到工具类！（只是申明）
+      toolbarService.createButtonSection('primary', [
+        /* 各个要展示在上方工具栏的工具（对应toolbarButtons.js里每一个Tool的id） */
+      ]);
+    },
+    /* 其他代码 */
+  };
+}
+```
+
+#### (1) toolbarButtons.js
+
+**作用：**
+
+* 直接定义到上方工具栏的东西（但并不能使用到Viewport，需要将该Tool与Viewport绑定到同一ToolGroup）
+
+工具栏每一个**工具(Tool)按钮的骨架**定义如下：
+
+```json
+{
+  "id": "Zoom", // 唯一标识
+  "type": "ohif.radioGroup", // 种类，就是Extension的ToolbarModule里自动(?)注册的
+  "props": { // 具体该工具的属性，有复杂的属性
+    // ...
+  }
+}
+```
+
+##### 有关type
+
+是在引用的Extensions，里的"ToolbarModule"注册的东西，  
+可以看到只有`default`插件注册了6种。
+
+常用的就四种：
+
+* `ohif.radioGroup` - 可能是单个工具
+* `ohif.action` - 也是单个工具，但带有复杂的命令（应该是调用Command吧）
+* `ohif.splitButton` - 工具组(Nested Buttons)
+* `ohif.layoutSelector` - 专门选择layout的
+
+虽然在`default` Extension里注册了6种工具类别，但实际上感觉用到的就这四种。【其他具体的可以见Extension里写的……
+
+> **我就把话说在这了：**
+>
+> `radioGroup`、`action`、`toggle`，这三个定义在Tool顶层属性的`type`，没有任何区别！！！……  
+> 纯纯的搞人，真正决定调用方式的是`Tool.props.type`！！……  
+> 因为本身这三者在`getToolbarModule.tsx`中，定义就是一模一样的！……  
+> 也许在其他不知道的地方可能有区别，但反正目前我互换了之后，没发现任何区别！……  
+> 或者是现在没区别，但以后会区别化【那就以后再放出来啊Kora！……
+>
+> 只有`splitButton`、`layoutSelector`和`divider`这三个和上面的会有区别……  
+> 然后`divider`也有点问题，纯纯搞子……
+
+##### 有关props
+
+根据该Tool的不同`type`，会有不同的`props`配置。  
+具体的话，可以在`extensions/default/src/getToolbarModule.tsx`里看到所有的type，然后导出函数里需要的参数，就是`props`。
+
+**对于`type: "ohif.radioGruop"`（包括`action`和`toggle`）的：**
+
+```js
+  props: {
+    type: 'tool', // 这个跟外面的type不同，只有以下三种
+    icon: 'tool-zoom', // 该Tool展示的图标
+    label: 'Zoom', // 该Tool显示的名字【Tool Tip悬浮显示的东西……
+    commands: _createSetToolActiveCommands('Zoom'),
+  }
+```
+
+**⭐`props.type`的三种**：
+
+* `tool` - 就是激活工具  
+  关键：点击后，会激活切换当前工具（一直高亮显示），一个时间只能有一个active的tool
+* `toggle` - 切换开关量  
+  关键：点击后，会切换开关状态（开的话就是蓝色显示，关的话就是白色显示），比如MPR那个
+* `action` - 执行command  
+  关键：点击后，不会切换到该工具（一直高亮显示），比如Capture那个
+
+*代码级差别可见[Service](Service.md#点击后命令的调用流程)里。*
+
+---
+
+**对于`type: "ohif.splitButton"`的：**
+
+```js
+    props: {
+      groupId: 'MeasurementTools',
+      isRadio: true, // 是否是Radio类型的选项组：是的话选择子选项，会顶替该选项上去！如批注工具
+      isAction: false, // 是否是Action类别的选项组：是的话选择子选项，只会执行操作，不会代替选项！如窗宽窗位（与isRadio互斥）
+      primary: { // 首选工具，属性如下
+        type: "", // 跟Tool.props一样，只有三种：tool、toggle、action
+        id: "", // 这莫名其妙又来个id，可跟label相同【……
+        label: "", // 展示名字
+        icon: "", // 图标
+        command: [ // 会执行的命令，有些复杂
+          {}
+        ],
+        tooltip: "", // 工具的悬浮提示【区别于radioGruop，直接拿label作为提示
+        uiType: "", // 虽然有这个属性，但一般不配置
+      }
+      secondary: { // 这个一般照抄，就是下箭头的那儿
+        icon: 'chevron-down',
+        label: '',
+        isActive: true,
+        tooltip: 'More Measure Tools', // 这个Tool Tip可以相应改改
+      },
+      items: [ // 选项卡里的东西 - 备选工具
+        // ⚠注意：这里的Tool定义，跟上面的Tool定义不一样！
+        // 这里每个Tool的属性跟渲染函数有关！默认的渲染函数就是上面primary里的属性，但也存在公共字段！！
+        // 但如窗宽窗位的渲染函数(renderer: WindowLevelMenuItem)，就是title、subtitle这些
+        /// ⚠再注意：如果isRadio，这里也需要把在primary里的写过来，不然在选别的工具组后会无之……
+        {},
+      ],
+    },
+```
+
+有关`items`备选Tools，其每个Tool公有有以下字段：
+
+* `id`
+* `type` - 和id这两个，跟基本的Tool属性一样的
+* `command` - 这个相当于直接把`Tool.props`里的`command`拿了出来
+
+⭐渲染函数(`renderer`)，可见[UI笔记里的"ListItem"](../%E4%B8%B4%E6%97%B6%E8%AE%B0%E5%BD%95/4%20-%20UI/ui.md#内嵌---listitem)！
+
+*这里用的是ui里的`SplitButton`，具体可以看源文件【】或者[UI笔记里的记录](../%E4%B8%B4%E6%97%B6%E8%AE%B0%E5%BD%95/4%20-%20UI/ui.md#4-splitbutton)。*  
+
+---
+
+**对于`type: "ohif.layoutSelector"`的：**
+
+* `rows`：行数
+* `columns`：列数
+
+这个的悬浮提示，应该在`extensions\default\src\Toolbar\ToolbarLayoutSelector.tsx`里定义的
+
+##### 有关commands
+
+`ohif.splitButton`和`ohif.radioGruop`都有`commands`。
+
+首先`commands`为数组，所以可以执行多个`command`，应当是按顺序执行(`forEach`)，  
+一个`command`有三个属性：
+
+* `commandName`
+* `commandOptions`
+* `context`，  
+
+三个组合成一个`command`就是`commandManager.runcommand(...)`。
+
+*不同`type`的执行在Service的执行区别、记忆Commands执行流程见[Service](Service.md#点击后命令的调用流程)部分。*  
+
+#### (2) initToolGroup.js
+
+**作用：**
+
+* 申明创建工具组(ToolGroup)
+* 并向工具组中添加工具(Tool)，工具有四种类型。
+
+*【格式比较固定，抄新的tmtv的格式就好*……
+
+解释一下`const tools`里的四个type：
+
+| Tool Mode | Description |
+| --- |  --- |
+| Active | 该工具会进行绑定（一般都是鼠标）来相应交互。如果是批注(Annotation)工具，不在已有的批注上点击会创建新批注。【一般只有缩放、窗宽窗位、移动、滚片切片**这四个** |
+| Passive (default) | 会交互，但应该不会绑定如果是批注工具，且如果对于的Handle(?)或线条被选中，其可以被移动和重新定位。【所以批注的东西一般就这 |
+| Enabled | 这个工具会被渲染，但不会有交互？【所以一般不用 |
+| Disabled | 既不会渲染，也不会交互【几乎不用吧 |
+
+存在点点疑惑：
+
+* Active比Passive就多了个`bindings`，但如果没填，是不是就是Passive
+* 我大一货啊？？怎么`disabled`的反而会渲染，而不在`disabled`反而用不了？？？
+
+**有关Bindings：**  
+![图 1](images/Mode--04-07_23-40-56.png)

@@ -343,3 +343,43 @@ export default function getCustomizationModule() {
 * `Mode` - 对应各个模式的路由
 * `WorkList` - 主页面（根）路由
 * `NotFound` - 404路由【但根本没发现这个orz……
+
+### 可能存在登陆系统OIDC
+
+`appConfig.oidc`
+
+default插件中的LayoutTemplate：  
+![图 2](images/OHIF--04-07_21-49-25.png)
+
+### 有关i18n
+
+添加差不多知道了，就在`src/locales`里，比如中文就`zh`里，找对应的匹配文件json，然后添加匹配项。  
+如果要添加新的匹配文件，需要在`index.js`里添加导出。
+
+**使用i18n：**
+
+```js
+import { useTranslation } from 'react-i18next';
+
+/// 注意，下面的const { t }不能在全局运用
+
+/// 方式1：不带匹配文件
+const { t } = useTranslation();
+t("匹配文件:一大串要匹配的字符 可带空格");
+
+/// 方式2：带匹配为念
+const { tt } = useTranslation("Common");
+tt("A string wanted to use i18n"); // 会自动找Common.json里的"A string wanted to use i18n"
+```
+
+提示：对于HTML标签中，不能直接用`t()`，可以用`String(t())`。
+
+~~有些诡异的是，可能不加`t()`，只要其他语言中存在该字符串，就会替换。  ~~
+~~比如`measurement-tracking`里的`PanelStudyBrowserTracking.tsx`里的那三个Primary、Recent和All。  ~~
+~~【我觉得怖……~~  
+破案了，是因为生成的`tabs`，会传到`StudyBrowser.tsx`这个UI组件里，里面用了i18n。
+
+### 有关删除DICOM-Web的东西(Report)
+
+在"PanelStudyBrowserTracking.tsx"里有示例吧：  
+![图 4](images/OHIF--04-07_22-15-35.png)
