@@ -4,7 +4,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": -616.5,
-    "scrollLeft": -559,
+    "scrollLeft": -358,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -19,7 +19,7 @@
     },
     "database": "MSSQL",
     "databaseName": "",
-    "canvasType": "@vuerd/builtin-generator-code",
+    "canvasType": "ERD",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -43,13 +43,211 @@
     }
   },
   "table": {
-    "tables": [],
+    "tables": [
+      {
+        "name": "",
+        "comment": "",
+        "columns": [
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "a93c7c1b-d5bf-499d-b0aa-a8cabf8b5e9c"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "723910b3-4e46-489e-b121-9e4cfd48bfbc"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "8d22ce87-d782-481e-abf5-cd13f0a4d8de"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 563,
+          "top": 734.5,
+          "zIndex": 19,
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "c16d4e8c-0978-487e-852a-0fd3dd4d6bfc"
+      },
+      {
+        "name": "",
+        "comment": "",
+        "columns": [
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "a918dae9-02fb-42ca-b586-9a9b7ca73a50"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f953775a-ff9e-420c-a106-eeb2ff9d0327"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "07aceec6-79e6-43f7-8f33-15d344d6ec5d"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1063,
+          "top": 827.5,
+          "zIndex": 22,
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "4f0723f6-ba6c-4064-ae24-efef7924c59a"
+      }
+    ],
     "indexes": []
   },
   "memo": {
     "memos": []
   },
   "relationship": {
-    "relationships": []
+    "relationships": [
+      {
+        "identification": false,
+        "relationshipType": "ZeroOne",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "c16d4e8c-0978-487e-852a-0fd3dd4d6bfc",
+          "columnIds": [
+            "8d22ce87-d782-481e-abf5-cd13f0a4d8de"
+          ],
+          "x": 910,
+          "y": 799.75,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "4f0723f6-ba6c-4064-ae24-efef7924c59a",
+          "columnIds": [
+            "07aceec6-79e6-43f7-8f33-15d344d6ec5d"
+          ],
+          "x": 1063,
+          "y": 892.75,
+          "direction": "left"
+        },
+        "constraintName": "fk__to_",
+        "visible": true,
+        "id": "7624abb2-5486-4f67-a970-9bc4c4bdbce3"
+      }
+    ]
   }
 }

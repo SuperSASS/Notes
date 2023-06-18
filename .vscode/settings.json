@@ -1,56 +1,75 @@
 {
     // 工作区插件设置 - LaTeX Workshop
+    // "latex-workshop.latex.tools": [
+    //     {
+    //         "name": "pdflatex", // 对纯英文支持好
+    //         "command": "pdflatex",
+    //         "args": [
+    //             "-synctex=1",
+    //             "-interaction=nonstopmode",
+    //             "-file-line-error",
+    //             "%DOCFILE%"
+    //         ]
+    //     },
+    //     {
+    //         "name": "bibtex", // 含有引用时用这个
+    //         "command": "bibtex",
+    //         "args": [
+    //             "%DOCFILE%"
+    //         ]
+    //     },
+    //     {
+    //         "name": "xelatex", // 对中文支持好
+    //         "command": "xelatex",
+    //         "args": [
+    //             "-synctex=1",
+    //             "-interaction=nonstopmode",
+    //             "-file-line-error",
+    //             "-pdf",
+    //             "%DOC%"
+    //         ]
+    //     },
+    // ],
+    // "latex-workshop.latex.recipes": [ // 编译策略
+    //     {
+    //         "name": "中文用……",
+    //         "tools": [
+    //             "xelatex"
+    //         ]
+    //     },
+    //     {
+    //         "name": "英文用……",
+    //         "tools": [
+    //             "pdflatex"
+    //         ]
+    //     },
+    //     {
+    //         "name": "引用用……",
+    //         "tools": [
+    //             "xelatex",
+    //             "bibtex",
+    //             "xelatex",
+    //             "xelatex"
+    //         ]
+    //     }
+    // ],
+    "latex-workshop.latex.recipes": [
+        {
+        "name": "tectonic",
+        "tools": ["tectonic"]
+        }
+    ],
     "latex-workshop.latex.tools": [
         {
-            "name": "pdflatex", // 对纯英文支持好
-            "command": "pdflatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "%DOCFILE%"
-            ]
-        },
-        {
-            "name": "bibtex", // 含有引用时用这个
-            "command": "bibtex",
-            "args": [
-                "%DOCFILE%"
-            ]
-        },
-        {
-            "name": "xelatex", // 对中文支持好
-            "command": "xelatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-pdf",
-                "%DOC%"
-            ]
-        },
-    ],
-    "latex-workshop.latex.recipes": [ // 编译策略
-        {
-            "name": "中文用……",
-            "tools": [
-                "xelatex"
-            ]
-        },
-        {
-            "name": "英文用……",
-            "tools": [
-                "pdflatex"
-            ]
-        },
-        {
-            "name": "引用用……",
-            "tools": [
-                "xelatex",
-                "bibtex",
-                "xelatex",
-                "xelatex"
-            ]
+        "name": "tectonic",
+        "command": "tectonic",
+        "args": [
+            "-X",
+            "compile",
+            "--keep-intermediates",
+            "--keep-logs",
+            "%DOC%.tex"
+        ]
         }
     ],
     "latex-workshop.showContextMenu": true, // 在LaTeX文档添加右键菜单选项

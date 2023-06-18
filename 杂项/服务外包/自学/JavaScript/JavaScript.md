@@ -163,3 +163,55 @@ func_1("我想赋值到arg1，结果却到了arg2");
 ```
 
 这个bind：第一个参数会将该函数绑定到一个对象（相当于改函数内部的this），第二个参数按顺序作为被bind函数的参数
+
+## 4. for
+
+* `for in` - 遍历对象(或数组)的属性（因此可以`for (index in arr(obj)) { arr(obj)[index]; }`  
+  但有一些缺陷。
+* `for of` - 未知
+
+## 5. Promise
+
+### 基本用法 - new Promise
+
+```js
+const promise = new Promise((resolve, reject) => { // reject是可选的
+    try{
+      // 里面放需要异步的函数
+      const result = await 一些异步函数();
+      // 最终成功
+      resolve(/* 外界传的resolve函数（由then提供），所需的内部参数 */);
+    }
+    catch (e) {
+      // 中途失败
+      reject(/* 外界传的reject函数（由then提供），所需的内部参数 */))
+    }
+  }
+); 
+```
+
+`new Promise()`的参数就一个：`executor`，是带有`resolve`和`reject`两个参数、**没有返回值**（返回值会被忽略）的函数。  
+Promise构造函数执行时**立即调用**`executor`函数！【但因为里面有异步函数，比如会`await`，所以一般执行不完会等着……  
+
+当最终内部的`executor`全部执行完后，改状态为`fulfilled`，调用`resolve`；  
+当内部执行完前发生错误(抛出一个错误)时，调用`reject`(如果有)，并同样抛出错误。
+
+此时new返回的是一个promise对象，存在若干方法，  
+基本的是`then`方法，在后面讲。
+
+#### 延迟执行executor
+
+如果不希望立即执行`exector`，可以在外面套一层`function`，并记得返回【否则这个承诺就谁也记不到了……
+
+```js
+const run = () => { return new Promise(executor); }
+
+const promise = run(); // 执行
+```
+
+### 结果处理 - then
+
+每个Promise的实例对象，都有一个`then`的方法，这个方法就是用来处理之前各种异步逻辑的结果。
+
+接受（一或）两个回调参数，就是上面提到的`resolve`和`reject`(可选)，  
+回调函数的参数可以自定，只需要在内部调`resolve`时传过去就可以。
