@@ -299,8 +299,6 @@ export default commandsModule;
 * 当没有Command符合运行条件（context没有匹配的） - 展示warning信息  
   可用在当快捷键不可用，比如`invert`快捷键，在PDF类型的viewport是不可用的
 
-#### 
-
 ### 3. SOP Class Handler - SOP类处理器
 
 **关键词**： DICOM SOP Class → displaySet
@@ -320,11 +318,15 @@ Mode会选择使用何种SOPClassHandler，所以在该Viewer应用中，可以�
 
 #### 作用
 
-在`DisplayService`中会用这个Module，会注册到该服务中（只要是在Mode中所有插件加载的这个Module都会），  
-然后可将"DICOM raw metadata"格式转化为OHIF的"DisplaySet"格式，  
-以供Viewport展示。
+在`displaySetService`中会用这个Module，会注册到该服务中（只要是在Mode中所有插件加载的这个Module都会），  
+然后可**将"OHIF-Series-Metadata"(参数传的式其中的instances属性)格式转化为OHIF的"DisplaySet"格式**，  
+然后应该会存到DisplaySetService里，在以后以供Viewport展示。
+
+**注意：**刚开始转换出来的displaySet，只拥有基本属性，其重要的数据(PixelData)还没加载，其`isLoaded`(是否加载完成)和`loading`(是否加载中)属性为`false`。
 
 #### 骨架图
+
+**注意！**：所有转换为displaySet的函数，都具有参数`instances`，即代表OHIF-Series-Metadata里的该属性。
 
 最后要**返回**的三个东西：
 
@@ -337,6 +339,8 @@ return [
   },
 ];
 ```
+
+都要返回一个`getDisplaySetsFromSeries`函数，用于在`DisplaySetService`中调用。
 
 故**骨架图**：
 
@@ -369,6 +373,10 @@ export default function getSopClassHandlerModule() {
   ];
 }
 ```
+
+#### 其他
+
+有关SOPClassHandler，具体将某一Series(OHIF-Series-Metadata/instances, 注意有s)转换为displaySet的流程，可见[有关 Viewport + HangingProtocol + DisplaySet + SOPClassHandler 的综合总结](../%E4%B8%B4%E6%97%B6%E8%AE%B0%E5%BD%95/5%20-%20Viewport%2B%E6%8C%82%E7%89%87%E5%8D%8F%E8%AE%AE%2BDisplaySet/5.Viewport%2BHangingProtocol%2BDisplaySet%2BSOPClassHandler.md)。
 
 #### 已知的SOP Class Handler
 

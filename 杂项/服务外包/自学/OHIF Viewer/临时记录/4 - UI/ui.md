@@ -175,6 +175,24 @@ const DefaultListItemRenderer = ({ type, icon, label, t, id }) => {
 * `onInteraction` - 哈？……
 * `servicesManager` - 哈？……
 
+## 5. uiViewportDialogService + useViewportDialog + Notification
+
+这三个用来显示Viewport中的Notification。  
+比如那个添加测量后，问是否追踪。
+
+方法：
+
+* 在Viewport中，引入`useViewportDialog`，获取服务的状态（就是各种文本和回调函数）  
+  
+  ```js
+  const [viewportDialogState, viewportDialogApi] = useViewportDialog();
+  ```
+
+* 在Viewport最后的返回组件，添加一个Notification组件，参数全传`viewportDialogState`里的。  
+  具体样式见"OHIFCornerstoneSEGViewport.tsx"。
+* 在某处调用`uiViewportDialogService.show()`，内部传各种参数。  
+  `show`后会自动更改Context，会呈现到Notification组件。
+
 ## 杂项
 
 ### 进入Mode后整个页面的框架

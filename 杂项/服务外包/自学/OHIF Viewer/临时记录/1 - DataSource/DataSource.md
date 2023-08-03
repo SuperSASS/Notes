@@ -15,3 +15,14 @@
 关键就在于从Extension Manager里得到的Data Sources对象，其中包含了对数据源的基本方法，如下图：  
 ![图 1](images/DataSource--03-21_23-01-29.png)  
 其中的`store.dicom()`方法，但参数还未知。
+
+## 进入Mode后，会先查询Series的Metadata，导致后面查询时取缓存
+
+![图 2](images/DataSource--04-12_06-38-00.png)  
+
+## 对于同步(Sync)与不同步(Async)RetrieveSeriesMetadata的差异
+
+**同步：**  
+![图 3](images/DataSource--04-12_07-15-15.png)  
+
+**不同步：**  

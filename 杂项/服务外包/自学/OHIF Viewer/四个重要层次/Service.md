@@ -156,7 +156,7 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 
 ## 2. DICOM Metadata Store - DICOM元数据存储服务
 
-`DicomMetaDataStore`将metadata存储在其中，  
+`DicomMetaDataStore`将metadata(均为OHIF格式，而非Raw格式)存储在其中，  
 有一些API可以添加/获得有关Study/Series/Instance的元数据，  
 `DataSource`使用`DicomMetaDataStore`来增加或查询(retrieve)元数据。
 
@@ -178,6 +178,67 @@ Data Service用来处理与UI无关的状态，因此每个Data Service都有自
 ```js
 import { DicomMetadataStore } from '@ohif/core';
 ```
+
+### 内部存储的Study格式
+
+```js
+studies: [
+  {
+    // Study层级属性
+    StudyInstanceUID: string,
+    StudyDescription: string | undefined
+    isLoaded: boolean, // 是否加载完成吧
+    ModalitiesInstudy: Array<string>, // 拥有的所有影像类型
+    NumberOfStudyRelatedSeries: number, // 应该是Series数量吧
+    // 函数
+    setSeriesMetadata: function(SeriesInstanceUID, seriesMetadata), // 就是设置指定SeriesUid为OHIF-Series-Metadata
+    addInstance(s)ToSeries: function(instance(s)), // 把OHIF-Instance-Metadata加入到该Study下的对应Sereis
+    // 该Study所有的Series
+    series: [
+      {
+        // Study层级属性
+        StudyInstanceUID: string,
+        StudyDescription: string | undefined,
+        // Series层级属性
+        SeriesInstanceUID: string,
+        SeriesDescription: string | undefined,
+        SOPClassUID
+        SeriesNumber: number | null,
+        SeriesTime: string,
+        Modality: string,
+        // OHIF专属属性
+        ProtocolName: string | undefined,
+        // 该Series所有的Instances
+        instances: [
+          {
+            // 类型为OHIF-Instance-Metadata(naturalized instance metadata)
+            SOPInstanceUID: string,
+            SOPClassUID: string,
+            Rows: number,
+            Columns: number,
+            PatientSex: string,
+            Modality: string,
+            InstanceNumber: string,
+            imageId: string,
+            PixelData: object,
+            ...
+          },
+          {
+            // instance 2
+          },
+        ],
+      },
+      {
+        // series 2
+      },
+    ],
+  },
+  { study 2 }
+],
+```
+
+在内部存放在`_model`中。  
+内部各个方法的时间都基于这个`_model`，进行查询、设置等。
 
 ### 有关DataSource本身的API
 
