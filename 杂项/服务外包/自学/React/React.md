@@ -473,6 +473,6 @@ const inputRef = useRef<HTMLInputElement>(null);
 ```
 
 只是单方面用来引用HTML元素的（单方面绑定），  
-而不是用来改变，然后影像HTML元素的。
+而不是用来改变，然后影响HTML元素的。
 
 因为更改`ref.current`，不会重渲。

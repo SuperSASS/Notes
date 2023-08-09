@@ -184,7 +184,7 @@ const promise = new Promise((resolve, reject) => { // reject是可选的
     }
     catch (e) {
       // 中途失败
-      reject(/* 外界传的reject函数（由then提供），所需的内部参数 */))
+      reject(/* 外界传的reject函数（由then提供），所需的内部参数 */);
     }
   }
 ); 
