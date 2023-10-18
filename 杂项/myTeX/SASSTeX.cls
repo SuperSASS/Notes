@@ -105,7 +105,7 @@
 %% 中文字体
 \setCJKmainfont[AutoFakeBold,AutoFakeSlant]{SimSun} % 衬线字体 - 中体（假粗体、假斜体）
 \setCJKsansfont[BoldFont = Microsoft~YaHei~Bold,AutoFakeSlant]{SimHei} % 非衬线字体 - 黑体（粗体为微软雅黑、假斜体）
-\setCJKmonofont[BoldFont = sarasa-mono-sc-bold.ttf, ItalicFont = sarasa-mono-sc-italic.ttf]{sarasa-mono-sc-regular.ttf} % 等宽字体 - 更纱黑体（假粗体、假斜体）（其实就是黑体）
+%\setCJKmonofont[BoldFont = sarasa-mono-sc-bold.ttf, ItalicFont = sarasa-mono-sc-italic.ttf]{sarasa-mono-sc-regular.ttf} % 等宽字体 - 更纱黑体（假粗体、假斜体）（其实就是黑体）
 \setCJKfamilyfont{ChineseKaiFont}[AutoFakeBold,AutoFakeSlant]{simkai.ttf} % 楷体（假粗体、假斜体）
 \setCJKfamilyfont{ChineseCommentFont}[AutoFakeBold, ItalicFont = simkai.ttf]{simkai.ttf} % 专门用于代码中中文注释的字体（就是不会倾斜的楷体）
 % - %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
