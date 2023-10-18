@@ -11,7 +11,7 @@ function Welcome(props) {
 ```
 
 组件为一个函数，  
-接收唯一参数`props`代表组件属性，可包含数据或方法（回调函数）；  
+接收**唯一参数**`props`，代表组件属性，可包含数据或方法（回调函数）；  
 返回一个HTML标签（React元素）。
 
 使用组件则像HTML标签一样
@@ -27,7 +27,7 @@ ReactDOM.render(
 );
 ```
 
-## 事件属性
+## 事件触发属性 - onX
 
 在React中，要使用事件触发属性，如`onclick=""`之类的，方法如下：
 
@@ -473,6 +473,4 @@ const inputRef = useRef<HTMLInputElement>(null);
 ```
 
 只是单方面用来引用HTML元素的（单方面绑定），  
-而不是用来改变，然后影响HTML元素的。
-
-因为更改`ref.current`，不会重渲。
+而不是用来改变然后影响HTML元素的，因为更改`ref.current`，不会重渲。

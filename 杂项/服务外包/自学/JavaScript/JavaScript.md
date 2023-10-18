@@ -194,7 +194,7 @@ const promise = new Promise((resolve, reject) => { // reject是可选的
 Promise构造函数执行时**立即调用**`executor`函数！【但因为里面有异步函数，比如会`await`，所以一般执行不完会等着……  
 
 当最终内部的`executor`全部执行完后，改状态为`fulfilled`，调用`resolve`；  
-当内部执行完前发生错误(抛出一个错误)时，调用`reject`(如果有)，并同样抛出错误。
+当内部执行完前发生错误(抛出一个错误)时，调用`reject`(如果有)，并抛出同样错误。
 
 此时new返回的是一个promise对象，存在若干方法，  
 基本的是`then`方法，在后面讲。
