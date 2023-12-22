@@ -234,7 +234,7 @@ for (work of queue) { // queue为set队列
 ### 1. 监听
 
 *可以理解*为**监听**某数据发生变化后，执行某回调函数。
-**注意**：如果只是为了防止反复计算而想用监听，请用`useMemo`。  
+**注意**：如果只是为了防止反复计算而想用这个，请用`useMemo`。  
 【真正理解是有关“副作用”……
 
 `useEffect`函数：
@@ -252,9 +252,9 @@ useEffect(
 * 第二个参数：要监听的对象
   * 不传：无限执行（每次重渲都执行）
   * 空数组`[]`：只在组件挂载的时候执行，即`componentDidMount`
-  * 特定依赖项`[name]`：在依赖项发生变化（数据）或被调用（函数）后执行【注意：此时组件挂载时**仍会执行**！】  
+  * 特定依赖项`[name]`：在依赖项发生变化（数据）或被调用（函数）后执行【注意：此时组件挂载后**仍会执行**！】  
     提醒：当逻辑处理函数中，**用到了组件的Prop, State数据**后，就最好**添加到“依赖数组”中**【就像 Verilog 里的`always`一样……
-    * 数据依赖项：数据改变时调用
+    * 数据依赖项：数据改变时调用【目前感觉支持 Prop、State 和 context 的监听，而对于组件外部的变量【比如某全局变量】则不能监听
     * 函数依赖项：当**监听函数被调用**时，调用该逻辑处理函数【存疑：如果内部会调用该函数呢？……  
       ![图 1](images/React--03-30_03-48-04.png)
 
@@ -497,7 +497,7 @@ const SonComponent = () => {
 ### 一般用法
 
 与state一样，都是**存状态**的，  
-但`reducer`更适合复杂状态（比如对象）、以及更新逻辑复杂（指的是`setState()`，对同一状态可能有不同的更新逻辑CURD）。
+但`reducer`更适合复杂状态（比如对象）、以及更新逻辑复杂（指的是`setState()`，对同一状态可能有不同的更新逻辑（CURD）。
 
 > 原因 - 为何取名为`reduce`：
 >
@@ -674,7 +674,7 @@ export default ComplexComponent() {
     // 根据Reducer和初始状态，定义状态变量State和设置方法Dispatch
     const [SuperSASSState, SuperSASSDispatch] = useReducer(SuperSASSReducer, DEFAULT_STATE);
 
-    // 定义一些回调方法
+    // 定义一些状态修改方法
     const setSex = useCallback(
         sex => SuperSASSDispatch({ type:'CHANGE_SEX', payload: {sex} }),
         [SuperSASSDispatch] // 使得每次在setSex被调用后，调用Dispatch后，才会进行重渲
