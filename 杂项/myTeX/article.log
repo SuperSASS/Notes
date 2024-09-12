@@ -930,7 +930,20 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 8.
  (umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-! Misplaced alignment tab character &.
-l.12 ...rnational conference on computer science &
-                                                   education (ICCSE). 2012 :...
-No pages of output.
+
+LaTeX Warning: Citation `a' on page 1 undefined on input line 10.
+
+(article.bbl
+
+LaTeX Warning: Empty `thebibliography' environment on input line 27.
+
+) [1
+
+] (article.aux)
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `article.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+ )
+Output written on article.xdv (1 page, 2124 bytes).

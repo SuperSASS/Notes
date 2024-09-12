@@ -24,11 +24,4 @@
 \providecommand{\bibdate}[1]{#1}
 \providecommand{\biburl}[1]{\newline\url{#1}}
 
-\bibitem{xie2012research}
-\bibauthor{XIE J}\@. \bibtitle{Research on key technologies base Unity3D game
-  engine}\bibmark{[C]} //\thinspace{}\bibbooktitle{2012 7th international
-  conference on computer science \& education (ICCSE)}\@.
-  \bibyear{2012}\thinspace{}\textnormal{:
-  }\bibpages{695\thinspace{}\textnormal{--}\thinspace{}699}\@.
-
 \end{thebibliography}
