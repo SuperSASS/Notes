@@ -1,0 +1,412 @@
+\documentclass[a4paper,12pt]{ctexart}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{dsfont}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{slashbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{times}
+\usepackage{mathtools}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\graphicspath{{figure/}}
+\lstset{breaklines}
+\lstset{extendedchars=false}
+\usepackage{caption}
+\usepackage[CJKbookmarks,colorlinks,linkcolor=blue]{hyperref}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\captionsetup{font={small}}
+\geometry{left=1.25in,right=1.25in,top=1in,bottom=1in}
+
+\newcommand{\exref}[1]{0.\ref{#1}}
+\newcommand{\crd}{\color{red}}
+%%%%%%%%%%%%优化论文和书中常用的符号%%%%%%%%%%%%%%%
+\def\Min{{\rm minimize}}
+\def\Max{{\rm maximize}}
+\def\ST{{\rm subject\ to}}
+\def\bzero{{\bf 0}}
+\DeclareMathOperator*{\argmax}{argmax}
+\def\bydef{:=}
+\newcommand{\tr}{{\scriptscriptstyle T}}  % transpose symbol
+\def\R{{\mathbb R}}%\def\R{\mbox{I}\!\mbox{R}}
+\def\allone{\bm 1}
+
+\def\eproof{$\hfill\rule[0cm]{1.5mm}{3mm}$}
+\newcommand\la{\langle}
+\newcommand\ra{\rangle}
+\newcommand\p{\partial}
+\newcommand{\bml}{\bmatrix}
+\newcommand{\bmr}{\endbmatrix}
+
+%%%%%%%%%Bold Greek letter%%%%%%%%%%%%%%%%
+\newcommand\gl{\bm \lambda}
+\newcommand\ga{\bm \alpha}
+\newcommand\gb{\bm \beta}
+\newcommand\gs{\bm \sigma}
+\newcommand\gr{\bm \gamma}
+\newcommand\gd{\bm \delta}
+\newcommand\gu{\bm\mu}
+\newcommand\gx{\bm\xi}
+\newcommand\gS{\bm \Sigma}
+\newcommand\gth{\bm \theta}
+%%%%%%%%% Bold Letter%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\ba{{\bm a}}
+\newcommand\bj{{\bm j}}
+\newcommand\bA{{\bm A}}
+\newcommand\bB{{\bm B}}
+\newcommand\bH{{\bm H}}
+\newcommand\bK{{\bm K}}
+\newcommand\bz{{\bm z}}
+\newcommand\bx{{\bm x}}
+\newcommand\bbf{{\bm f}}
+\newcommand\by{{\bm y}}
+\newcommand\bh{{\bm h}}
+\newcommand\rd{{\rm d}}
+\newcommand\bff{{\bm f}}
+\newcommand\bc{{\bm c}}
+\newcommand\bC{{\bm C}}
+\newcommand\bd{{\bm d}}
+\newcommand\bg{{\bm g}}
+\newcommand\bG{{\bm G}}
+\newcommand\bb{{\bm b}}
+\newcommand\brr{{\bm r}}
+\newcommand\bu{{\bm u}}
+\newcommand\bv{{\bm v}}
+\newcommand\bq{{\bm q}}
+\newcommand\br{{\bm r}}
+\newcommand\bI{{\bm I}}
+\newcommand\be{{\bm e}}
+\newcommand\bD{{\bm D}}
+\newcommand\bE{{\bm E}}
+\newcommand\bF{{\bm F}}
+\newcommand\bW{{\bm W}}
+\newcommand\bL{{\bm L}}
+\newcommand\bP{{\bm P}}
+\newcommand\bQ{{\bm Q}}
+\newcommand\bT{{\bm T}}
+\newcommand\bM{{\bm M}}
+\newcommand\bN{{\bm N}}
+\newcommand\bR{{\bm R}}
+\newcommand\bS{{\bm S}}
+\newcommand\bU{{\bm U}}
+\newcommand\bV{{\bm V}}
+\newcommand\bY{{\bm Y}}
+\newcommand\bJ{{\bm J}}
+\newcommand\bX{{\bm X}}
+\newcommand\bZ{{\bm Z}}
+\newcommand\bw{{\bm w}}
+\newcommand\bs{{\bm s}}
+\newcommand\bt{{\bm t}}
+\newcommand\bp{{\bm p}}
+%%%%%%mathcal stytle%%%%%%%%%%
+\def\MCC{{\mathcal C}}
+\def\MCK{{\mathcal K}}
+\def\MCI{{\mathcal I}}
+\def\MCE{{\mathcal E}}
+\def\MCF{{\mathcal F}}
+\def\MCA{{\mathcal A}}
+\def\MCL{{\mathcal L}}
+\def\MCG{{\mathcal G}}
+\def\MCS{{\mathcal S}}
+\def\MCT{{\mathcal T}}
+\def\MCN{{\mathcal N}}
+\def\MCD{{\mathcal D}}
+\def\MCV{{\mathcal V}}
+\def\MCW{{\mathcal W}}
+%%%%%%%%%%%%%%常用的迭代记号%%%%%%%%%%%%%%%%%%%%%%%
+\def\fk{f^{(k)}}
+\def\fxk{f({\bm x}^{(k)})}
+\def\fx{f({\bm x})}
+\def\gk{{{\bm g}^{(k)}}}
+\def\pk{{{\bm p}^{(k)}}}
+\def\dk{{{\bm d}^{(k)}}}
+\def\sk{{{\bm s}^{(k)}}}
+\def\yk{{{\bm y}^{(k)}}}
+\def\xk{{\bm x}^{(k)}}
+\def\glk{{\bmgl}^{(k)}}
+\def\xx{{\bm x}^{(0)}}
+\def\ff{{f}^{(0)}}
+\def\pp{{\bm p}^{(0)}}
+\def\xkk{{\bm x}^{(k+1)}}
+\def\glkk{{\bmgl}^{(k+1)}}
+\def\gkk{{{\bm g}^{(k+1)}}}
+\def\pkk{{{\bm p}^{(k+1)}}}
+\def\Bkk{{\bm B}^{(k+1)}}
+\def\Hkk{{\bm H}^{(k+1)}}
+\def\fkk{{f}^{(k+1)}}
+\def\gxk{{\bm g}({\bf x}^{(k)})}
+\def\gx{{\bm g}({\bm x})}
+\def\Gk{{{\bm G}^{(k)}}}
+\def\Bk{{{\bm B}^{(k)}}}
+\def\Hk{{\bm H}^{(k)}}
+\def\Gxk{{\bm G}({\bf x}^{(k)})}
+\def\Wk{{\bm W}^{(k)}}
+\def\Zk{{\bm Z}^{(k)}}
+\def\Ak{{{\bm A}^{(k)}}}
+\def\ck{{{\bm c}^{(k)}}}
+\def\rk{{{\bm r}^{(k)}}}
+\def\lpbv{{\rm bv}}
+\def\rhs{{\rm rhs}}
+
+
+\pagestyle{plain}
+\title{2024秋季 \,\, 最优化理论与方法I(最优化基础)\\
+第~1~次作业\\
+ \small 提交日期：2024 年9 月30日23:00}
+
+%\author{刘红英}
+\begin{document}
+\maketitle
+
+{\bf 提交说明}：
+\begin{enumerate}
+\item 将自己的作业保存/扫描成pdf文件上传(代码粘到文档中). 请查云盘上根据上课时间，选择自己所在班的excel文件并找到自己名字的序号. 文件命名规则：
+\begin{verbatim}
+	序号-学号-姓名-optihw*(*=1,2,3,4,5,6)
+\end{verbatim}
+比如序号为1， 学号为SY2409107的陈同学的第一次优化作业，命名为1-SY2409107-陈同学-optihw1.pdf.
+\item 对照参考解答批阅自己的作业，需要有红色笔批改痕迹. 并将自己的问题(新解答-与参考解答不一致的解答、不理解并需要助教解答的地方)标注出来，由助教逐一解答. 此外，务必标注清楚哪些是自己做的；哪些是自己看过参考解答，理解后重新写的解答(可用异色笔).
+
+\item 学院路~1~班(周三和周五3-4节)同学的第一次作业提交链接如下：
+
+\url{https://bhpan.buaa.edu.cn/link/AA785C7DAC2CAF44539F84D827645773D4}
+\begin{verbatim}
+文件夹名：最优化HW_1
+有效期限：2024-09-30 23:59
+\end{verbatim}
+
+学院路~2~班(周三和周五1-2节)同学的第一次作业提交链接如下：
+
+\url{https://bhpan.buaa.edu.cn/link/AA0851E8FADE1D4307BC25E2F114C034CF}
+\begin{verbatim}
+文件夹名：最优化HW_1
+有效期限：2024-09-30 23:59
+\end{verbatim}
+\end{enumerate}
+
+\begin{enumerate}
+
+\item [1.] (复习并熟悉多元函数梯度和海塞矩阵的概念，特别注意(d)，其是非线性最小二乘问题的目标函数，所得结果是设计求解非线性最小二乘问题算法的基础)
+确定下列~$n~$元函数的梯度向量和~Hesse~阵：
+    \begin{enumerate}
+    \item[(a)] ~$\ba^{\tr}\bx$: ~$\ba~$是已知向量；
+    \item[(b)] ~$\bx^{\tr}\bA\bx$: ~$\bA~$是非对称已知矩阵；
+    \item[(c)] ~$\tfrac{1}{2}\bx^{\tr}\bA\bx-\bb^{\tr}\bx$: ~$\bA~$ 是已知的对称矩阵，$\bb~$是已知向量；
+    \item[(d)] ~$\br(\bx)^{\tr}\br(\bx)$: ~$\br(\bx)=(r_1(\bx), \cdots, r_m(\bx))^{\tr}~$是依赖于~$\bx~$的~$m~$维向量，记~${\nabla \br}^{\tr}~$ 为~$\bA^{\tr}$，它一般不是常量.
+    \end{enumerate}
+
+解:
+\begin{enumerate}
+    \item[(a)]
+    $\nabla f = \ba$ \\
+    $\nabla^2 f = 0$
+    \item[(b)]
+    $\nabla f = (\bA+\bA^T)\bx$ \\
+    $\nabla^2 f = (\bA+\bA^T)$
+    \item[(c)]
+    $\nabla f = \bA\bx-\bb$ \\
+    $\nabla^2 f = \bA$
+    \item[(d)]
+
+\end{enumerate}
+
+\item[2.](优化问题解的存在性) 一个函数 $f : \R^n \to \R$ 被称为{\bf 强制的} (coercive)，如果$\lim\limits_{\|\bx\| \to +\infty} f(\bx) = +\infty$. 证明强制的连续函数$f$在非空闭集$S$ 上能取到最小值，即它在$S$上至少存在一个全局极小点.
+
+\item[3.](本题将第一节课中优化表述技巧延申到非线性规划. 一般地，在应用中可用来将目标函数非光滑的问题等价表述成光滑的约束最优化问题.)
+ 设~$\br:\R^n\to \R^m~$是光滑的向量值函数(每个分量函数是$n$元的，其一阶偏导数存在并连续). 考虑~$\min\limits_{\bx\in \R^n} f(\bx)$， 其中
+    \begin{enumerate}
+    \item[(a)] ~$f(\bx)=\|\br(\bx)\|_\infty~$;
+    \item[(b)] ~$f(\bx)=\max\{r_i(\bx), i=1,\cdots,m\}~$;
+    \item[(c)] ~$f(\bx)=\|\br(\bx)\|_1$.
+    \end{enumerate}
+    请将这些(通常是非光滑的)问题重新表述成光滑(目标函数和约束函数的一阶偏导数存在并且连续)的优化问题.
+
+\item [4.] 指出下面哪些集合是凸集. 是凸集的说明理由，不是凸集的也需要说明理由(凸集的定义、保凸运算、凸函数的上镜图是凸集、凸函数的下水平集是凸集等).记以下题目所给集合为$S$.
+\begin{itemize}
+\item[(a)] $\{\bx\in\R^2:x_1+i^2x_2\leq1,i=1,\cdots,10\}$
+
+\item[(b)] $\{\bx\in\R^2:x_1^2+2ix_1x_2+i^2x_2^2\leq1,i=1,\cdots,10\}$
+
+\item[(c)] $\{\bx\in\R^2:x_1^2+ix_1x_2+i^2x_2^2\leq1,i=1,\cdots,10\}$
+
+\item[(d)] $\{\bx\in\R^2:x_1^2+5x_1x_2+4x_2^2\leq1\}$
+
+\item[(e)] $\{\bx\in\R^{10}:x_1^2+2x_2^2+3x_3^2+\cdots+10x_{10}^2\leq2004x_1-2003x_2+2002x_3-\cdots+1996x_9-1995x_{10}\}$
+
+\item[(f)]
+$\{\bx\in\R^2:\exp\{x_1\}\leq x_2\}$
+
+\item[(j)]
+$\{\bx\in\R^2:\exp\{x_1\}\geq x_2\}$
+
+\item[(h)]
+$\{\bx\in\R^n:\sum_{i=1}^nx_i^2=1\}$
+
+\item[(i)]
+$\{\bx\in\R^n:\sum_{i=1}^nx_i^2\leq1\}$
+
+\item[(j)]
+$\{\bx\in\R^n:\sum_{i=1}^nx_i^2\geq1\}$
+
+\item[(k)]
+$\{\bx\in\R^n:\max_{i=1,\cdots,n}x_i\leq1\}$
+
+\item[(l)]
+$\{\bx\in\R^n:\max_{i=1,\cdots,n}x_i\geq1\}$
+
+\item[(m)]
+$\{\bx\in\R^n:\max_{i=1,\cdots,n}x_i=1\}$
+
+\item[(n)]
+$\{\bx\in\R^n:\min_{i=1,\cdots,n}x_i\leq1\}$
+
+\item[(o)]
+$\{\bx\in\R^n:\min_{i=1,\cdots,n}x_i\geq1\}$
+
+\item[(p)]
+$\{\bx\in\R^n:\min_{i=1,\cdots,n}x_i=1\}$
+
+\end{itemize}
+
+\item[5.] 判断下面的函数在指定区域上是否是凸函数(凸函数的定义、函数凸当且仅当上镜图凸、保凸运算、二阶可微函数凸当且仅当任一点的Hesse矩阵半正定)，并给出理由:
+\begin{enumerate}
+    \item[(a)] $f(x)\equiv1$ 在$\R$上.
+    \item[(b)] $f(x)=x$ 在$\R$上.
+    \item[(c)] $f(x)=|x|$ 在$\R$上.
+    \item[(d)] $f(x)=-|x|$ 在$\R$上.
+    \item[(e)] $f(x)=-|x|$ 在$\R_+=\{x\in\R: x\geq0\}$ 上.
+    \item[(f)] $\exp\{x\}$在$\R$上.
+    \item[(g)] $\exp\{x^2\}$在$\R$上.
+    \item[(h)] $\exp\{-x^2\}$在$\R$上.
+    \item[(i)] $\exp\{-x^2\}$在$\{x\in\R: x\geq100\}$ 上.
+    \item[(j)] $\frac{x^2}{y}$ 在 $Q=\{(x,y)\in\R^2:y>0\}$ 上.
+    \item[(l)] $\ln(\exp\{x\}+\exp\{y\})$在二维平面上.
+\end{enumerate}
+
+\item [6.] ({\bf 凸函数及其性质})完成以下问题：
+    \begin{enumerate}
+    \item [(a)] 证明{\it 熵函数}
+$$
+f(\bx) = -\sum_{i=1}^n x_i \log(x_i)
+$$
+在集合$S = \{\bx \in \R^n : \sum_{i=1}^n x_i = 1, x_i>0,i=1,\cdots,n\}$ 上是凹的.
+
+    \item [(b)] 设 $f\in C^1$ , $S$是凸集. 证明$f$在$S$上是凸的当且仅当对所有的 $\bx,\by\in S$都有
+$$
+(\nabla f(\bx) - \nabla f(\by))^T (\bx-\by) \geq 0
+$$
+成立. 称这个性质为 $\nabla f$ 的{\bf 单调性}.
+
+    \item [(c)] 给出一个严格凸函数的例子，它取不到最小值，即不存在极小点.
+
+    \item [(d)]{\bf (选做题)} 证明凸函数在有界多面体$S$上的的最大值必定可以在多面体的某极点取到. 提示：可以使用事实：一个有界多面体可以表示为其极点集合${\rm ext}\ S$ 的凸包，即$S={\rm conv} ({\rm ext}\ S)$.
+    \end{enumerate}
+
+\item [7.]({\bf 使用 CVX求解优化问题，不用交})
+复合凸规划(disciplined convex programming, DCP)是一个系统，用于由已知曲率(函数是常数、仿射的、凸的、凹的)的基函数库构造数学表达式.  凸优化建模语言CVX, CVXPY, Convex.jl, 和CVXR都使用DCP以确保特定优化问题是凸的. CVX 是一个出色的用于复合凸规划的系统，虽然它不总是最快的工具，但它的适用性很广，因此是一个很好的工具. 在此练习中，设置 CVX 环境并求解一个凸优化问题.
+
+一般来说，对于本课程的作业，编程问题解答应包括图表以及回答问题所需的解释. 此外，完整代码应作为作业文件的附件提交.
+
+CVX的各种变体适用于主要的数值编程语言. 这些变体在语法和功能上有一些微小的差异，但基本上提供相同的功能. 根据需求下载 CVX 变体:
+\begin{itemize}
+\item Matlab: \url{http://cvxr.com/cvx/}
+\item Python: \url{http://www.cvxpy.org/}
+\item R: \url{https://cvxr.rbind.io}
+\item Julia: \url{https://github.com/JuliaOpt/Convex.jl}
+\end{itemize}
+并查阅文档以了解基本功能. 确保可以求解：已知任意向量 $\by$ 和矩阵 $\bX$ 的最小二乘问题 $\min_{\gb} \; \|\by-\bX\gb\|_2^2$. 提示：这里可通过与闭式解 $(\bX^T \bX)^{-1} \bX^T \by$ 比较来检查CVX求解结果的正确性.
+
+\begin{enumerate}
+\item [(a)] 已知标签 $\by \in \{-1,1\}^n$和特征矩阵 $\bX \in \R^{n\times p}$，其行向量为 $\bx_1,\ldots, \bx_n$，支持向量机 ( support vector machine, SVM) 问题是
+\begin{alignat*}{2}
+&\mathop{\Min}\limits_{\gb,\beta_0,\bm\xi} \quad
+&& \frac{1}{2} \|\gb\|_2^2 + C \sum_{i=1}^n \xi_i \\
+&\ST \quad && \xi_i \geq 0, \; i=1,\ldots n \\
+& && y_i(\bx_i^T \gb + \beta_0) \geq 1-\xi_i, \;
+i=1,\ldots n.
+\end{alignat*}
+\begin{enumerate}
+\item [(i)] 加载训练数据 {\tt xy\_train.csv}. 这是 $n=200$ 行 3 列的矩阵. 前两列是 $p=2$ 的特征向量，第三列是标签. 使用 CVX, 在 $C=1$的情况下求解 SVM 问题. 给出最优目标函数值, 以及最优系数向量 $\gb \in \R^2$ 和截距 $\beta_0 \in \R$.
+
+\item [(ii)]  SVM 问题的最优解中的$\gb$和$\beta_0$定义了一个超平面
+  \begin{equation}\label{eq:svmhyperplane}
+  \beta_0 + \gb^T \bx = 0,
+  \end{equation}
+  这是 SVM 分类器的决策边界. 绘制训练数据, 并用不同颜色标记两类点. 在上面绘制决策边界.
+
+\item[(iii)]  现在定义 \smash{$\tilde{\bX} \in \R^{n \times p}$} , 其行向量$\tilde{\bx}_i=y_i \bx_i$, $i=1,\ldots,n$, 并使用 CVX 求解
+  \begin{alignat*}{2}
+    &\mathop{\Max}_{\ga\in\R^n} && -\tfrac{1}{2} \ga^T \tilde{\bX} \tilde{\bX}^T \ga + \sum_{i=1}^n\alpha_i \\
+    &\ST \quad && 0 \leq \alpha_i \leq C, i=1,\cdots,n,\; \by^T \ga = 0.
+  \end{alignat*}
+给出最优函数值；它应与 (i) 中的最优值对应. 并给出在最优点 $\ga$ 下的 \smash{$\tilde{\bX}^T \ga$}; 这应与 (i) 中最优的 $\gb$ 对应. 注意：这不是巧合，而是 {\it 对偶性} 的一个例子，后续课程将会进行详细的研究.
+
+\item [(iv)]  对于惩罚参数 $C=2^a$,\ $a$的值从-5到5(间隔取1)，对于每个惩罚参数$C$的取值，求解SVM 问题，得到决策边界\eqref{eq:svmhyperplane}，并据此计算 {\tt xy\_test.csv} 中的测试数据的错分率(预测结果$\hat y_i={\rm sign}(\beta_0 + \gb^T \bx_i)$与已知标签不一致的频率). 绘制错分率($y$ 轴)与 $C$ ($x$ 轴，你可能需要使用对数刻度)的图形.
+\end{enumerate}
+
+\item[(b)] 复合凸规划(disciplined convex programming , DCP)是一个系统，用于从已知曲率(函数是常数、仿射的、凸的、凹的)的基函数库构造数学表达式.  凸优化建模语言CVX, CVXPY, Convex.jl, 和CVXR都使用DCP以确保特定的优化问题是凸的.
+
+    DCP是 CVX 的基础语言. 本质上，凸表达式的解析树中的每个节点都标有曲率(凸、凹、仿射、常数)和符号(正、负)的属性，允许对整个表达式的凸性进行推理. 网站 \url{http://dcp.stanford.edu/} 提供简单表达式的可视化和分析.
+
+通常情况下，以 DCP 形式表述问题是自然的，但在某些情况下需要进行处理以构建满足规则的表达式. 对于下面的每组数学表达式，首先简要解释为什么每个表达式定义了一个凸集. 然后，给出一个等价的 DCP 表达式，以及为什么 DCP 表达式等同于原表达式的简要解释.  DCP 表达式应该以一种形式给出，该形式在 \url{http://dcp.stanford.edu/analyzer} 上通过分析的检验(表达式框左侧是绿勾). 注意：这个问题实际上可以帮助您更好地理解各种保凸性的函数的复合规则.
+
+以i)为例，$\|(x, y, z)\|_2^2 \le 1$表示以原点为中心，半径为1的2 范数球(Euclidean球)，所以是凸的.
+
+ DCP表达式：\verb"pow(norm2(x,y,z),2)<=1".
+
+\begin{enumerate}
+\item[i)] $\|(x, y, z)\|_2^2 \le 1$.
+\item[ii)] $\sqrt{x^2 + 1} \le 3x + y$
+\item[iii)] $1/x + 2/y \le 5,  x > 0, y > 0$
+\item[iv)] $(x+y)^2/\sqrt{y} \le x - y + 5, y > 0$
+\item [v)] $(x+z)y \ge 1, x+z \ge 0, y \ge 0$
+\item[vi)] $\|(x + 2y, x-y)\|_2 = 0$
+\item[vii)] $x\sqrt{y} \ge 1$, $x \ge 0, y \ge 0$
+\item[viii)] $\log(e^{y-1} + e^{x/2}) \le -e^x $
+\end{enumerate}
+\end{enumerate}
+
+
+%\item[6.]
+%对于$n$维向量$\bx$, 设$\hat{\bx}=(\hat{x}^1,\cdots,\hat{x}^n)$ 是对向量$\bx$ 的分量以非增方式进行排序后得到的新向量. 例如$\bx=(2,1,3,1),\hat{\bx}=(3,2,1,1)$. 固定$k,1\leq k\leq n$.
+%\begin{enumerate}
+%\item[(a)] 函数$\hat{x}^k$($\bx$的第$k$大元素)是$\bx$ 的凸函数吗?
+%\item[(b)] 函数$s_k(\bx)=\hat{x}^1+\cdots+\hat{x}^k$($\bx$中前$k$ 大元素之和)是凸函数吗？
+%\end{enumerate}
+%
+%
+%\item[7.] \label{xiti7-supgraph}(理解函数凸等价于它的上图凸. 这样，可以利用凸集研究凸函数的性质)
+%设~$f~$是定义在凸集~$C\subseteq \R^n~$上的函数, 定义集合$$[f, C]=\{(\bx, r)\in \R^n\times\R: \bx\in C, f(\bx)\le r\},$$
+%称该集合为~$f~$在~$C~$上的{\heiti 上图}(epigraph). 证明~$f(\bx)$~ 是凸函数当且仅当~$[f, C]~$是凸集.
+%
+%
+%\item[8.](Jensen不等式是研究中分析涉及凸函数不等式的重要工具)
+%设~$C~$是~$\R^n~$中的凸集, ~$f(\cdot):C\rightarrow \R$. 证明~$f~$ 是~$C~$ 上的凸函数当且仅当对任一整数~$k\geq 2~$, $\bx_i\in C, \gth_i\geq 0, i=1,\cdots, k, \sum_{i=1}^k\gth_i=1$~蕴含着
+%\[
+%f\left(\sum_{i=1}^k\gth_i\bx_i\right)\leq \sum_{i=1}^k\gth_if(\bx_i).
+%\]
+%
+%\item[9.] 利用凸函数的一阶刻画, 证明：
+% \begin{enumerate}
+% \item [(a)]  $(1-a)^t\leq e^{-at},\,\,\forall a\in (0,1], \forall t>0$.
+%  \item [(b)] $\ln(x+1)\leq x,\,\,\forall x>-1$.
+%  \end{enumerate}
+
+
+\end{enumerate}
+\end{document}
