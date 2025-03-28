@@ -8,3 +8,5 @@
    ![Unicode 字体](images/image-index.png)
    自带的字体对中文支持不全，在这里将 Ubuntu 的 grub 里的"unicode.pf2"覆盖进来，即可解决。  
    [文件链接](c:/Users/SuperSASS/Desktop/unicode.pf2)。
+
+## 2. sleek 主题

@@ -1,6 +1,8 @@
 # Windows 的 Grub 2 引导项手动配置
 
 ```sh
+### 注意: 如果启用了 Secure Boot，则不可以使用 insmod 加载 mod（而要在 grub-install 时通过`--modules=`预加载 mod），原因可见"wiki.archlinuxcn.org/wiki/GRUB"的"2.2.2 Shim-lock"
+
 # 设置超时时间和默认选项
 set timeout=5
 set default=0
@@ -11,31 +13,9 @@ set lang=zh_CN # 设置为中文
 set locale_dir=/EFI/grub/locale # 设置翻译文件目录（不设置则无法使用中文）
 loadfont /EFI/grub/fonts/unicode.pf2
 
-# 加载文件系统模块
-## 两种最流行的磁盘分区格式
-insmod part_gpt
-insmod part_msdos
-## 常见文件系统驱动
-insmod btrfs
-insmod exfat
-insmod ext2
-insmod fat
-insmod iso9660
-insmod jfs
-insmod ntfs
-insmod reiserfs
-insmod udf
-insmod xfs
-insmod zfs
-
 # 图形终端（主题）相关
 set gfxmode=1920x1080,1280x720,auto # 分辨率设置
 set gfxpayload=keep # Linux 内核的视频模式（不明白什么意思，不加也可以）
-insmod gfxterm   # 加载图形模式终端
-insmod gfxmenu   # 加载图形模式菜单（不知道有没有用，Ubuntu 里看到的）
-insmod all_video # 加载所有视频驱动
-insmod gettext   # 应该是有关文本的（尤其是中文）（不知道有没有用，Ubuntu 里看到的）
-insmod png       # 加载PNG图片支持（背景图片）
 terminal_output gfxterm # 使用 gfxterm 图形终端（必须在最后）
 
 # 设置为 sleek 主题
@@ -58,14 +38,13 @@ loadfont /EFI/grub/themes/sleek/WenQuanYi-32.pf2
 ### $2 OS name
 ### $3 Class
 function add_os_if_exists {
-    for d in hd0,gpt1 hd0,gpt2 hd1,gpt1 hd1,gpt2 hd0,msdos1 hd0,msdos2 hd1,msdos1 hd1,msdos2; do
-        if [ -e ($d)$1 ]; then # 判断 OS 对应的 efi 存在
-            menuentry "$2" "$d" "$1" --class "$3" { # 注：`"$2"`后面的作为参数传入，故内部的`$2`实际上代表这里的`$d`
-                chainloader ($2)$3
-            }
-            break
-        fi
-    done
+    set os_root="" # 清空局部变量
+    if [ search --no-floppy -f "$1" ]; then # 判断该 OS 对应的 efi 文件所在分区是否存在（如果不加这个判断，则会导致在进入 submenu 时如果找不到、会弹出报错信息）
+        search --no-floppy --set os_root -f "$1" # 搜索该 OS 对应的 efi 文件所在分区，写入到 os_root 变量，如`hd0,gpt1`
+        menuentry "$2" "$os_root" "$1" --class "$3" { # 注：`"$2"`后面的作为参数传入，故内部的`$2`实际上代表这里的`$os_root`
+            chainloader "($2)$3"
+        }
+    fi
 }
 
 ## add_android_tv_entry: 添加有关 Andorid TV 的启动项
@@ -77,7 +56,7 @@ function add_android_tv_entry {
     set class="$2"
     shift 2
     menuentry "$title" "$@" --class "$class" {
-        set root=$android_tv_os_root
+        set root="$android_tv_os_root"
         shift 1
         linux $kdir/kernel root=/dev/ram0 $@
         initrd $kdir/initrd.img
@@ -97,20 +76,35 @@ add_os_if_exists /EFI/debian/${grub}.efi Debian debian
 add_os_if_exists /EFI/gentoo/${grub}.efi Gentoo gentoo
 add_os_if_exists /EFI/opensuse/${grub}.efi openSUSE opensuse
 add_os_if_exists /EFI/linuxmint/${grub}.efi "Linux Mint" linuxmint
+## Mac OS
 add_os_if_exists /EFI/CLO2020-03-30/${grub}.efi macOS macosx
 ## Android TV
 set kdir=/android-2020-03-30 # 设置 Android TV 内核所在路径
-search --no-floppy --set android_tv_os_root -f $kdir/kernel # 搜索 Android TV 系统内核所在分区，写入到 android_tv_os_root 变量（从而指定后续`linux`命令加载内核的分区，如`hd0,gpt2`）
-export kdir android_tv_os_root
-add_android_tv_entry "Android TV" "android" quiet
-submenu "Android TV (More options)" --class submenu {
-    add_android_tv_entry "Android TV - Laptop mode" "android" quiet video=eDP-1:d video=HDMI-A-1:e
-    add_android_tv_entry "Android TV - DEBUG mode" "android" DEBUG=2
-    add_android_tv_entry "Android TV - No Hardware Acceleration" "android" quiet nomodeset HWACCEL=0 # 注意：在 VM 虚拟机中，只能使用该选项（禁用硬件加速）以启动系统
-    add_android_tv_entry "Android TV - TWRP Recovery" "recovery" quiet androidboot.selinux=permissive RAMDISK=ramdisk-recovery.img
-}
+search --no-floppy --set android_tv_os_root -f "$kdir/kernel" # 搜索 Android TV 系统内核所在分区，写入到 android_tv_os_root 变量（从而指定后续`linux`命令加载内核的分区，如`hd0,gpt2`）
+if [ -n "$android_tv_os_root" ]; then # 如果存在 Android TV 系统
+    export kdir android_tv_os_root
+    add_android_tv_entry "Android TV" "android" quiet
+    submenu "Android TV (More options)" --class submenu {
+        add_android_tv_entry "Android TV - Laptop mode" "android" quiet video=eDP-1:d video=HDMI-A-1:e
+        add_android_tv_entry "Android TV - DEBUG mode" "android" DEBUG=2
+        add_android_tv_entry "Android TV - No Hardware Acceleration" "android" quiet nomodeset HWACCEL=0 # 注意：在 VM 虚拟机中，只能使用该选项（禁用硬件加速）以启动系统
+    	add_android_tv_entry "Android TV - Vulkan support (experimental)" "android" quiet VULKAN=1
+    	add_android_tv_entry "Android TV - No Setup Wizard" "android" quiet SETUPWIZARD=0
+        add_android_tv_entry "Android TV - TWRP Recovery" "recovery" quiet androidboot.selinux=permissive RAMDISK=ramdisk-recovery.img
+    }
+fi
+## Batocera
+set disk_label="Batocera-OS" # Batocera 系统所在分区的卷标
+search --no-floppy --set batocera_os_root --label "$disk_label"
+if [ -n "$batocera_os_root" ]; then
+    menuentry "Batocera" --class "batocera" {
+        set root="$batocera_os_root"
+        linux /boot/linux label="$disk_label" console=tty3 quiet loglevel=0 vt.global_cursor_default=0
+        initrd /boot/initrd.gz
+    }
+fi
 ## 高级选项
-submenu "#Advanced options" --class submenu {
+submenu "# Advanced options" --class submenu {
     add_os_if_exists /EFI/BOOT/$bootefi "UEFI OS" efi
     add_os_if_exists /EFI/BOOT/fallback.efi "UEFI Fallback" efi
     add_os_if_exists /EFI/BOOT/fallback_x64.efi "UEFI Fallback" efi
