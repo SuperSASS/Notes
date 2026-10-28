@@ -184,14 +184,14 @@ const promise = new Promise((resolve, reject) => { // reject是可选的
     }
     catch (e) {
       // 中途失败
-      reject(/* 外界传的reject函数（由then提供），所需的内部参数 */);
+      reject(/* 外界传的reject函数（由catch提供），所需的内部参数 */);
     }
   }
 ); 
 ```
 
-`new Promise()`的参数就一个：`executor`，是带有`resolve`和`reject`两个参数、**没有返回值**（返回值会被忽略）的函数。  
-Promise构造函数执行时**立即调用**`executor`函数！【但因为里面有异步函数，比如会`await`，所以一般执行不完会等着……  
+`Promise`构造函数的参数就一个：`executor`，是带有`resolve`和`reject`两个参数、**没有返回值**（返回值会被忽略）的函数。  
+`Promise`构造函数执行时**立即调用**`executor`函数！【但因为里面有异步函数，比如会`await`，所以一般执行不完会等着……  
 
 当最终内部的`executor`全部执行完后，改状态为`fulfilled`，调用`resolve`；  
 当内部执行完前发生错误(抛出一个错误)时，调用`reject`(如果有)，并抛出同样错误。
